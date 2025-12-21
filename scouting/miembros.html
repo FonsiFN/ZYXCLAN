@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZYX SCOUTING PRO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos de la aplicación principal */
+        :root {
+            --primary: #00c896;
+            --primary-dark: #009874;
+            --primary-light: #00e6b8;
+            --dark: #0f1923;
+            --light: #f8f9fa;
+            --danger: #ff4655;
+            --secondary: #1a2e35;
+            --secondary-light: #2a4a55;
+            --accent: #4cc9f0;
+            --success: #32cd32;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        h1 i {
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        
+        .search-section {
+            background-color: var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 200, 150, 0.2);
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+        
+        .search-bar button {
+            padding: 14px 24px;
+            background-color: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1rem;
+            min-width: 120px;
+        }
+        
+        .search-bar button:hover {
+            background-color: #00e6b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.3);
+        }
+        
+        .search-bar button:active {
+            transform: translateY(0);
+        }
+        
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-group {
+            position: relative;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* ESTILOS PERSONALIZADOS PARA LOS MENÚS DESPLEGABLES */
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+        
+        .select-header {
+            padding: 14px 50px 14px 16px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.04));
+            color: var(--light);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            min-height: 48px;
+        }
+        
+        .select-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 200, 150, 0.1) 50%, 
+                transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .select-header:hover {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .select-header:hover::before {
+            opacity: 1;
+        }
+        
+        .select-header.active {
+            border-color: var(--primary);
+            background: linear-gradient(145deg, rgba(0, 200, 150, 0.15), rgba(0, 200, 150, 0.08));
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.1), 
+                        0 8px 24px rgba(0, 200, 150, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .select-header.active::before {
+            opacity: 1;
+        }
+        
+        .select-header.active .select-arrow {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+        
+        .selected-value {
+            font-weight: 500;
+            color: var(--light);
+        }
+        
+        .select-placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+        
+        .select-arrow {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* EL MENÚ DESPLEGABLE PERSONALIZADO */
+        .select-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: linear-gradient(145deg, var(--secondary), var(--secondary-light));
+            border-radius: 12px;
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 300px;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+        }
+        
+        .select-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            animation: dropdownAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes dropdownAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .select-search {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .select-search input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        .select-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 200, 150, 0.1);
+        }
+        
+        .select-options {
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        
+        .select-option {
+            padding: 14px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            border-left: 3px solid transparent;
+        }
+        
+        .select-option:hover {
+            background: linear-gradient(90deg, 
+                rgba(0, 200, 150, 0.15) 0%, 
+                rgba(0, 200, 150, 0.05) 100%);
+            color: var(--light);
+            border-left-color: var(--primary);
+            padding-left: 24px;
+        }
+        
+        .select-option.selected {
+            background: linear-gradient(90deg, 
+                rgba(0, 200, 150, 0.25) 0%, 
+                rgba(0, 200, 150, 0.1) 100%);
+            color: var(--primary-light);
+            font-weight: 600;
+            border-left-color: var(--primary-light);
+        }
+        
+        .select-option.selected::after {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: checkmark 0.3s ease;
+        }
+        
+        @keyframes checkmark {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .select-option .option-badge {
+            background: rgba(0, 200, 150, 0.2);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .select-no-results {
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+        
+        /* Scrollbar personalizado para el dropdown */
+        .select-options::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .select-options::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        
+        .select-options::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            border-radius: 3px;
+        }
+        
+        .select-options::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--primary-light), var(--primary));
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: #00e6b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.3);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #ff2d3f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 70, 85, 0.3);
+        }
+        
+        .players-table-container {
+            background-color: var(--secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .players-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .players-table th {
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .players-table th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+        
+        .players-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+        
+        .players-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+        
+        .players-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .players-table tr:hover {
+            background-color: rgba(0, 200, 150, 0.08);
+        }
+        
+        .player-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 2px 0;
+        }
+        
+        .player-link:hover {
+            color: #00e6b8;
+            text-decoration: underline;
+            transform: translateX(2px);
+        }
+        
+        .money-cell {
+            color: #32cd32;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .money-cell.zero {
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+        
+        .pr-cell {
+            font-weight: 600;
+            color: #4cc9f0;
+        }
+        
+        .pr-cell.zero {
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .search-bar button {
+                width: 100%;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .players-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .action-buttons {
+                justify-content: center;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .search-section, .players-table-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00e6b8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenido principal de la aplicación -->
+    <div id="appContent">
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-crosshairs"></i> ZYX SCOUTING PRO</h1>
+                <p class="subtitle">Plataforma avanzada de scouting para jugadores competitivos</p>
+            </header>
+            
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre, rol, rango o región...">
+                    <button id="searchBtn"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="regionFilter"><i class="fas fa-globe"></i> Región</label>
+                        <div class="custom-select" id="regionSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Todas las regiones</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar región..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Todas las regiones</div>
+                                    <div class="select-option" data-value="EU">Europa (EU)</div>
+                                    <div class="select-option" data-value="NA">Norte América (NA)</div>
+                                    <div class="select-option" data-value="SA">Medio Oriente (ME)</div>
+                                    <div class="select-option" data-value="AS">Asia (AS)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="rankFilter"><i class="fas fa-chart-line"></i> Rango</label>
+                        <div class="custom-select" id="rankSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Todos los rangos</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar rango..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Todos los rangos</div>
+                                    <div class="select-option" data-value="ZYX Cantera">ZYX Cantera</div>
+                                    <div class="select-option" data-value="ZYX Rango 1">ZYX Rango 1</div>
+                                    <div class="select-option" data-value="ZYX Rango 2">ZYX Rango 2</div>
+                                    <div class="select-option" data-value="ZYX Rango 3">ZYX Rango 3</div>
+                                    <div class="select-option" data-value="ZYX Pro">ZYX Pro</div>
+                                    <div class="select-option" data-value="ZYX Oficial">ZYX Oficial</div>
+                                    <div class="select-option" data-value="ZYX CEO">ZYX CEO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="roleFilter"><i class="fas fa-user-tag"></i> Rol</label>
+                        <div class="custom-select" id="roleSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Todos los roles</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar rol..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Todos los roles</div>
+                                    <div class="select-option" data-value="Fragger">Fragger</div>
+                                    <div class="select-option" data-value="Support">Support</div>
+                                    <div class="select-option" data-value="IGL">IGL</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="prFilter"><i class="fas fa-chart-bar"></i> PR </label>
+                        <div class="custom-select" id="prSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Cualquier PR</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar PR..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Cualquier PR</div>
+                                    <div class="select-option" data-value="100">+100 </div>
+                                    <div class="select-option" data-value="500">+500 </div>
+                                    <div class="select-option" data-value="1000">+1000 </div>
+                                    <div class="select-option" data-value="5000">+5000 </div>
+                                    <div class="select-option" data-value="10000">+10000 </div>
+                                    <div class="select-option" data-value="0">Sin PR (0) </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="earningsFilter"><i class="fas fa-money-bill-wave"></i> Earnings</label>
+                        <div class="custom-select" id="earningsSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Cualquier Earnings</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar earnings..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Cualquier Earnings</div>
+                                    <div class="select-option" data-value="with">Con Earnings </div>
+                                    <div class="select-option" data-value="without">Sin Earnings</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-danger" id="resetBtn"><i class="fas fa-sync-alt"></i> Reiniciar Filtros</button>
+                </div>
+            </div>
+            
+            <div class="players-table-container">
+                <table class="players-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Rango</th>
+                            <th>Rol</th>
+                            <th>Región</th>
+                            <th>PR</th>
+                            <th>Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody id="playersTableBody">
+                        <!-- Jugadores se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPlayers">0</div>
+                    <div class="stat-label">Total Jugadores</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="avgPR">0.00</div>
+                    <div class="stat-label">PR Promedio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalEarnings">$0</div>
+                    <div class="stat-label">Total Earnings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATOS DE EJEMPLO
+        let players = [
+            {
+                id: '1',
+                name: 'ZYX Fonsi V2',
+                rank: 'ZYX CEO',
+                role: 'Fragger',
+                region: 'EU',
+                pr: 6,
+                earnings: 0,
+                link: '#',
+                notes: 'Excelente en duelos, trabajo en equipo mejorando'
+            },
+            {
+                id: '2',
+                name: 'ZYX Diuuk',
+                rank: 'ZYX CEO',
+                role: 'IGL',
+                region: 'EU',
+                pr: 0,
+                earnings: 0,
+                link: '#',
+                notes: 'Fundador y CEO, visión estratégica excepcional'
+            }
+        ];
+
+        // SISTEMA DE SELECT PERSONALIZADO
+        class CustomSelect {
+            constructor(elementId) {
+                this.element = document.getElementById(elementId);
+                this.header = this.element.querySelector('.select-header');
+                this.dropdown = this.element.querySelector('.select-dropdown');
+                this.selectedValue = this.element.querySelector('.selected-value');
+                this.options = this.element.querySelectorAll('.select-option');
+                this.searchInput = this.element.querySelector('.search-input');
+                this.optionsContainer = this.element.querySelector('.select-options');
+                
+                this.value = '';
+                this.init();
+            }
+            
+            init() {
+                // Evento para abrir/cerrar el dropdown
+                this.header.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.toggleDropdown();
+                });
+                
+                // Evento para seleccionar opciones
+                this.options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        this.selectOption(option);
+                    });
+                });
+                
+                // Evento para búsqueda
+                if (this.searchInput) {
+                    this.searchInput.addEventListener('input', () => {
+                        this.filterOptions();
+                    });
+                }
+                
+                // Cerrar dropdown al hacer click fuera
+                document.addEventListener('click', (e) => {
+                    if (!this.element.contains(e.target)) {
+                        this.closeDropdown();
+                    }
+                });
+                
+                // Cerrar dropdown con Escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.dropdown.classList.contains('active')) {
+                        this.closeDropdown();
+                    }
+                });
+            }
+            
+            toggleDropdown() {
+                const isActive = this.dropdown.classList.contains('active');
+                
+                // Cerrar todos los demás dropdowns
+                document.querySelectorAll('.select-dropdown.active').forEach(dropdown => {
+                    if (dropdown !== this.dropdown) {
+                        dropdown.classList.remove('active');
+                        dropdown.previousElementSibling.classList.remove('active');
+                    }
+                });
+                
+                if (isActive) {
+                    this.closeDropdown();
+                } else {
+                    this.openDropdown();
+                }
+            }
+            
+            openDropdown() {
+                this.dropdown.classList.add('active');
+                this.header.classList.add('active');
+                
+                // Posicionar el dropdown si se sale de la pantalla
+                const rect = this.dropdown.getBoundingClientRect();
+                if (rect.bottom > window.innerHeight) {
+                    this.dropdown.style.top = 'auto';
+                    this.dropdown.style.bottom = '100%';
+                    this.dropdown.style.marginBottom = '8px';
+                }
+                
+                // Enfocar el search input si existe
+                if (this.searchInput) {
+                    setTimeout(() => this.searchInput.focus(), 100);
+                }
+            }
+            
+            closeDropdown() {
+                this.dropdown.classList.remove('active');
+                this.header.classList.remove('active');
+                
+                // Resetear posición y búsqueda
+                this.dropdown.style.top = '';
+                this.dropdown.style.bottom = '';
+                this.dropdown.style.marginBottom = '';
+                
+                if (this.searchInput) {
+                    this.searchInput.value = '';
+                    this.filterOptions(); // Resetear filtro
+                }
+            }
+            
+            selectOption(option) {
+                const value = option.dataset.value;
+                const text = option.textContent;
+                
+                this.value = value;
+                this.selectedValue.textContent = text;
+                this.selectedValue.classList.remove('select-placeholder');
+                
+                // Remover selección anterior
+                this.options.forEach(opt => opt.classList.remove('selected'));
+                
+                // Agregar selección nueva
+                option.classList.add('selected');
+                
+                this.closeDropdown();
+                this.triggerChange();
+            }
+            
+            filterOptions() {
+                if (!this.searchInput) return;
+                
+                const searchTerm = this.searchInput.value.toLowerCase();
+                let hasVisibleOptions = false;
+                
+                this.options.forEach(option => {
+                    const text = option.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        option.style.display = '';
+                        hasVisibleOptions = true;
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+                
+                // Mostrar mensaje si no hay resultados
+                let noResults = this.dropdown.querySelector('.select-no-results');
+                if (!hasVisibleOptions) {
+                    if (!noResults) {
+                        noResults = document.createElement('div');
+                        noResults.className = 'select-no-results';
+                        noResults.textContent = 'No se encontraron resultados';
+                        this.optionsContainer.appendChild(noResults);
+                    }
+                } else if (noResults) {
+                    noResults.remove();
+                }
+            }
+            
+            triggerChange() {
+                const event = new Event('change', { bubbles: true });
+                this.element.dispatchEvent(event);
+            }
+            
+            getValue() {
+                return this.value;
+            }
+            
+            setValue(value) {
+                this.options.forEach(option => {
+                    if (option.dataset.value === value) {
+                        this.selectOption(option);
+                    }
+                });
+            }
+            
+            reset() {
+                this.value = '';
+                this.selectedValue.textContent = this.selectedValue.dataset.placeholder || 'Seleccionar...';
+                this.selectedValue.classList.add('select-placeholder');
+                this.options.forEach(opt => opt.classList.remove('selected'));
+            }
+        }
+
+        // INICIALIZACIÓN DE LOS SELECTS PERSONALIZADOS
+        let regionSelect, rankSelect, roleSelect, prSelect, earningsSelect;
+
+        // ELEMENTOS DEL DOM
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const playersTableBody = document.getElementById('playersTableBody');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        // Elementos de estadísticas
+        const totalPlayersEl = document.getElementById('totalPlayers');
+        const avgPREl = document.getElementById('avgPR');
+        const totalEarningsEl = document.getElementById('totalEarnings');
+
+        // FUNCIONES PARA JUGADORES
+        function renderPlayers() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const region = regionSelect.getValue();
+            const rank = rankSelect.getValue();
+            const role = roleSelect.getValue();
+            const prValue = prSelect.getValue();
+            const earningsValue = earningsSelect.getValue();
+            
+            // Filtrar jugadores
+            const filteredPlayers = players.filter(player => {
+                // Búsqueda general
+                const matchesSearch = 
+                    player.name.toLowerCase().includes(searchTerm) ||
+                    player.rank.toLowerCase().includes(searchTerm) ||
+                    player.role.toLowerCase().includes(searchTerm) ||
+                    player.region.toLowerCase().includes(searchTerm);
+                
+                // Filtros básicos
+                const matchesRegion = region === '' || player.region === region;
+                const matchesRank = rank === '' || player.rank === rank;
+                const matchesRole = role === '' || player.role === role;
+                
+                // Filtro por PR
+                let matchesPR = true;
+                if (prValue !== '') {
+                    if (prValue === '0') {
+                        matchesPR = player.pr === 0;
+                    } else {
+                        const minPR = parseInt(prValue);
+                        matchesPR = player.pr * 100 >= minPR;
+                    }
+                }
+                
+                // Filtro por Earnings
+                let matchesEarnings = true;
+                if (earningsValue !== '') {
+                    if (earningsValue === 'with') {
+                        matchesEarnings = player.earnings > 0;
+                    } else if (earningsValue === 'without') {
+                        matchesEarnings = player.earnings === 0;
+                    }
+                }
+                
+                return matchesSearch && matchesRegion && matchesRank && matchesRole && 
+                       matchesPR && matchesEarnings;
+            });
+            
+            // Renderizar tabla
+            playersTableBody.innerHTML = '';
+            
+            if (filteredPlayers.length === 0) {
+                playersTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-search" style="font-size: 3rem; color: rgba(255,255,255,0.2); margin-bottom: 15px; display: block;"></i>
+                            <p style="color: rgba(255,255,255,0.5); font-size: 1.1rem;">No se encontraron jugadores con los filtros actuales</p>
+                        </td>
+                    </tr>`;
+                updateStats([]);
+                return;
+            }
+            
+            filteredPlayers.forEach(player => {
+                // Formatear earnings con símbolo de dólar
+                const formattedEarnings = player.earnings === 0 ? 'Sin earnings' : `$${player.earnings.toLocaleString()}`;
+                const earningsClass = player.earnings === 0 ? 'zero' : '';
+                
+                // Determinar clase para PR
+                const prClass = player.pr === 0 ? 'zero' : '';
+                const prDisplay = player.pr === 0 ? '0.00' : player.pr.toFixed(2);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><a href="${player.link}" class="player-link" target="_blank">${player.name}</a></td>
+                    <td>${player.rank}</td>
+                    <td>${player.role}</td>
+                    <td>${player.region}</td>
+                    <td class="pr-cell ${prClass}">${prDisplay}</td>
+                    <td class="money-cell ${earningsClass}">${formattedEarnings}</td>
+                `;
+                playersTableBody.appendChild(row);
+            });
+            
+            updateStats(filteredPlayers);
+        }
+
+        function updateStats(filteredPlayers) {
+            const total = filteredPlayers.length;
+            totalPlayersEl.textContent = total;
+            
+            if (total > 0) {
+                // Calcular PR promedio (excluyendo CEOs si tienen PR 0)
+                const playersWithPR = filteredPlayers.filter(player => player.pr > 0);
+                const totalPR = playersWithPR.reduce((sum, player) => sum + player.pr, 0);
+                const avgPR = playersWithPR.length > 0 ? totalPR / playersWithPR.length : 0;
+                avgPREl.textContent = avgPR.toFixed(2);
+                
+                // Calcular total de earnings
+                const totalEarnings = filteredPlayers.reduce((sum, player) => sum + player.earnings, 0);
+                totalEarningsEl.textContent = `$${totalEarnings.toLocaleString()}`;
+            } else {
+                avgPREl.textContent = '0.00';
+                totalEarningsEl.textContent = '$0';
+            }
+        }
+
+        function resetFilters() {
+            searchInput.value = '';
+            regionSelect.reset();
+            rankSelect.reset();
+            roleSelect.reset();
+            prSelect.reset();
+            earningsSelect.reset();
+            renderPlayers();
+            showNotification('Filtros reiniciados');
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                background-color: var(--primary);
+                color: var(--dark);
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                animation: slideUp 0.3s ease-out;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideDown 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // INICIALIZACIÓN
+        window.addEventListener('DOMContentLoaded', () => {
+            // Crear instancias de los selects personalizados
+            regionSelect = new CustomSelect('regionSelect');
+            rankSelect = new CustomSelect('rankSelect');
+            roleSelect = new CustomSelect('roleSelect');
+            prSelect = new CustomSelect('prSelect');
+            earningsSelect = new CustomSelect('earningsSelect');
+            
+            // Event listeners para cambios en los selects
+            document.querySelectorAll('.custom-select').forEach(select => {
+                select.addEventListener('change', renderPlayers);
+            });
+            
+            // Event listeners existentes
+            searchInput.addEventListener('input', renderPlayers);
+            searchBtn.addEventListener('click', renderPlayers);
+            resetBtn.addEventListener('click', resetFilters);
+            
+            // Renderizar inicialmente
+            renderPlayers();
+        });
+    </script>
+</body>
+</html>
