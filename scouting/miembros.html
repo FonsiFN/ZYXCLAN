@@ -3,274 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZYX SCOUTING PRO - Plataforma de Scouting</title>
+    <title>ZYX SCOUTING PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        /* Estilos de la aplicación principal */
         :root {
-            --primary-color: #FFFFFF;
-            --secondary-color: #FF00FF;
-            --accent-color: #00FFFF;
-            --success-color: #00FF88;
-            --dark-bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 20, 0.85);
-            --gradient: linear-gradient(135deg, #FF00FF 0%, #00FFFF 100%);
-            --gradient-reverse: linear-gradient(135deg, #00FFFF 0%, #FF00FF 100%);
-            --gradient-green: linear-gradient(135deg, #00FF88 0%, #00FFFF 100%);
-            --text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-            --box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
-            --box-shadow-green: 0 0 20px rgba(0, 255, 136, 0.3);
+            --primary: #00c896;
+            --primary-dark: #009874;
+            --primary-light: #00e6b8;
+            --dark: #0f1923;
+            --light: #f8f9fa;
+            --danger: #ff4655;
+            --secondary: #1a2e35;
+            --secondary-light: #2a4a55;
+            --accent: #4cc9f0;
+            --success: #32cd32;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--primary-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 20%);
-            overflow-x: hidden;
-            line-height: 1.6;
-            padding: 0;
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 20px;
+            min-height: 100vh;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
         
-        /* Header Styles */
         header {
-            background-color: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            width: 100%;
-            border-bottom: 2px solid var(--secondary-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin-bottom: 30px;
             padding: 20px 0;
         }
         
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 15px;
-            text-decoration: none;
         }
         
-        .logo-img {
-            height: 50px;
-            filter: drop-shadow(0 0 8px var(--secondary-color));
-            animation: logoPulse 3s infinite alternate;
-        }
-        
-        @keyframes logoPulse {
-            0% {
-                filter: drop-shadow(0 0 8px var(--secondary-color));
-                transform: scale(1);
-            }
-            100% {
-                filter: drop-shadow(0 0 15px var(--secondary-color));
-                transform: scale(1.05);
-            }
-        }
-        
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 28px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        h1 i {
+            font-size: 2.2rem;
         }
         
         .subtitle {
-            color: var(--accent-color);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
             margin-top: 5px;
-            text-align: center;
-            font-weight: 500;
         }
         
-        /* Hero Section */
-        .hero {
-            padding: 100px 0 60px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, rgba(255,0,255,0.1) 0%, transparent 70%);
-            z-index: -1;
-        }
-        
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 15px;
-            background: var(--gradient-green);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: textGlow 2s infinite alternate;
-        }
-        
-        @keyframes textGlow {
-            0% {
-                text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 20px rgba(0, 255, 136, 0.8), 0 0 30px rgba(0, 255, 136, 0.6);
-            }
-        }
-        
-        .hero i {
-            font-size: 2.8rem;
-            margin-right: 15px;
-            background: var(--gradient-green);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        /* Search Section */
         .search-section {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 0, 255, 0.3);
-            box-shadow: var(--box-shadow);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        
-        .search-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient-green);
+            background-color: var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .search-bar {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
-        .search-input {
+        .search-bar input {
             flex: 1;
-            padding: 18px 25px;
-            border: 2px solid rgba(255, 0, 255, 0.3);
-            border-radius: 15px;
-            background-color: rgba(10, 10, 10, 0.8);
-            color: var(--primary-color);
-            font-size: 1.1rem;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--light);
+            font-size: 1rem;
             transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
         }
         
-        .search-input:focus {
+        .search-bar input:focus {
             outline: none;
-            border-color: var(--success-color);
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
-            background-color: rgba(15, 15, 15, 0.9);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 200, 150, 0.2);
+            background-color: rgba(255, 255, 255, 0.12);
         }
         
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .search-btn {
-            padding: 18px 35px;
-            background: var(--gradient-green);
-            color: var(--dark-bg);
+        .search-bar button {
+            padding: 14px 24px;
+            background-color: var(--primary);
+            color: var(--dark);
             border: none;
-            border-radius: 15px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-width: 150px;
-            box-shadow: var(--box-shadow-green);
+            gap: 8px;
+            font-size: 1rem;
+            min-width: 120px;
         }
         
-        .search-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+        .search-bar button:hover {
+            background-color: #00e6b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.3);
         }
         
-        /* Filters Grid */
-        .filters-grid {
+        .search-bar button:active {
+            transform: translateY(0);
+        }
+        
+        .filters {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
         }
         
         .filter-group {
             position: relative;
         }
         
-        .filter-label {
+        .filter-group label {
             display: block;
-            margin-bottom: 12px;
-            font-size: 1rem;
-            color: var(--accent-color);
-            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
-        /* Custom Select Styles */
+        /* ESTILOS PERSONALIZADOS PARA LOS MENÚS DESPLEGABLES */
         .custom-select {
             position: relative;
             width: 100%;
         }
         
         .select-header {
-            padding: 18px 50px 18px 20px;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 0, 255, 0.3);
-            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(15, 15, 15, 0.9));
-            color: var(--primary-color);
-            font-size: 1rem;
+            padding: 14px 50px 14px 16px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.04));
+            color: var(--light);
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
@@ -279,30 +168,54 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            min-height: 60px;
+            min-height: 48px;
+        }
+        
+        .select-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 200, 150, 0.1) 50%, 
+                transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .select-header:hover {
-            background: linear-gradient(145deg, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.9));
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06));
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .select-header:hover::before {
+            opacity: 1;
         }
         
         .select-header.active {
-            border-color: var(--success-color);
-            background: linear-gradient(145deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1), 
-                        0 8px 24px rgba(0, 255, 136, 0.15);
+            border-color: var(--primary);
+            background: linear-gradient(145deg, rgba(0, 200, 150, 0.15), rgba(0, 200, 150, 0.08));
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.1), 
+                        0 8px 24px rgba(0, 200, 150, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .select-header.active::before {
+            opacity: 1;
         }
         
         .select-header.active .select-arrow {
             transform: rotate(180deg);
-            color: var(--success-color);
+            color: var(--primary);
         }
         
         .selected-value {
             font-weight: 500;
-            color: var(--primary-color);
+            color: var(--light);
         }
         
         .select-placeholder {
@@ -312,31 +225,31 @@
         
         .select-arrow {
             position: absolute;
-            right: 20px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--accent-color);
-            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Dropdown */
+        /* EL MENÚ DESPLEGABLE PERSONALIZADO */
         .select-dropdown {
             position: absolute;
-            top: calc(100% + 10px);
+            top: calc(100% + 8px);
             left: 0;
             right: 0;
-            background: linear-gradient(145deg, var(--card-bg), rgba(25, 25, 25, 0.95));
-            border-radius: 15px;
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+            background: linear-gradient(145deg, var(--secondary), var(--secondary-light));
+            border-radius: 12px;
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
                         0 0 0 1px rgba(255, 255, 255, 0.05);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-15px) scale(0.95);
+            transform: translateY(-10px) scale(0.95);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 350px;
+            max-height: 300px;
             overflow-y: auto;
             backdrop-filter: blur(20px);
         }
@@ -351,7 +264,7 @@
         @keyframes dropdownAppear {
             0% {
                 opacity: 0;
-                transform: translateY(-15px) scale(0.95);
+                transform: translateY(-10px) scale(0.95);
             }
             100% {
                 opacity: 1;
@@ -360,36 +273,35 @@
         }
         
         .select-search {
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .select-search input {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 0, 255, 0.3);
-            background: rgba(10, 10, 10, 0.8);
-            color: var(--primary-color);
-            font-size: 0.95rem;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+            font-size: 0.9rem;
             transition: all 0.2s ease;
-            font-family: 'Montserrat', sans-serif;
         }
         
         .select-search input:focus {
             outline: none;
-            border-color: var(--success-color);
-            box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 200, 150, 0.1);
         }
         
         .select-options {
-            max-height: 280px;
+            max-height: 250px;
             overflow-y: auto;
-            padding: 10px 0;
+            padding: 8px 0;
         }
         
         .select-option {
-            padding: 16px 24px;
+            padding: 14px 20px;
             color: rgba(255, 255, 255, 0.8);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -397,32 +309,32 @@
             align-items: center;
             justify-content: space-between;
             position: relative;
-            border-left: 4px solid transparent;
+            border-left: 3px solid transparent;
         }
         
         .select-option:hover {
             background: linear-gradient(90deg, 
-                rgba(0, 255, 136, 0.15) 0%, 
-                rgba(0, 255, 136, 0.05) 100%);
-            color: var(--primary-color);
-            border-left-color: var(--success-color);
-            padding-left: 28px;
+                rgba(0, 200, 150, 0.15) 0%, 
+                rgba(0, 200, 150, 0.05) 100%);
+            color: var(--light);
+            border-left-color: var(--primary);
+            padding-left: 24px;
         }
         
         .select-option.selected {
             background: linear-gradient(90deg, 
-                rgba(0, 255, 136, 0.25) 0%, 
-                rgba(0, 255, 136, 0.1) 100%);
-            color: var(--success-color);
-            font-weight: 700;
-            border-left-color: var(--success-color);
+                rgba(0, 200, 150, 0.25) 0%, 
+                rgba(0, 200, 150, 0.1) 100%);
+            color: var(--primary-light);
+            font-weight: 600;
+            border-left-color: var(--primary-light);
         }
         
         .select-option.selected::after {
             content: '✓';
-            color: var(--success-color);
+            color: var(--primary);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             animation: checkmark 0.3s ease;
         }
         
@@ -431,60 +343,92 @@
             100% { transform: scale(1); opacity: 1; }
         }
         
-        /* Action Buttons */
+        .select-option .option-badge {
+            background: rgba(0, 200, 150, 0.2);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .select-no-results {
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+        
+        /* Scrollbar personalizado para el dropdown */
+        .select-options::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .select-options::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        
+        .select-options::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            border-radius: 3px;
+        }
+        
+        .select-options::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--primary-light), var(--primary));
+        }
+        
         .action-buttons {
             display: flex;
             justify-content: flex-end;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 20px;
         }
         
         .btn {
-            padding: 16px 30px;
-            border-radius: 15px;
+            padding: 12px 20px;
+            border-radius: 8px;
             border: none;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            font-size: 1rem;
-            min-width: 180px;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: #00e6b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.3);
         }
         
         .btn-danger {
-            background: linear-gradient(135deg, #FF0066 0%, #FF00FF 100%);
-            color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(255, 0, 102, 0.3);
+            background-color: var(--danger);
+            color: white;
         }
         
         .btn-danger:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 0, 102, 0.4);
+            background-color: #ff2d3f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 70, 85, 0.3);
         }
         
-        /* Players Table */
         .players-table-container {
-            background-color: var(--card-bg);
-            border-radius: 20px;
+            background-color: var(--secondary);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--box-shadow);
-            border: 1px solid rgba(255, 0, 255, 0.3);
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .players-table-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient-green);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
         }
         
         .players-table {
@@ -493,28 +437,27 @@
         }
         
         .players-table th {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 255, 0.2));
-            color: var(--primary-color);
-            padding: 22px 25px;
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 18px 20px;
             text-align: left;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border-bottom: 2px solid rgba(0, 255, 136, 0.3);
-            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
         }
         
         .players-table th:first-child {
-            border-radius: 20px 0 0 0;
+            border-radius: 12px 0 0 0;
         }
         
         .players-table th:last-child {
-            border-radius: 0 20px 0 0;
+            border-radius: 0 12px 0 0;
         }
         
         .players-table td {
-            padding: 20px 25px;
+            padding: 16px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         
         .players-table tr:last-child td {
@@ -522,205 +465,94 @@
         }
         
         .players-table tr:hover {
-            background-color: rgba(0, 255, 136, 0.08);
+            background-color: rgba(0, 200, 150, 0.08);
         }
         
         .player-link {
-            color: var(--accent-color);
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.2s ease;
             display: inline-block;
-            padding: 5px 0;
-            position: relative;
-        }
-        
-        .player-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s ease;
+            padding: 2px 0;
         }
         
         .player-link:hover {
-            color: var(--secondary-color);
-        }
-        
-        .player-link:hover::after {
-            width: 100%;
+            color: #00e6b8;
+            text-decoration: underline;
+            transform: translateX(2px);
         }
         
         .money-cell {
-            color: var(--success-color);
-            font-weight: 700;
-            font-size: 1.1rem;
+            color: #32cd32;
+            font-weight: 600;
+            font-size: 1rem;
         }
         
         .money-cell.zero {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.5);
             font-style: italic;
         }
         
         .pr-cell {
-            font-weight: 700;
-            color: var(--accent-color);
+            font-weight: 600;
+            color: #4cc9f0;
         }
         
         .pr-cell.zero {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.5);
             font-style: italic;
         }
         
-        /* Stats Container */
         .stats-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 25px;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
-            border-radius: 15px;
-            border: 1px solid rgba(255, 0, 255, 0.3);
-            box-shadow: var(--box-shadow);
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .stat-item {
             text-align: center;
             flex: 1;
-            padding: 0 20px;
-            position: relative;
-        }
-        
-        .stat-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 60%;
-            background: rgba(255, 255, 255, 0.1);
         }
         
         .stat-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--success-color);
-            margin-bottom: 10px;
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-            animation: statPulse 2s infinite alternate;
-        }
-        
-        @keyframes statPulse {
-            0% {
-                text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 15px rgba(0, 255, 136, 0.8), 0 0 20px rgba(0, 255, 136, 0.6);
-            }
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
         }
         
         .stat-label {
-            font-size: 1rem;
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 50px 0 25px;
-            margin-top: 60px;
-            border-top: 2px solid var(--secondary-color);
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .footer-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            padding: 10px 25px;
-            border-radius: 20px;
-            border: 1px solid transparent;
-        }
-        
-        .footer-link:hover {
-            color: var(--secondary-color);
-            border-color: rgba(255, 0, 255, 0.5);
-            background-color: rgba(255, 0, 255, 0.05);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #AAAAAA;
             font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .filters-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .search-section {
-                padding: 30px;
-            }
+            color: rgba(255, 255, 255, 0.7);
         }
         
         @media (max-width: 768px) {
-            .header-container {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
                 flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-            
-            .hero {
-                padding: 120px 0 50px;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
+                gap: 10px;
             }
             
             .search-bar {
                 flex-direction: column;
             }
             
-            .search-btn, .btn {
+            .search-bar button {
                 width: 100%;
             }
             
-            .filters-grid {
+            .filters {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
             .players-table {
@@ -734,337 +566,209 @@
             
             .stats-container {
                 flex-direction: column;
-                gap: 25px;
-            }
-            
-            .stat-item:not(:last-child)::after {
-                display: none;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 30px;
+                gap: 15px;
             }
         }
         
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .search-section {
-                padding: 20px;
-            }
-            
-            .players-table th, .players-table td {
-                padding: 15px 20px;
-            }
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Scroll Animation */
-        .reveal {
-            position: relative;
-            opacity: 0;
-            transition: all 1s ease;
+        .search-section, .players-table-container {
+            animation: fadeIn 0.5s ease-out;
         }
         
-        .reveal.active {
-            opacity: 1;
-        }
-        
-        .reveal-left.active {
-            animation: slideInLeft 0.8s ease forwards;
-        }
-        
-        .reveal-right.active {
-            animation: slideInRight 0.8s ease forwards;
-        }
-        
-        .reveal-up.active {
-            animation: slideInUp 0.8s ease forwards;
-        }
-        
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Custom Scrollbar */
-        .select-options::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .select-options::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-        
-        .select-options::-webkit-scrollbar-thumb {
-            background: var(--gradient-green);
-            border-radius: 4px;
-        }
-        
-        .select-options::-webkit-scrollbar-thumb:hover {
-            background: var(--success-color);
-        }
-        
+        /* Scrollbar personalizado */
         ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
         }
         
         ::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb {
-            background: var(--gradient);
-            border-radius: 5px;
+            background: var(--primary);
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-color);
+            background: #00e6b8;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <img src="https://imgur.com/Jy1wIah.png" alt="ZYX eSports Logo" class="logo-img">
-                <span class="logo-text">ZYX SCOUTING PRO</span>
-            </a>
-            <p class="subtitle">Plataforma avanzada de scouting para jugadores competitivos</p>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Contenido principal de la aplicación -->
+    <div id="appContent">
         <div class="container">
-            <h1 class="reveal reveal-up"><i class="fas fa-crosshairs"></i> ZYX SCOUTING PRO</h1>
-            <p class="subtitle reveal reveal-up">Encuentra al jugador perfecto para tu equipo con nuestro sistema de scouting inteligente</p>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Search Section -->
-        <div class="search-section reveal reveal-up">
-            <div class="search-bar">
-                <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre, rol, rango o región...">
-                <button id="searchBtn" class="search-btn">
-                    <i class="fas fa-search"></i> Buscar Jugador
-                </button>
+            <header>
+                <h1><i class="fas fa-crosshairs"></i> ZYX SCOUTING PRO</h1>
+                <p class="subtitle">Plataforma avanzada de scouting para jugadores competitivos</p>
+            </header>
+            
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre, rol, rango o región...">
+                    <button id="searchBtn"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="regionFilter"><i class="fas fa-globe"></i> Región</label>
+                        <div class="custom-select" id="regionSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Todas las regiones</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar región..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Todas las regiones</div>
+                                    <div class="select-option" data-value="EU">Europa (EU)</div>
+                                    <div class="select-option" data-value="NA">Norte América (NA)</div>
+                                    <div class="select-option" data-value="SA">Medio Oriente (ME)</div>
+                                    <div class="select-option" data-value="AS">Asia (AS)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="rankFilter"><i class="fas fa-chart-line"></i> Rango</label>
+                        <div class="custom-select" id="rankSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Todos los rangos</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar rango..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Todos los rangos</div>
+                                    <div class="select-option" data-value="ZYX Cantera">ZYX Cantera</div>
+                                    <div class="select-option" data-value="ZYX Rango 1">ZYX Rango 1</div>
+                                    <div class="select-option" data-value="ZYX Rango 2">ZYX Rango 2</div>
+                                    <div class="select-option" data-value="ZYX Rango 3">ZYX Rango 3</div>
+                                    <div class="select-option" data-value="ZYX Pro">ZYX Pro</div>
+                                    <div class="select-option" data-value="ZYX Oficial">ZYX Oficial</div>
+                                    <div class="select-option" data-value="ZYX CEO">ZYX CEO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="roleFilter"><i class="fas fa-user-tag"></i> Rol</label>
+                        <div class="custom-select" id="roleSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Todos los roles</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar rol..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Todos los roles</div>
+                                    <div class="select-option" data-value="Fragger">Fragger</div>
+                                    <div class="select-option" data-value="Support">Support</div>
+                                    <div class="select-option" data-value="IGL">IGL</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="prFilter"><i class="fas fa-chart-bar"></i> PR </label>
+                        <div class="custom-select" id="prSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Cualquier PR</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar PR..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Cualquier PR</div>
+                                    <div class="select-option" data-value="100">+100 </div>
+                                    <div class="select-option" data-value="500">+500 </div>
+                                    <div class="select-option" data-value="1000">+1000 </div>
+                                    <div class="select-option" data-value="5000">+5000 </div>
+                                    <div class="select-option" data-value="10000">+10000 </div>
+                                    <div class="select-option" data-value="0">Sin PR (0) </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="earningsFilter"><i class="fas fa-money-bill-wave"></i> Earnings</label>
+                        <div class="custom-select" id="earningsSelect">
+                            <div class="select-header">
+                                <span class="selected-value select-placeholder">Cualquier Earnings</span>
+                                <i class="fas fa-chevron-down select-arrow"></i>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-search">
+                                    <input type="text" placeholder="Buscar earnings..." class="search-input">
+                                </div>
+                                <div class="select-options">
+                                    <div class="select-option" data-value="">Cualquier Earnings</div>
+                                    <div class="select-option" data-value="with">Con Earnings </div>
+                                    <div class="select-option" data-value="without">Sin Earnings</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-danger" id="resetBtn"><i class="fas fa-sync-alt"></i> Reiniciar Filtros</button>
+                </div>
             </div>
             
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-globe"></i> Región</label>
-                    <div class="custom-select" id="regionSelect">
-                        <div class="select-header">
-                            <span class="selected-value select-placeholder">Todas las regiones</span>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                        <div class="select-dropdown">
-                            <div class="select-search">
-                                <input type="text" placeholder="Buscar región..." class="search-input">
-                            </div>
-                            <div class="select-options">
-                                <div class="select-option" data-value="">Todas las regiones</div>
-                                <div class="select-option" data-value="EU">Europa (EU)</div>
-                                <div class="select-option" data-value="NA">Norte América (NA)</div>
-                                <div class="select-option" data-value="SA">Medio Oriente (ME)</div>
-                                <div class="select-option" data-value="AS">Asia (AS)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-chart-line"></i> Rango ZYX</label>
-                    <div class="custom-select" id="rankSelect">
-                        <div class="select-header">
-                            <span class="selected-value select-placeholder">Todos los rangos</span>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                        <div class="select-dropdown">
-                            <div class="select-search">
-                                <input type="text" placeholder="Buscar rango..." class="search-input">
-                            </div>
-                            <div class="select-options">
-                                <div class="select-option" data-value="">Todos los rangos</div>
-                                <div class="select-option" data-value="ZYX Cantera">ZYX Cantera</div>
-                                <div class="select-option" data-value="ZYX Rango 1">ZYX Rango 1</div>
-                                <div class="select-option" data-value="ZYX Rango 2">ZYX Rango 2</div>
-                                <div class="select-option" data-value="ZYX Rango 3">ZYX Rango 3</div>
-                                <div class="select-option" data-value="ZYX Rango 4">ZYX Rango 4</div>
-                                <div class="select-option" data-value="ZYX Pro">ZYX Pro</div>
-                                <div class="select-option" data-value="ZYX Oficial">ZYX Oficial</div>
-                                <div class="select-option" data-value="ZYX CEO">ZYX CEO</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-user-tag"></i> Rol en Equipo</label>
-                    <div class="custom-select" id="roleSelect">
-                        <div class="select-header">
-                            <span class="selected-value select-placeholder">Todos los roles</span>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                        <div class="select-dropdown">
-                            <div class="select-search">
-                                <input type="text" placeholder="Buscar rol..." class="search-input">
-                            </div>
-                            <div class="select-options">
-                                <div class="select-option" data-value="">Todos los roles</div>
-                                <div class="select-option" data-value="Fragger">Fragger</div>
-                                <div class="select-option" data-value="Support">Support</div>
-                                <div class="select-option" data-value="IGL">IGL</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-chart-bar"></i> Puntos de Rango (PR)</label>
-                    <div class="custom-select" id="prSelect">
-                        <div class="select-header">
-                            <span class="selected-value select-placeholder">Cualquier PR</span>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                        <div class="select-dropdown">
-                            <div class="select-search">
-                                <input type="text" placeholder="Buscar PR..." class="search-input">
-                            </div>
-                            <div class="select-options">
-                                <div class="select-option" data-value="">Cualquier PR</div>
-                                <div class="select-option" data-value="100">+100 PR</div>
-                                <div class="select-option" data-value="500">+500 PR</div>
-                                <div class="select-option" data-value="1000">+1000 PR</div>
-                                <div class="select-option" data-value="5000">+5000 PR</div>
-                                <div class="select-option" data-value="10000">+10000 PR</div>
-                                <div class="select-option" data-value="0">Sin PR (0)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-money-bill-wave"></i> Ganancias</label>
-                    <div class="custom-select" id="earningsSelect">
-                        <div class="select-header">
-                            <span class="selected-value select-placeholder">Cualquier Earnings</span>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                        <div class="select-dropdown">
-                            <div class="select-search">
-                                <input type="text" placeholder="Buscar earnings..." class="search-input">
-                            </div>
-                            <div class="select-options">
-                                <div class="select-option" data-value="">Cualquier Earnings</div>
-                                <div class="select-option" data-value="with">Con Earnings</div>
-                                <div class="select-option" data-value="without">Sin Earnings</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="players-table-container">
+                <table class="players-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Rango</th>
+                            <th>Rol</th>
+                            <th>Región</th>
+                            <th>PR</th>
+                            <th>Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody id="playersTableBody">
+                        <!-- Jugadores se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
             </div>
             
-            <div class="action-buttons">
-                <button class="btn btn-danger" id="resetBtn">
-                    <i class="fas fa-sync-alt"></i> Reiniciar Filtros
-                </button>
-            </div>
-        </div>
-        
-        <!-- Players Table -->
-        <div class="players-table-container reveal reveal-up">
-            <table class="players-table">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Rango ZYX</th>
-                        <th>Rol</th>
-                        <th>Región</th>
-                        <th>PR</th>
-                        <th>Earnings</th>
-                    </tr>
-                </thead>
-                <tbody id="playersTableBody">
-                    <!-- Players will be loaded here dynamically -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Stats Container -->
-        <div class="stats-container reveal reveal-up">
-            <div class="stat-item">
-                <div class="stat-value" id="totalPlayers">0</div>
-                <div class="stat-label">Total Jugadores</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="avgPR">0.00</div>
-                <div class="stat-label">PR Promedio</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="totalEarnings">$0</div>
-                <div class="stat-label">Total Earnings</div>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPlayers">0</div>
+                    <div class="stat-label">Total Jugadores</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="avgPR">0.00</div>
+                    <div class="stat-label">PR Promedio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalEarnings">$0</div>
+                    <div class="stat-label">Total Earnings</div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <a href="https://discord.gg/vwSYHyDaG3" target="_blank" class="search-btn" style="margin-bottom: 20px; text-decoration: none;">
-                        <i class="fab fa-discord"></i> Unirse al Discord Oficial
-                    </a>
-                    <a href="https://zyxclan.vercel.app/scouting/miembros.html" target="_blank" class="footer-link">
-                        <i class="fas fa-users"></i> Ver Miembros Oficiales
-                    </a>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2025 ZYX eSports - SCOUTING PRO. Todos los derechos reservados.</p>
-                <p style="margin-top: 10px;">Sistema de scouting exclusivo para miembros de ZYX eSports</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // DATOS DE EJEMPLO
@@ -1075,8 +779,8 @@
                 rank: 'ZYX CEO',
                 role: 'Fragger',
                 region: 'EU',
-                pr: 6.45,
-                earnings: 12500,
+                pr: 6,
+                earnings: 0,
                 link: '#',
                 notes: 'Excelente en duelos, trabajo en equipo mejorando'
             },
@@ -1090,72 +794,6 @@
                 earnings: 0,
                 link: '#',
                 notes: 'Fundador y CEO, visión estratégica excepcional'
-            },
-            {
-                id: '3',
-                name: 'ZYX Player1',
-                rank: 'ZYX Oficial',
-                role: 'Fragger',
-                region: 'NA',
-                pr: 8.92,
-                earnings: 3500,
-                link: '#',
-                notes: 'Agressive player with great mechanics'
-            },
-            {
-                id: '4',
-                name: 'ZYX Player2',
-                rank: 'ZYX Pro',
-                role: 'Support',
-                region: 'EU',
-                pr: 5.67,
-                earnings: 1200,
-                link: '#',
-                notes: 'Solid support, excellent game sense'
-            },
-            {
-                id: '5',
-                name: 'ZYX Player3',
-                rank: 'ZYX Rango 3',
-                role: 'IGL',
-                region: 'NA',
-                pr: 4.23,
-                earnings: 0,
-                link: '#',
-                notes: 'Developing IGL with good macro'
-            },
-            {
-                id: '6',
-                name: 'ZYX Player4',
-                rank: 'ZYX Rango 2',
-                role: 'Fragger',
-                region: 'EU',
-                pr: 2.89,
-                earnings: 0,
-                link: '#',
-                notes: 'Promising fragger, needs more experience'
-            },
-            {
-                id: '7',
-                name: 'ZYX Player5',
-                rank: 'ZYX Rango 4',
-                role: 'Support',
-                region: 'AS',
-                pr: 6.78,
-                earnings: 800,
-                link: '#',
-                notes: 'Consistent support player'
-            },
-            {
-                id: '8',
-                name: 'ZYX Player6',
-                rank: 'ZYX Rango 1',
-                role: 'Fragger',
-                region: 'SA',
-                pr: 1.45,
-                earnings: 0,
-                link: '#',
-                notes: 'New talent, shows potential'
             }
         ];
 
@@ -1237,7 +875,7 @@
                 if (rect.bottom > window.innerHeight) {
                     this.dropdown.style.top = 'auto';
                     this.dropdown.style.bottom = '100%';
-                    this.dropdown.style.marginBottom = '10px';
+                    this.dropdown.style.marginBottom = '8px';
                 }
                 
                 // Enfocar el search input si existe
@@ -1402,10 +1040,9 @@
             if (filteredPlayers.length === 0) {
                 playersTableBody.innerHTML = `
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 60px;">
-                            <i class="fas fa-search" style="font-size: 3.5rem; color: rgba(255,255,255,0.2); margin-bottom: 20px; display: block;"></i>
-                            <p style="color: rgba(255,255,255,0.5); font-size: 1.2rem; font-weight: 500;">No se encontraron jugadores con los filtros actuales</p>
-                            <p style="color: rgba(255,255,255,0.3); font-size: 1rem; margin-top: 10px;">Intenta ajustar los filtros o la búsqueda</p>
+                        <td colspan="6" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-search" style="font-size: 3rem; color: rgba(255,255,255,0.2); margin-bottom: 15px; display: block;"></i>
+                            <p style="color: rgba(255,255,255,0.5); font-size: 1.1rem;">No se encontraron jugadores con los filtros actuales</p>
                         </td>
                     </tr>`;
                 updateStats([]);
@@ -1471,46 +1108,27 @@
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
-                bottom: 30px;
-                right: 30px;
-                padding: 16px 25px;
-                background: var(--gradient-green);
-                color: var(--dark-bg);
-                border-radius: 12px;
-                font-weight: 700;
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                background-color: var(--primary);
+                color: var(--dark);
+                border-radius: 8px;
+                font-weight: 600;
                 z-index: 1000;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-                animation: slideUp 0.4s ease-out;
-                font-family: 'Montserrat', sans-serif;
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(0, 255, 136, 0.3);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                animation: slideUp 0.3s ease-out;
             `;
             
             notification.textContent = message;
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.animation = 'slideDown 0.4s ease-out';
-                setTimeout(() => notification.remove(), 400);
-            }, 2500);
+                notification.style.animation = 'slideDown 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
         }
 
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            const revealPoint = 150;
-            
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                
-                if (elementTop < windowHeight - revealPoint) {
-                    element.classList.add('active');
-                }
-            });
-        };
-        
         // INICIALIZACIÓN
         window.addEventListener('DOMContentLoaded', () => {
             // Crear instancias de los selects personalizados
@@ -1530,28 +1148,9 @@
             searchBtn.addEventListener('click', renderPlayers);
             resetBtn.addEventListener('click', resetFilters);
             
-            // Scroll reveal
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll();
-            
             // Renderizar inicialmente
             renderPlayers();
         });
-        
-        // Animation keyframes
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideUp {
-                from { transform: translateY(50px); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
-            }
-            
-            @keyframes slideDown {
-                from { transform: translateY(0); opacity: 1; }
-                to { transform: translateY(50px); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
