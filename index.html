@@ -32,6 +32,15 @@
             --gradient-reverse: linear-gradient(135deg, #00FFFF 0%, #FF00FF 100%);
             --gradient-black: linear-gradient(135deg, #0a0a0a 0%, #333333 100%);
             
+            /* COLORES DE RANGOS */
+            --future-promise: #0bf6f6;
+            --prospect: #2ecc71;
+            --advanced: #f1c40f;
+            --grind: #e91e63;
+            --vanguard: #d300ff;
+            --zyx-pro: #ffcc00;
+            --zyx-oficial: #ffffff;
+            
             /* EFECTOS */
             --text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
             --box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
@@ -189,16 +198,16 @@
         }
         
         /* ========== HERO SECTION ========== */
-.hero {
-    height: 100vh; /* Cambia esto - Ocupa toda la pantalla */
-    padding: 0; /* Quita el padding */
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    display: flex; /* Añade esto */
-    align-items: center; /* Añade esto */
-    justify-content: center; /* Añade esto */
-}
+        .hero {
+            height: 100vh; /* Ocupa toda la pantalla */
+            padding: 0; /* Quita el padding */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex; /* Añade esto */
+            align-items: center; /* Añade esto */
+            justify-content: center; /* Añade esto */
+        }
         
         .hero::before {
             content: '';
@@ -211,13 +220,13 @@
             z-index: -1;
         }
         
-         .hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Añade esto */
-    width: 100%; /* Añade esto */
-}
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Añade esto */
+            width: 100%; /* Añade esto */
+        }
         
         .zyx-logo-container {
             position: relative;
@@ -627,7 +636,7 @@
             }
         }
         
-        /* ========== RANKS SECTION ========== */
+        /* ========== RANKS SECTION MEJORADA ========== */
         .ranks-container {
             display: flex;
             flex-direction: column;
@@ -640,13 +649,14 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 25px 30px;
-            border-left: 5px solid;
+            border-left: 6px solid;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.6s forwards;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         @keyframes fadeInUp {
@@ -657,58 +667,93 @@
         }
         
         .rank-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
         }
         
-        .rank-card:nth-child(1) { border-left-color: #808080; animation-delay: 0.1s; }
-        .rank-card:nth-child(2) { border-left-color: var(--zyx-purple); animation-delay: 0.2s; }
-        .rank-card:nth-child(3) { border-left-color: var(--zyx-purple); animation-delay: 0.3s; }
-        .rank-card:nth-child(4) { border-left-color: var(--zyx-purple); animation-delay: 0.4s; }
-        .rank-card:nth-child(5) { border-left-color: var(--zyx-purple); animation-delay: 0.5s; }
-        .rank-card:nth-child(6) { border-left-color: var(--zyx-purple); animation-delay: 0.6s; }
-        .rank-card:nth-child(7) { border-left-color: var(--zyx-purple); animation-delay: 0.7s; }
-        .rank-card:nth-child(8) { border-left-color: var(--zyx-purple); animation-delay: 0.8s; }
+        .rank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            z-index: 0;
+        }
+        
+        .rank-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .rank-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .rank-title-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .rank-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
         
         .rank-title {
             font-size: 1.8rem;
             font-weight: 800;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .rank-title::before {
-            content: '';
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: inherit;
+        .rank-level {
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .rank-card:nth-child(1) .rank-title { color: #808080; }
-        .rank-card:nth-child(2) .rank-title { color: var(--zyx-purple); }
-        .rank-card:nth-child(3) .rank-title { color: var(--zyx-purple); }
-        .rank-card:nth-child(4) .rank-title { color: var(--zyx-purple); }
-        .rank-card:nth-child(5) .rank-title { color: var(--zyx-purple); }
-        .rank-card:nth-child(6) .rank-title { color: var(--zyx-purple); }
-        .rank-card:nth-child(7) .rank-title { color: var(--zyx-purple); }
-        .rank-card:nth-child(8) .rank-title { color: var(--zyx-purple); }
-        
-        .rank-card:nth-child(1) .rank-title::before { background-color: #808080; }
-        .rank-card:nth-child(2) .rank-title::before { background-color: var(--zyx-purple); }
-        .rank-card:nth-child(3) .rank-title::before { background-color: var(--zyx-purple); }
-        .rank-card:nth-child(4) .rank-title::before { background-color: var(--zyx-purple); }
-        .rank-card:nth-child(5) .rank-title::before { background-color: var(--zyx-purple); }
-        .rank-card:nth-child(6) .rank-title::before { background-color: var(--zyx-purple); }
-        .rank-card:nth-child(7) .rank-title::before { background-color: var(--zyx-purple); }
-        .rank-card:nth-child(8) .rank-title::before { background-color: var(--zyx-purple); }
+        .rank-subtitle {
+            font-size: 0.95rem;
+            color: #AAAAAA;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
         
         .rank-description {
             font-size: 1.1rem;
             color: #CCCCCC;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .discord-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 1px dotted var(--accent-color);
+        }
+        
+        .discord-link:hover {
+            color: #00ffff;
+            border-bottom: 1px solid #00ffff;
         }
         
         .rank-requirements {
@@ -716,7 +761,7 @@
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: 600;
-            color: var(--zyx-purple-light);
+            color: #DDDDDD;
         }
         
         /* ========== FOOTER ========== */
@@ -858,6 +903,20 @@
                 padding: 20px;
             }
             
+            .rank-title {
+                font-size: 1.5rem;
+            }
+            
+            .rank-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .rank-level {
+                align-self: flex-start;
+            }
+            
             .footer-content {
                 flex-direction: column;
                 gap: 40px;
@@ -904,7 +963,13 @@
             }
             
             .rank-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+            }
+            
+            .rank-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
             }
             
             .nav-links {
@@ -1235,47 +1300,70 @@
     </footer>
 
     <script>
-        // Ranks Data
+        // Ranks Data Actualizada con todas las mejoras solicitadas
         const ranks = [
             {
-                title: "COMUNIDAD",
-                description: "Rango basura, solo estás para mirar.",
-                requirements: ""
+                title: "FUTURE PROMISE",
+                subtitle: "@FUTURE PROMISE | ZYX eSports",
+                description: "Primer rango de la cantera NO oficial. Entrarás abriendo <a href='https://discord.com/channels/1320892099264122940/1328789338602868827' target='_blank' class='discord-link'>#📚・como-entrar-zyx</a> y revisando la información correspondiente.",
+                requirements: "Tendrás acceso a los canales oficiales de voz y a un banner exclusivo que se otorgará dentro del ticket.",
+                color: "#0bf6f6", // Azul cian
+                level: "Cantera Baja",
+                number: 1
             },
             {
-                title: "ZYX CANTERA",
-                description: "Primer rango de la cantera NO oficial. Entrarás abriendo #desconocido y revisando la información correspondiente. Tendrás acceso a los canales oficiales de voz y a un banner exclusivo que se otorgará dentro del ticket.",
-                requirements: ""
+                title: "PROSPECT",
+                subtitle: "@PROSPECT | ZYX eSports",
+                description: "Segundo grado de la plantilla NO oficial. Aquí empieza el juego. Deberás demostrar una actividad constante en Discord, especialmente en llamadas. No preguntes por mínimos, queremos ver que lo tomas en serio.",
+                requirements: "Alternativamente, con un mínimo de <strong>50 PR</strong>, tendrás acceso a los canales de voz correspondientes.",
+                color: "#2ecc71", // Verde
+                level: "Cantera Baja",
+                number: 2
             },
             {
-                title: "ZYX RANGO 1",
-                description: "Segundo grado de la plantilla NO oficial. Aquí empieza el juego. Deberás demostrar una actividad adecuada en Discord, especialmente estando en llamadas. No preguntes por el mínimo, queremos ver que te lo tomas en serio.",
-                requirements: "Alternativamente, con un mínimo de 300 PR, tendrás acceso a los canales de voz correspondientes."
+                title: "ADVANCED",
+                subtitle: "@ADVANCED | ZYX eSports",
+                description: "CSe valorará a quienes han pasado muchas horas en llamadas y han demostrado una actitud positiva dentro del servidor.",
+                requirements: "Con un mínimo de <strong>200 PR</strong> en tu región, tendrás acceso a todo lo anterior y a canales de voz adicionales.",
+                color: "#f1c40f", // Amarillo
+                level: "Cantera Media",
+                number: 3
             },
             {
-                title: "ZYX RANGO 2",
-                description: "Cantera media. Se tendrá en cuenta a la gente que ha metido muchas horas en llamadas y ha demostrado una actitud muy positiva dentro del servidor.",
-                requirements: "Con un mínimo de 800 PR o 100€ OFICIALES, tendrás acceso a todo lo anterior y a más canales de voz."
+                title: "GRIND",
+                subtitle: "@GRIND | ZYX eSports",
+                description: "CLo tendrán jugadores con verdaderas ganas de grindear en ZYX, demostrando dedicación y compromiso. Tienes que tomarte el juego enserio y necesitaras tener este PR para ver tus resultados de grindear en esta comunidad.",
+                requirements: "Requiere un mínimo de <strong>400 PR en EU</strong> o <strong>100€ OFICIALES</strong>. Acceso a todo lo anterior más llamadas de GRIND.",
+                color: "#e91e63", // Rosa
+                level: "Cantera Alta",
+                number: 4
             },
             {
-                title: "ZYX RANGO 3",
-                description: "Este rol es especial. Lo tendrán jugadores con verdaderas ganas de grindear en ZYX.",
-                requirements: "Con un mínimo de 1k PR o 200€ OFICIALES. Tendrás acceso a todo lo anterior y a llamadas de GRIND."
-            },
-            {
-                title: "ZYX RANGO 4",
-                description: "Aquí la cosa ya va en serio. Se requiere demostrar una actitud top dentro del servidor de ZYX, o más de 900h en llamadas. Es una barbaridad, pero algunos lo lograrán. Tendrás acceso a todo lo anterior junto a las calles correspondientes.",
-                requirements: "Mínimo de 2k PR o 300€ ganados OFICIALES, nada de serims."
+                title: "VANGUARD",
+                subtitle: "@VANGUARD | ZYX eSports",
+                description: "Top de la cantera. Aquí la cosa ya va en serio. Se necesita contar con al menos <strong>1k PR global</strong> o <strong>200€ OFICIALES</strong>, nada de scrims, y mostrar una actitud <strong>destacada</strong> dentro del servidor de ZYX.",
+                requirements: "Tendrás acceso a todo lo anterior junto con las llamadas correspondientes.",
+                color: "#d300ff", // Morado
+                level: "Top Cantera",
+                number: 5
             },
             {
                 title: "ZYX PRO",
-                description: "Enhorabuena, estás a un paso más. Aquí ya lo has dado todo y pasarás a formar parte del EQUIPO OFICIAL de ZYX eSports. Solo se accederá por decisión de @ZYX CEO. Serás una cara visible del team y queremos verte crecer.",
-                requirements: "Tendrás acceso a todo lo anterior, banner V2, anuncio en Twitter y más."
+                subtitle: "@ZYX PRO | ZYX eSports",
+                description: "Enhorabuena, estás a un paso más. Aquí ya lo has dado todo y pasarás a formar parte del <strong>EQUIPO OFICIAL</strong> de ZYX eSports. Solo se accede por decisión de @DIRECTIVA GENERAL | ZYX eSports. Serás una cara visible del team y queremos verte crecer.",
+                requirements: "Se requiere un mínimo de <strong>1.5k PR</strong> o <strong>400€ OFICIALES</strong>. Acceso a todo lo anterior, banner <strong>V2</strong>, anuncio en Twitter y más.",
+                color: "#ffcc00", // Amarillo dorado
+                level: "Oficial",
+                number: 6
             },
             {
                 title: "ZYX OFICIAL",
-                description: "Si estás aquí tienes todos mis respetos. Eres el 1% del equipo. Tu nivel no pasó desapercibido. Queremos que formes parte de ZYX y seas uno de los referentes del team. Cuando estés aquí, ya sabrás cuáles son tus beneficios.",
-                requirements: ""
+                subtitle: "@ZYX OFICIAL | ZYX eSports",
+                description: "Si estás aquí tienes todos los respetos de la Directiva General y has pasado a formar parte de la familia de ZYX. Eres el <strong>1%</strong> del equipo. Tu nivel no pasó desapercibido. Formarás parte de ZYX como referente del team.",
+                requirements: "Se requiere un mínimo de <strong>1k PR en tu región y 2.5k PR</strong>, o <strong>600€ OFICIALES</strong> global. Cuando estés aquí, ya sabrás todos tus beneficios.",
+                color: "#ffffff", // Blanco
+                level: "Oficial",
+                number: 7
             }
         ];
 
@@ -1287,11 +1375,27 @@
                 const rankCard = document.createElement('div');
                 rankCard.className = 'rank-card';
                 rankCard.style.animationDelay = `${(index + 1) * 0.1}s`;
+                rankCard.style.borderLeftColor = rank.color;
                 
                 rankCard.innerHTML = `
-                    <div class="rank-title">${rank.title}</div>
-                    <div class="rank-description">${rank.description}</div>
-                    ${rank.requirements ? `<div class="rank-requirements">${rank.requirements}</div>` : ''}
+                    <div class="rank-content">
+                        <div class="rank-header">
+                            <div class="rank-title-container">
+                                <div class="rank-number" style="background-color: ${rank.color}">
+                                    ${rank.number}
+                                </div>
+                                <div class="rank-title" style="color: ${rank.color}">
+                                    ${rank.title}
+                                </div>
+                            </div>
+                            <div class="rank-level" style="border-color: ${rank.color}; color: ${rank.color}">
+                                ${rank.level}
+                            </div>
+                        </div>
+                        <div class="rank-subtitle">${rank.subtitle}</div>
+                        <div class="rank-description">${rank.description}</div>
+                        ${rank.requirements ? `<div class="rank-requirements">${rank.requirements}</div>` : ''}
+                    </div>
                 `;
                 
                 ranksContainer.appendChild(rankCard);
