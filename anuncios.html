@@ -3,69 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZYX eSports - Comunicados Oficiales</title>
+    <title>Comunicados Oficiales | ZYX eSports</title>
     <link rel="icon" type="image/png" href="https://imgur.com/m1F040e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* COLORES PRINCIPALES */
-            --primary-color: #FFFFFF;
-            --secondary-color: #FF00FF;
-            --accent-color: #00FFFF;
-            --dark-bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 20, 0.85);
+            /* COLORES PRINCIPALES - MORADO ZYX */
+            --primary-dark: #0A0A14;
+            --secondary-dark: #1A1A24;
+            --accent-purple: #9C27B0;
+            --accent-purple-light: #BA68C8;
+            --accent-purple-dark: #7B1FA2;
+            --accent-cyan: #00BCD4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0C0;
             
             /* COLORES DE NAVEGACIÓN - GRIS CLARO #ebebeb */
             --nav-bg: #ebebeb;
             --nav-text: #0a0a0a;
             --nav-border: rgba(255, 0, 255, 0.3);
             
-            /* COLORES MORADOS PARA ZYX */
-            --zyx-purple: #9c27b0;
-            --zyx-purple-light: #ba68c8;
-            --zyx-purple-dark: #7b1fa2;
-            
             /* GRADIENTES */
             --gradient: linear-gradient(135deg, #FF00FF 0%, #00FFFF 100%);
             --gradient-reverse: linear-gradient(135deg, #00FFFF 0%, #FF00FF 100%);
             --gradient-black: linear-gradient(135deg, #0a0a0a 0%, #333333 100%);
             
-            /* COLORES DE ETIQUETAS */
-            --tag-update: #00FFFF;
-            --tag-new: #FF00FF;
-            --tag-important: #FFCC00;
-            --tag-official: #9c27b0;
-            --tag-event: #2ecc71;
-            --tag-system: #3498db;
+            /* COLORES DE ETIQUETAS MEJORADOS */
+            --tag-official: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+            --tag-important: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            --tag-system: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            --tag-update: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+            --tag-new: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+            --tag-event: linear-gradient(135deg, #FF5722 0%, #D84315 100%);
             
-            /* EFECTOS */
+            /* EFECTOS VISUALES */
+            --glow-purple: 0 0 20px rgba(156, 39, 176, 0.5);
+            --glow-cyan: 0 0 20px rgba(0, 188, 212, 0.3);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 15px 40px rgba(156, 39, 176, 0.2);
+            --border-glow: 1px solid rgba(156, 39, 176, 0.3);
+            --neon-shadow: 0 0 15px rgba(255, 0, 255, 0.4), 0 0 30px rgba(0, 255, 255, 0.2);
             --text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
             --box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
-            --neon-shadow: 0 0 15px rgba(255, 0, 255, 0.4), 0 0 30px rgba(0, 255, 255, 0.2);
             
             /* ESPACIADO */
-            --space-unit: 0.5rem;
-            --space-2: calc(var(--space-unit) * 1);
-            --space-4: calc(var(--space-unit) * 2);
-            --space-6: calc(var(--space-unit) * 3);
-            --space-8: calc(var(--space-unit) * 4);
-            --space-12: calc(var(--space-unit) * 6);
-            --space-16: calc(var(--space-unit) * 8);
-            
-            /* TIPOGRAFÍA */
-            --font-heading: 'Orbitron', sans-serif;
-            --font-body: 'Montserrat', sans-serif;
-            --text-xs: 0.8rem;
-            --text-sm: 1rem;
-            --text-base: 1.25rem;
-            --text-lg: 1.563rem;
-            --text-xl: 1.953rem;
-            --text-2xl: 2.441rem;
-            --text-3xl: 3.052rem;
-            --text-4xl: 3.815rem;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 3rem;
+            --space-xl: 4rem;
         }
         
         * {
@@ -75,9 +64,9 @@
         }
         
         body {
-            font-family: var(--font-body);
-            background-color: var(--dark-bg);
-            color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 20%);
@@ -97,7 +86,7 @@
             padding: 0 20px;
         }
         
-        /* ========== HEADER MEJORADO (COLOR #ebebeb) ========== */
+        /* ========== HEADER COMO EN EL EJEMPLO (COLOR #ebebeb) ========== */
         header {
             background-color: var(--nav-bg); /* #ebebeb */
             backdrop-filter: blur(10px);
@@ -128,7 +117,7 @@
         }
         
         .logo-text {
-            font-family: var(--font-heading);
+            font-family: 'Orbitron', sans-serif;
             font-weight: 900;
             font-size: 28px;
             background: var(--gradient-black);
@@ -142,6 +131,7 @@
         .nav-links {
             display: flex;
             gap: 30px;
+            align-items: center;
         }
         
         .nav-link {
@@ -166,7 +156,7 @@
         }
         
         .nav-link:hover {
-            color: var(--secondary-color) !important;
+            color: var(--accent-purple) !important;
         }
         
         .nav-link:hover::after {
@@ -179,7 +169,7 @@
             border: none;
             padding: 12px 25px;
             border-radius: 30px;
-            font-family: var(--font-body);
+            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
@@ -197,79 +187,60 @@
             background: var(--gradient-reverse);
         }
         
-        /* ========== HERO SECTION ========== */
-        .hero {
-            height: 60vh;
-            padding-top: 120px;
+        /* ========== HERO SECTION VISUAL ========== */
+        .hero-section {
+            padding: 8rem 0 4rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
-        .hero::before {
-            content: '';
+        .hero-glow {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, rgba(156,39,176,0.2) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(156, 39, 176, 0.2) 0%, transparent 70%);
+            filter: blur(60px);
             z-index: -1;
         }
         
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        
-        .logo-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: var(--zyx-purple);
-            background-image: url('https://imgur.com/18uCets.png');
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(156, 39, 176, 0.8);
-            border: 3px solid var(--zyx-purple-light);
-            animation: pulse 3s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 20px rgba(156, 39, 176, 0.6);
-            }
-            100% {
-                box-shadow: 0 0 40px rgba(156, 39, 176, 1);
-            }
-        }
-        
-        .logo-zyx {
-            font-family: var(--font-heading);
-            font-weight: 900;
-            font-size: 55px;
-            color: var(--zyx-purple);
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.2) 0%, rgba(0, 188, 212, 0.1) 100%);
+            border: 1px solid rgba(156, 39, 176, 0.3);
+            color: var(--accent-purple-light);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-md);
             text-transform: uppercase;
-            letter-spacing: 8px;
-            line-height: 1;
-            text-shadow: 0 0 50px rgba(156, 39, 176, 1);
-            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-purple-light) 50%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
         }
         
         .hero-subtitle {
-            font-family: var(--font-body);
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            max-width: 800px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
         
         .highlight {
@@ -292,452 +263,254 @@
             }
         }
         
-        /* ========== BARRA DE BÚSQUEDA MEJORADA ========== */
-        .search-container {
-            max-width: 900px;
-            margin: 0 auto 40px;
+        /* ========== BARRA DE BÚSQUEDA ESTILIZADA ========== */
+        .search-section {
+            padding: 0 0 var(--space-xl);
             position: relative;
-            z-index: 999; /* Más alto que los anuncios */
+        }
+        
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-wrapper {
+            position: relative;
+            background: rgba(26, 26, 36, 0.8);
+            border-radius: 15px;
+            border: var(--border-glow);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-card);
         }
         
         .search-box {
             width: 100%;
-            background: rgba(30, 30, 40, 0.95);
-            border: 2px solid rgba(255, 0, 255, 0.3);
-            border-radius: 50px;
-            padding: 18px 25px 18px 60px;
-            font-family: var(--font-body);
+            background: transparent;
+            border: none;
+            padding: 1.5rem 1.5rem 1.5rem 4.5rem;
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-            box-shadow: var(--box-shadow);
-            backdrop-filter: blur(10px);
-        }
-        
-        .search-box:focus {
+            color: var(--text-primary);
             outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
-            background: rgba(40, 40, 50, 0.95);
         }
         
         .search-box::placeholder {
-            color: #888;
-            font-weight: 500;
+            color: var(--text-secondary);
+            font-weight: 400;
         }
         
         .search-icon {
             position: absolute;
-            left: 25px;
+            left: 1.8rem;
             top: 50%;
             transform: translateY(-50%);
             font-size: 1.3rem;
-            color: var(--zyx-purple);
+            color: var(--accent-purple);
             z-index: 1;
         }
         
         .search-results {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 10px);
             left: 0;
             right: 0;
-            background: rgba(20, 20, 30, 0.98);
-            border-radius: 15px;
-            margin-top: 10px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 0, 255, 0.3);
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 1000; /* Más alto que todo */
-            display: none;
+            background: rgba(26, 26, 36, 0.95);
             backdrop-filter: blur(20px);
+            border-radius: 15px;
+            border: var(--border-glow);
+            box-shadow: var(--shadow-card);
+            max-height: 350px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
         }
         
         .search-results.active {
             display: block;
-            animation: fadeInDown 0.3s ease;
+            animation: fadeIn 0.3s ease;
         }
         
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .search-result-item {
-            padding: 18px 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.02);
         }
         
         .search-result-item:hover {
-            background: rgba(156, 39, 176, 0.15);
-            padding-left: 30px;
-            transform: translateX(5px);
-        }
-        
-        .search-result-item:last-child {
-            border-bottom: none;
+            background: rgba(156, 39, 176, 0.1);
+            padding-left: 2rem;
         }
         
         .search-result-title {
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--text-primary);
             font-size: 1.1rem;
         }
         
         .search-result-date {
             font-size: 0.9rem;
-            color: var(--accent-color);
-            font-weight: 500;
-            background: rgba(0, 255, 255, 0.1);
-            padding: 4px 12px;
-            border-radius: 15px;
+            color: var(--accent-cyan);
+            background: rgba(0, 188, 212, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
         }
         
         .no-results {
-            padding: 30px;
+            padding: 2rem;
             text-align: center;
-            color: #888;
+            color: var(--text-secondary);
             font-style: italic;
         }
         
-        .search-result-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .search-result-tag {
-            font-size: 0.7rem;
-            padding: 3px 10px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #ccc;
-        }
-        
-        /* ========== COMUNICADOS SECTION ========== */
+        /* ========== COMUNICADOS - ESTILO BLOG VISUAL ========== */
         .comunicados-section {
-            padding: 40px 0 100px;
-            position: relative;
-            z-index: 1; /* Debajo de la barra de búsqueda */
+            padding: 0 0 var(--space-xl);
         }
         
-        .comunicados-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(156,39,176,0.05) 50%, transparent 70%);
-            animation: shine 3s infinite linear;
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 60px;
-            position: relative;
-            padding-bottom: 20px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: var(--gradient);
-        }
-        
-        /* Contenedor de comunicados */
         .comunicados-container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: var(--space-lg);
             max-width: 900px;
             margin: 0 auto;
         }
         
-        /* Tarjeta de comunicado MEJORADA */
-        .comunicado-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 0;
-            border: 1px solid rgba(255, 0, 255, 0.3);
-            box-shadow: var(--box-shadow);
+        .comunicado-post {
+            background: rgba(26, 26, 36, 0.7);
+            border-radius: 20px;
+            padding: var(--space-xl);
+            border: var(--border-glow);
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s forwards;
             backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-card);
         }
         
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .comunicado-post:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(156, 39, 176, 0.5);
         }
         
-        .comunicado-card:hover {
-            transform: translateY(-10px) scale(1.01);
-            box-shadow: 0 20px 40px rgba(255, 0, 255, 0.25);
-            border-color: var(--secondary-color);
-        }
-        
-        .comunicado-card::before {
+        /* Efecto de borde luminoso */
+        .comunicado-post::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient);
-        }
-        
-        .comunicado-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
             right: 0;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle at top right, rgba(156,39,176,0.1) 0%, transparent 70%);
-            z-index: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 20px 20px 0 0;
         }
         
-        .comunicado-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 30px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-        
+        /* Etiquetas mejoradas */
         .comunicado-tags {
             display: flex;
-            gap: 10px;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
         
         .comunicado-tag {
-            padding: 8px 18px;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 700;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
         }
         
         .comunicado-tag:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .official-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--zyx-purple) 0%, var(--zyx-purple-dark) 100%);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 0 20px rgba(156, 39, 176, 0.5);
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: badgeGlow 2s infinite alternate;
+        .comunicado-tag i {
+            font-size: 0.9rem;
         }
         
-        @keyframes badgeGlow {
-            0% {
-                box-shadow: 0 0 15px rgba(156, 39, 176, 0.5);
-            }
-            100% {
-                box-shadow: 0 0 25px rgba(156, 39, 176, 0.8);
-            }
-        }
-        
-        .comunicado-content {
-            padding: 30px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .comunicado-title-container {
-            margin-bottom: 20px;
-            border-left: 4px solid var(--zyx-purple);
-            padding-left: 20px;
+        /* Encabezado del post */
+        .comunicado-header {
+            margin-bottom: 1.5rem;
         }
         
         .comunicado-title {
-            font-family: var(--font-heading);
-            font-size: 2rem;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-            line-height: 1.3;
-            background: linear-gradient(135deg, #fff 0%, #ccc 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            line-height: 1.2;
         }
         
         .comunicado-date {
-            font-size: 1rem;
-            color: var(--accent-color);
-            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            font-weight: 500;
         }
         
-        .comunicado-text {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #DDDDDD;
-            margin-bottom: 25px;
+        .comunicado-date i {
+            font-size: 1.1rem;
         }
         
-        .comunicado-text p {
-            margin-bottom: 20px;
+        /* Contenido breve */
+        .comunicado-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
         }
         
-        .comunicado-highlight {
-            background: rgba(156, 39, 176, 0.1);
-            border-left: 4px solid var(--zyx-purple);
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 0 10px 10px 0;
+        .comunicado-content p {
+            margin-bottom: 1rem;
         }
         
-        .comunicado-highlight p {
-            margin-bottom: 0;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .comunicado-list {
-            margin-left: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .comunicado-list li {
-            margin-bottom: 12px;
-            position: relative;
-            padding-left: 15px;
-            color: #CCCCCC;
-        }
-        
-        .comunicado-list li::before {
-            content: '▸';
-            color: var(--zyx-purple);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
+        /* Footer del post */
         .comunicado-footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.95rem;
-            color: #AAAAAA;
-            font-style: italic;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
         
         .comunicado-id {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+            color: var(--accent-cyan);
         }
         
-        /* Estilo para texto en negrita */
-        .bold-text {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        /* ========== NO HAY RESULTADOS ========== */
-        .no-comunicados {
-            text-align: center;
-            padding: 80px 20px;
-            background: rgba(20, 20, 20, 0.5);
-            border-radius: 15px;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
-        }
-        
-        .no-comunicados i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .no-comunicados h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .no-comunicados p {
-            color: #AAAAAA;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        /* ========== FOOTER ========== */
+        /* ========== FOOTER COMO EN EL EJEMPLO ========== */
         footer {
             background-color: rgba(0, 0, 0, 0.9);
             padding: 60px 0 30px;
-            border-top: 2px solid var(--secondary-color);
+            border-top: 2px solid var(--accent-purple);
         }
         
         .footer-content {
@@ -755,7 +528,7 @@
         }
         
         .ceo-info h3 {
-            font-family: var(--font-heading);
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
             margin-bottom: 15px;
             background: var(--gradient);
@@ -767,7 +540,7 @@
         .ceo-names {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--accent-color);
+            color: var(--accent-cyan);
         }
         
         .footer-links {
@@ -780,7 +553,7 @@
         }
         
         .footer-link {
-            color: var(--primary-color);
+            color: var(--text-primary);
             text-decoration: none;
             font-size: 1.1rem;
             transition: all 0.3s ease;
@@ -790,9 +563,9 @@
         }
         
         .footer-link:hover {
-            color: var(--secondary-color);
-            border-color: rgba(255, 0, 255, 0.5);
-            background-color: rgba(255, 0, 255, 0.05);
+            color: var(--accent-purple);
+            border-color: rgba(156, 39, 176, 0.5);
+            background-color: rgba(156, 39, 176, 0.05);
         }
         
         .copyright {
@@ -811,7 +584,7 @@
             width: 0%;
             height: 3px;
             background: var(--gradient);
-            z-index: 1002;
+            z-index: 1001;
             transition: width 0.3s ease;
         }
         
@@ -842,21 +615,17 @@
         }
         
         /* ========== RESPONSIVE ========== */
-        @media (max-width: 992px) {
-            .section-title {
-                font-size: 2.2rem;
-            }
-            
-            .comunicado-title {
-                font-size: 1.7rem;
-            }
-            
-            .logo-zyx {
-                font-size: 50px;
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.2rem;
             }
             
             .hero-subtitle {
-                font-size: 1.3rem;
+                font-size: 2rem;
+            }
+            
+            .comunicado-post {
+                padding: var(--space-lg);
             }
         }
         
@@ -872,78 +641,52 @@
                 justify-content: center;
             }
             
-            .hero {
-                padding-top: 180px;
-                height: 50vh;
+            .hero-section {
+                padding: 6rem 0 3rem;
             }
             
-            .comunicado-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+            .hero-title {
+                font-size: 2.5rem;
             }
             
-            .comunicado-content {
-                padding: 20px;
+            .hero-subtitle {
+                font-size: 1.5rem;
             }
             
-            .official-badge {
-                position: relative;
-                top: 0;
-                right: 0;
-                align-self: flex-start;
-                margin-top: 10px;
+            .comunicado-title {
+                font-size: 1.8rem;
+            }
+            
+            .comunicado-post {
+                padding: var(--space-md);
             }
             
             .footer-content {
                 flex-direction: column;
                 gap: 40px;
             }
-            
-            .logo-circle {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .logo-zyx {
-                font-size: 40px;
-            }
-            
-            .search-box {
-                padding: 15px 20px 15px 55px;
-                font-size: 1rem;
-            }
-            
-            .search-icon {
-                left: 20px;
-            }
         }
         
-        @media (max-width: 576px) {
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .comunicado-title {
-                font-size: 1.4rem;
-            }
-            
-            .logo-zyx {
-                font-size: 35px;
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
             }
             
             .hero-subtitle {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             
-            .comunicado-tag {
-                padding: 6px 12px;
-                font-size: 0.75rem;
+            .comunicado-title {
+                font-size: 1.5rem;
             }
             
-            .official-badge {
-                padding: 8px 15px;
-                font-size: 0.75rem;
+            .search-box {
+                padding: 1.2rem 1.2rem 1.2rem 3.5rem;
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 0 var(--space-sm);
             }
         }
     </style>
@@ -952,7 +695,7 @@
     <!-- Progress Bar -->
     <div class="progress-bar"></div>
 
-    <!-- Header -->
+    <!-- Header como en el ejemplo -->
     <header>
         <div class="container header-container">
             <a href="https://zyxclan.vercel.app/" class="logo">
@@ -961,72 +704,76 @@
             </a>
             
             <nav class="nav-links">
-                <a href="https://zyxclan.vercel.app/" class="nav-link">Inicio</a>
+                <a href="https://zyxclan.vercel.app/" class="nav-link">Volver al Inicio</a>
+                <a href="https://discord.gg/zyxclan" target="_blank" class="discord-btn">
+                    <i class="fab fa-discord"></i> Unirse al Discord
+                </a>
             </nav>
-            
-            <a href="https://discord.gg/zyxclan" target="_blank" class="discord-btn">
-                <i class="fab fa-discord"></i> Unirse al Discord
-            </a>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="logo-circle"></div>
-            <h1 class="logo-zyx reveal reveal-up">COMUNICADOS OFICIALES</h1>
-            <p class="hero-subtitle reveal reveal-up">
-                Mantente informado sobre todas las <span class="highlight">actualizaciones</span>, 
-                <span class="highlight">anuncios</span> y <span class="highlight">noticias importantes</span> 
-                del team ZYX eSports
-            </p>
+    <section class="hero-section">
+        <div class="hero-glow"></div>
+        <div class="container">
+            <div class="hero-badge">
+                <i class="fas fa-bullhorn"></i> Centro de Comunicaciones
+            </div>
+            <h1 class="hero-title">COMUNICADOS OFICIALES</h1>
+            <div class="hero-subtitle">ZYX ESPORTS</div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="search-box" 
+                        id="searchInput"
+                        placeholder="Buscar comunicados oficiales..."
+                    >
+                </div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
         </div>
     </section>
 
     <!-- Comunicados Section -->
     <section class="comunicados-section">
         <div class="container">
-            <h2 class="section-title reveal reveal-up">ÚLTIMOS COMUNICADOS</h2>
-            
-            <!-- Barra de búsqueda -->
-            <div class="search-container reveal reveal-up">
-                <div class="search-icon">
-                    <i class="fas fa-search"></i>
-                </div>
-                <input 
-                    type="text" 
-                    class="search-box" 
-                    id="searchInput"
-                    placeholder="Buscar comunicados por título..."
-                >
-                <div class="search-results" id="searchResults"></div>
-            </div>
-            
-            <!-- Contenedor de comunicados -->
             <div class="comunicados-container" id="comunicadosContainer">
-                <!-- Los comunicados se cargarán con JavaScript -->
+                <!-- Comunicados se cargan dinámicamente -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer como en el ejemplo -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="ceo-info reveal reveal-up">
+                <div class="ceo-info">
                     <h3>FUNDADORES & CEOs</h3>
                     <p class="ceo-names">ZYX Fonsi V2<br>ZYX Diiuuk</p>
                     <p style="margin-top: 15px; color: #AAAAAA;">Liderando el team hacia la excelencia competitiva</p>
                 </div>
                 
-                <div class="footer-links reveal reveal-up">
+                <div class="footer-links">
                     <a href="https://discord.gg/zyxclan" target="_blank" class="discord-btn" style="margin-bottom: 20px; background: var(--gradient); color: white !important;">
                         <i class="fab fa-discord"></i> Unirse al Discord Oficial
                     </a>
-                    <a href="https://zyxclan.vercel.app/" class="footer-link">
-                        <i class="fas fa-home"></i> Página Principal
+                    <a href="https://zyxclan.vercel.app/scouting/miembros.html" target="_blank" class="footer-link">
+                        <i class="fas fa-users"></i> Ver Miembros Oficiales
                     </a>
-                    <a href="#comunicados" class="footer-link">
+                    <a href="https://zyxclan.vercel.app/" class="footer-link">
+                        <i class="fas fa-home"></i> Sitio Principal
+                    </a>
+                    <a href="#" class="footer-link">
                         <i class="fas fa-bullhorn"></i> Comunicados Oficiales
                     </a>
                 </div>
@@ -1040,119 +787,59 @@
     </footer>
 
     <script>
-        // Datos de los comunicados (ordenados por fecha, más reciente primero)
+        // Datos de los comunicados (menos información, más breve)
         const comunicados = [
             {
                 id: 1,
-                title: "Aclaración Requisitos PR",
+                title: "Aclaración sobre Requisitos PR",
                 date: "18 de Enero, 2026",
-                tags: ["oficial", "importante", "sistema"],
+                tags: ["oficial", "actualización" ],
                 content: `
-                    <p>Se informa a todos los miembros de ZYX eSports sobre una importante aclaración respecto a los requisitos de Power Ranking (PR):</p>
-                    
-                    <div class="comunicado-highlight">
-                        <p><span class="bold-text">El PR decayed no cuenta para los requisitos de ascenso o mantenimiento de rango.</span></p>
-                    </div>
-                    
-                    <p>Al tener un PR decayed significa que ya no eres tan activo competitivamente y no estás participando regularmente en torneos oficiales.</p>
-                    
-                    <p><span class="bold-text">Política actualizada:</span></p>
-                    <ul class="comunicado-list">
-                        <li>Solo se considerará PR activo y actualizado</li>
-                        <li>Los PR decayed serán ignorados en evaluaciones</li>
-                        <li>Se requiere participación constante en torneos</li>
-                        <li>Evaluaciones trimestrales de actividad competitiva</li>
-                    </ul>
-                    
-                    <p>Esta política asegura que nuestro team mantenga jugadores activos y comprometidos con el crecimiento competitivo. La competitividad requiere constancia y dedicación.</p>
+                    <p>Informamos a todos los miembros sobre una actualización en los criterios de evaluación del Power Ranking.</p>
+                    <p>Los PR decayed no serán considerados válidos para ascensos o mantenimiento de rango, ya que reflejan falta de actividad competitiva reciente.</p>
+                    <p>Esta medida busca mantener la integridad competitiva de ZYX eSports.</p>
                 `
             },
             {
                 id: 2,
-                title: "Lanzamiento: Agente de IA ZYX",
+                title: "Plataforma de IA ZYX",
                 date: "30 de Diciembre, 2025",
                 tags: ["oficial", "nueva-función", "sistema"],
                 content: `
-                    <p>¡Nos complace anunciar el lanzamiento oficial del <span class="bold-text">Agente de IA ZYX</span>! Esta innovadora herramienta revolucionará la forma en que nuestros miembros acceden a información y mejoran su gameplay.</p>
-                    
-                    <div class="comunicado-highlight">
-                        <p><span class="bold-text">Asistencia 24/7 para dudas avanzadas de Fortnite y toda la información sobre ZYX eSports.</span></p>
-                    </div>
-                    
-                    <p><span class="bold-text">Características principales del Agente de IA:</span></p>
-                    <ul class="comunicado-list">
-                        <li><span class="bold-text">Respuestas a dudas avanzadas de Fortnite:</span> Estrategias, meta actual, builds, rotaciones y consejos profesionales.</li>
-                        <li><span class="bold-text">Información completa sobre ZYX:</span> Historia del team, rangos, requisitos, torneos internos y más.</li>
-                        <li><span class="bold-text">Asistencia 24/7:</span> Disponible en cualquier momento para resolver consultas.</li>
-                        <li><span class="bold-text">Análisis personalizado:</span> Puede analizar gameplay y ofrecer recomendaciones específicas.</li>
-                        <li><span class="bold-text">Actualizaciones en tiempo real:</span> Siempre informado sobre los últimos cambios en Fortnite y en ZYX.</li>
-                    </ul>
-                    
-                    <p><span class="bold-text">Acceso:</span> Todos los rangos oficiales tendrán acceso completo al Agente de IA a través de nuestro servidor de Discord.</p>
-                    
-                    <p>Esta herramienta representa nuestro compromiso con la innovación y el soporte continuo a nuestros miembros. El Agente de IA será una herramienta fundamental para el crecimiento de todos nuestros jugadores.</p>
+                    <p>Lanzamos oficialmente nuestro asistente de inteligencia artificial para las dudas que surjan.</p>
+                    <p>Disponible 24/7 para resolver dudas avanzadas de Fortnite y proporcionar información de ZYX.</p>
+                    <p>Herramienta clave para el desarrollo y optimización del gameplay de nuestros miembros.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Actualización del Sistema de Rangos",
+                date: "15 de Diciembre, 2025",
+                tags: ["oficial", "sistema", "actualización"],
+                content: `
+                    <p>Implementamos mejoras en el sistema de evaluación y progresión de rangos.</p>
+                    <p>Nuevos criterios enfocados en consistencia competitiva y participación activa en torneos.</p>
+                    <p>Mayor transparencia en los procesos de ascenso y evaluación trimestral.</p>
                 `
             }
         ];
 
         // Función para generar etiquetas con colores
         function generateTagHTML(tagName) {
-            let color;
-            let icon;
+            const tagConfig = {
+                'oficial': { gradient: 'var(--tag-official)', icon: 'fa-certificate' },
+                'importante': { gradient: 'var(--tag-important)', icon: 'fa-exclamation-circle' },
+                'sistema': { gradient: 'var(--tag-system)', icon: 'fa-cogs' },
+                'nueva-función': { gradient: 'var(--tag-new)', icon: 'fa-plus-circle' },
+                'actualización': { gradient: 'var(--tag-update)', icon: 'fa-sync-alt' },
+                'evento': { gradient: 'var(--tag-event)', icon: 'fa-calendar-alt' }
+            };
             
-            switch(tagName) {
-                case 'oficial':
-                    color = 'var(--tag-official)';
-                    icon = 'fa-certificate';
-                    break;
-                case 'actualización':
-                    color = 'var(--tag-update)';
-                    icon = 'fa-sync-alt';
-                    break;
-                case 'nueva-función':
-                    color = 'var(--tag-new)';
-                    icon = 'fa-plus-circle';
-                    break;
-                case 'importante':
-                    color = 'var(--tag-important)';
-                    icon = 'fa-exclamation-triangle';
-                    break;
-                case 'sistema':
-                    color = 'var(--tag-system)';
-                    icon = 'fa-cogs';
-                    break;
-                case 'evento':
-                    color = 'var(--tag-event)';
-                    icon = 'fa-calendar-alt';
-                    break;
-                default:
-                    color = 'rgba(255, 255, 255, 0.2)';
-                    icon = 'fa-tag';
-            }
+            const config = tagConfig[tagName] || tagConfig['oficial'];
             
             return `
-                <span class="comunicado-tag" style="background: ${color}">
-                    <i class="fas ${icon}"></i> ${tagName.replace('-', ' ').toUpperCase()}
-                </span>
-            `;
-        }
-
-        // Función para generar etiquetas pequeñas para resultados de búsqueda
-        function generateSmallTagHTML(tagName) {
-            let color;
-            
-            switch(tagName) {
-                case 'oficial': color = 'var(--tag-official)'; break;
-                case 'actualización': color = 'var(--tag-update)'; break;
-                case 'nueva-función': color = 'var(--tag-new)'; break;
-                case 'importante': color = 'var(--tag-important)'; break;
-                case 'sistema': color = 'var(--tag-system)'; break;
-                case 'evento': color = 'var(--tag-event)'; break;
-                default: color = 'rgba(255, 255, 255, 0.2)';
-            }
-            
-            return `
-                <span class="search-result-tag" style="background: ${color}">
+                <span class="comunicado-tag" style="background: ${config.gradient}">
+                    <i class="fas ${config.icon}"></i>
                     ${tagName.replace('-', ' ')}
                 </span>
             `;
@@ -1162,27 +849,31 @@
         function renderComunicados(filteredComunicados = comunicados) {
             const container = document.getElementById('comunicadosContainer');
             
-            // Si no hay comunicados
             if (filteredComunicados.length === 0) {
                 container.innerHTML = `
-                    <div class="no-comunicados reveal reveal-up">
-                        <i class="fas fa-inbox"></i>
-                        <h3>No se encontraron comunicados</h3>
-                        <p>No hay comunicados que coincidan con tu búsqueda. Intenta con otras palabras clave.</p>
+                    <div class="comunicado-post">
+                        <div class="comunicado-content">
+                            <p style="text-align: center; color: var(--text-secondary);">
+                                <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                                No se encontraron comunicados que coincidan con tu búsqueda.
+                            </p>
+                        </div>
                     </div>
                 `;
                 return;
             }
             
-            // Ordenar comunicados por fecha (más reciente primero)
+            // Ordenar por fecha (más reciente primero)
             const sortedComunicados = [...filteredComunicados].sort((a, b) => {
-                // Convertir fechas a objetos Date para ordenar
-                const dateA = new Date(a.date.split(' ').slice(-1)[0], getMonthNumber(a.date.split(' ')[1].replace(',', '')), a.date.split(' ')[0]);
-                const dateB = new Date(b.date.split(' ').slice(-1)[0], getMonthNumber(b.date.split(' ')[1].replace(',', '')), b.date.split(' ')[0]);
-                return dateB - dateA; // Orden descendente (más reciente primero)
+                const dateA = new Date(a.date.split(' ').slice(-1)[0], 
+                    getMonthNumber(a.date.split(' ')[1].replace(',', '')), 
+                    a.date.split(' ')[0]);
+                const dateB = new Date(b.date.split(' ').slice(-1)[0], 
+                    getMonthNumber(b.date.split(' ')[1].replace(',', '')), 
+                    b.date.split(' ')[0]);
+                return dateB - dateA;
             });
             
-            // Función auxiliar para convertir mes en español a número
             function getMonthNumber(monthName) {
                 const months = {
                     'Enero': 0, 'Febrero': 1, 'Marzo': 2, 'Abril': 3,
@@ -1192,46 +883,37 @@
                 return months[monthName] || 0;
             }
             
-            // Generar HTML de los comunicados
+            // Generar HTML
             container.innerHTML = sortedComunicados.map((comunicado, index) => {
-                // Generar etiquetas HTML
                 const tagsHTML = comunicado.tags.map(tag => generateTagHTML(tag)).join('');
                 
-                // Verificar si es oficial
-                const isOfficial = comunicado.tags.includes('oficial');
-                
                 return `
-                    <div class="comunicado-card reveal reveal-up" data-id="${comunicado.id}" style="animation-delay: ${index * 0.2}s">
-                        ${isOfficial ? '<div class="official-badge"><i class="fas fa-shield-alt"></i> COMUNICADO OFICIAL</div>' : ''}
+                    <article class="comunicado-post reveal reveal-up" data-id="${comunicado.id}" style="animation-delay: ${index * 0.2}s">
+                        <div class="comunicado-tags">
+                            ${tagsHTML}
+                        </div>
                         
                         <div class="comunicado-header">
-                            <div class="comunicado-tags">
-                                ${tagsHTML}
+                            <h2 class="comunicado-title">${comunicado.title}</h2>
+                            <div class="comunicado-date">
+                                <i class="far fa-calendar"></i>
+                                ${comunicado.date}
                             </div>
                         </div>
                         
                         <div class="comunicado-content">
-                            <div class="comunicado-title-container">
-                                <h3 class="comunicado-title">${comunicado.title}</h3>
-                                <div class="comunicado-date">
-                                    <i class="far fa-calendar-alt"></i> ${comunicado.date}
-                                </div>
-                            </div>
-                            
-                            <div class="comunicado-text">
-                                ${comunicado.content}
-                            </div>
-                            
-                            <div class="comunicado-footer">
-                                <div>ZYX eSports - Dirección General</div>
-                                <div class="comunicado-id">ID: ZYX-COM-${String(comunicado.id).padStart(3, '0')}</div>
-                            </div>
+                            ${comunicado.content}
                         </div>
-                    </div>
+                        
+                        <div class="comunicado-footer">
+                            <div>Publicado por Dirección General</div>
+                            <div class="comunicado-id">REF: ZYX-${String(comunicado.id).padStart(3, '0')}</div>
+                        </div>
+                    </article>
                 `;
             }).join('');
             
-            // Activar animaciones
+            // Activar animaciones reveal
             setTimeout(() => {
                 const elements = document.querySelectorAll('.reveal');
                 elements.forEach(el => {
@@ -1247,9 +929,7 @@
 
         // Función para buscar comunicados
         function searchComunicados(searchTerm) {
-            if (!searchTerm.trim()) {
-                return comunicados; // Retorna todos si no hay búsqueda
-            }
+            if (!searchTerm.trim()) return comunicados;
             
             const term = searchTerm.toLowerCase();
             return comunicados.filter(comunicado => 
@@ -1273,37 +953,28 @@
                 resultsContainer.innerHTML = `
                     <div class="no-results">
                         <i class="fas fa-search"></i>
-                        <p>No se encontraron comunicados con "${searchTerm}"</p>
+                        <p>No se encontraron comunicados</p>
                     </div>
                 `;
             } else {
                 resultsContainer.innerHTML = results.map(comunicado => `
                     <div class="search-result-item" data-id="${comunicado.id}">
-                        <div>
-                            <div class="search-result-title">${comunicado.title}</div>
-                            <div class="search-result-tags">
-                                ${comunicado.tags.map(tag => generateSmallTagHTML(tag)).join('')}
-                            </div>
-                        </div>
+                        <div class="search-result-title">${comunicado.title}</div>
                         <div class="search-result-date">${comunicado.date}</div>
                     </div>
                 `).join('');
                 
-                // Agregar event listeners a los resultados
+                // Event listeners para resultados
                 document.querySelectorAll('.search-result-item').forEach(item => {
                     item.addEventListener('click', function() {
                         const id = parseInt(this.getAttribute('data-id'));
                         const comunicado = comunicados.find(c => c.id === id);
                         
                         if (comunicado) {
-                            // Filtrar solo ese comunicado
                             renderComunicados([comunicado]);
-                            
-                            // Limpiar búsqueda y ocultar resultados
                             document.getElementById('searchInput').value = '';
                             resultsContainer.classList.remove('active');
                             
-                            // Desplazar al comunicado
                             const card = document.querySelector(`[data-id="${id}"]`);
                             if (card) {
                                 card.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1316,39 +987,15 @@
             resultsContainer.classList.add('active');
         }
 
-        // Función para manejar el scroll y animaciones
-        function handleScrollAnimations() {
-            const revealElements = document.querySelectorAll('.reveal');
-            const windowHeight = window.innerHeight;
-            const revealPoint = 150;
-            
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                
-                if (elementTop < windowHeight - revealPoint) {
-                    element.classList.add('active');
-                }
-            });
-        }
-
-        // Función para la barra de progreso
-        function updateProgressBar() {
-            const progressBar = document.querySelector('.progress-bar');
-            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (window.scrollY / windowHeight) * 100;
-            progressBar.style.width = scrolled + '%';
-        }
-
-        // Inicializar cuando el DOM esté listo
+        // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
-            // Renderizar comunicados iniciales
+            // Renderizar comunicados
             renderComunicados();
             
-            // Configurar event listeners para búsqueda
+            // Configurar búsqueda
             const searchInput = document.getElementById('searchInput');
             const searchResults = document.getElementById('searchResults');
             
-            // Búsqueda en tiempo real
             searchInput.addEventListener('input', function() {
                 showSearchResults(this.value);
             });
@@ -1360,17 +1007,16 @@
                 }
             });
             
-            // Configurar event listeners de scroll
-            window.addEventListener('scroll', () => {
-                handleScrollAnimations();
-                updateProgressBar();
+            // Limpiar búsqueda con Escape
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    searchInput.value = '';
+                    searchResults.classList.remove('active');
+                    renderComunicados();
+                }
             });
             
-            // Inicializar animaciones
-            handleScrollAnimations();
-            updateProgressBar();
-            
-            // Efecto en el header al hacer scroll
+            // Header scroll effect
             let lastScroll = 0;
             window.addEventListener('scroll', () => {
                 const currentScroll = window.pageYOffset;
@@ -1386,15 +1032,62 @@
                 }
                 
                 lastScroll = currentScroll;
+                
+                // Progress bar
+                const progressBar = document.querySelector('.progress-bar');
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (window.scrollY / windowHeight) * 100;
+                progressBar.style.width = scrolled + '%';
+                
+                // Scroll reveal animation
+                const revealElements = document.querySelectorAll('.reveal');
+                const revealPoint = 150;
+                
+                revealElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    
+                    if (elementTop < window.innerHeight - revealPoint) {
+                        element.classList.add('active');
+                    }
+                });
             });
             
-            // Limpiar búsqueda con Escape
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    searchInput.value = '';
-                    searchResults.classList.remove('active');
-                    renderComunicados();
-                }
+            // Smooth scrolling para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Efecto hover en posts
+            document.addEventListener('mousemove', function(e) {
+                const posts = document.querySelectorAll('.comunicado-post');
+                posts.forEach(post => {
+                    const rect = post.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                        const glowX = (x / rect.width) * 100;
+                        const glowY = (y / rect.height) * 100;
+                        post.style.background = `
+                            radial-gradient(circle at ${glowX}% ${glowY}%, 
+                                rgba(156, 39, 176, 0.1) 0%, 
+                                rgba(26, 26, 36, 0.7) 50%)
+                        `;
+                    }
+                });
             });
         });
     </script>
