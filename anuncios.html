@@ -939,6 +939,127 @@
             );
         }
 
+        // Función para actualizar la URL con el parámetro de búsqueda
+        function updateURLWithSearch(searchTerm) {
+            const baseURL = window.location.origin + window.location.pathname;
+            
+            if (searchTerm.trim()) {
+                // Generar un código único para la búsqueda (puedes personalizar esto)
+                const searchCode = generateSearchCode(searchTerm);
+                
+                // Actualizar la URL sin recargar la página
+                const newURL = `${baseURL}?search=${encodeURIComponent(searchTerm)}&code=${searchCode}`;
+                window.history.pushState({ search: searchTerm }, '', newURL);
+                
+                // También puedes mostrar el código en consola o en la interfaz
+                console.log(`Código de búsqueda: ${searchCode}`);
+                
+                // Opcional: Mostrar el código en un tooltip o mensaje
+                showSearchCodeMessage(searchCode);
+            } else {
+                // Limpiar la URL si no hay búsqueda
+                window.history.pushState({}, '', baseURL);
+            }
+        }
+
+        // Función para generar un código único de búsqueda
+        function generateSearchCode(searchTerm) {
+            // Usar timestamp y hash simple del término de búsqueda
+            const timestamp = Date.now().toString().slice(-6);
+            const searchHash = btoa(searchTerm).slice(0, 6).replace(/[^a-zA-Z0-9]/g, '');
+            
+            // Generar código en formato: search-ZYX-XXX
+            const randomNum = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+            return `search-ZYX-${randomNum}-${searchHash}`;
+        }
+
+        // Función para mostrar un mensaje con el código de búsqueda
+        function showSearchCodeMessage(code) {
+            // Puedes personalizar esto para mostrar en la interfaz
+            const message = document.createElement('div');
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--accent-purple);
+                color: white;
+                padding: 10px 15px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 600;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: fadeInOut 3s ease;
+            `;
+            
+            message.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-link" style="font-size: 14px;"></i>
+                    <span>Código de búsqueda: ${code}</span>
+                    <button onclick="navigator.clipboard.writeText('${code}').then(() => this.innerHTML='<i class=\\'fas fa-check\\'></i>')" 
+                        style="background: none; border: none; color: white; cursor: pointer; margin-left: 5px;">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(message);
+            
+            // Eliminar después de 3 segundos
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.style.animation = 'fadeOut 0.5s ease';
+                    setTimeout(() => {
+                        if (message.parentNode) {
+                            message.parentNode.removeChild(message);
+                        }
+                    }, 500);
+                }
+            }, 3000);
+        }
+
+        // Función para procesar parámetros de búsqueda desde la URL
+        function processURLSearchParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchParam = urlParams.get('search');
+            const codeParam = urlParams.get('code');
+            
+            if (searchParam) {
+                // Decodificar el término de búsqueda
+                const searchTerm = decodeURIComponent(searchParam);
+                
+                // Establecer el valor en el input de búsqueda
+                const searchInput = document.getElementById('searchInput');
+                searchInput.value = searchTerm;
+                
+                // Ejecutar la búsqueda
+                const results = searchComunicados(searchTerm);
+                renderComunicados(results);
+                
+                // Mostrar resultados de búsqueda
+                const resultsContainer = document.getElementById('searchResults');
+                if (results.length > 0) {
+                    resultsContainer.innerHTML = results.map(comunicado => `
+                        <div class="search-result-item" data-id="${comunicado.id}">
+                            <div class="search-result-title">${comunicado.title}</div>
+                            <div class="search-result-date">${comunicado.date}</div>
+                        </div>
+                    `).join('');
+                    
+                    resultsContainer.classList.add('active');
+                }
+                
+                // Si hay un código en la URL, mostrarlo
+                if (codeParam) {
+                    console.log(`Cargando búsqueda con código: ${codeParam}`);
+                }
+                
+                return true;
+            }
+            
+            return false;
+        }
+
         // Función para mostrar resultados de búsqueda
         function showSearchResults(searchTerm) {
             const resultsContainer = document.getElementById('searchResults');
@@ -946,6 +1067,8 @@
             
             if (!searchTerm.trim()) {
                 resultsContainer.classList.remove('active');
+                renderComunicados();
+                updateURLWithSearch('');
                 return;
             }
             
@@ -974,6 +1097,7 @@
                             renderComunicados([comunicado]);
                             document.getElementById('searchInput').value = '';
                             resultsContainer.classList.remove('active');
+                            updateURLWithSearch('');
                             
                             const card = document.querySelector(`[data-id="${id}"]`);
                             if (card) {
@@ -982,6 +1106,12 @@
                         }
                     });
                 });
+                
+                // Renderizar los resultados filtrados
+                renderComunicados(results);
+                
+                // Actualizar la URL con el término de búsqueda
+                updateURLWithSearch(searchTerm);
             }
             
             resultsContainer.classList.add('active');
@@ -989,15 +1119,32 @@
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
-            // Renderizar comunicados
-            renderComunicados();
+            // Primero procesar parámetros de búsqueda de la URL
+            const hasSearchParam = processURLSearchParams();
+            
+            // Si no hay parámetros de búsqueda en la URL, renderizar todos los comunicados
+            if (!hasSearchParam) {
+                renderComunicados();
+            }
             
             // Configurar búsqueda
             const searchInput = document.getElementById('searchInput');
             const searchResults = document.getElementById('searchResults');
             
+            // Usar debounce para mejorar el rendimiento en búsquedas
+            let searchTimeout;
             searchInput.addEventListener('input', function() {
-                showSearchResults(this.value);
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    showSearchResults(this.value);
+                }, 300); // 300ms de delay
+            });
+            
+            // También buscar al presionar Enter
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    showSearchResults(this.value);
+                }
             });
             
             // Ocultar resultados al hacer clic fuera
@@ -1013,7 +1160,13 @@
                     searchInput.value = '';
                     searchResults.classList.remove('active');
                     renderComunicados();
+                    updateURLWithSearch('');
                 }
+            });
+            
+            // Manejar el botón de retroceso/avance del navegador
+            window.addEventListener('popstate', function(event) {
+                processURLSearchParams() || renderComunicados();
             });
             
             // Header scroll effect
@@ -1052,24 +1205,6 @@
                 });
             });
             
-            // Smooth scrolling para enlaces internos
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
             // Efecto hover en posts
             document.addEventListener('mousemove', function(e) {
                 const posts = document.querySelectorAll('.comunicado-post');
@@ -1089,6 +1224,22 @@
                     }
                 });
             });
+            
+            // Añadir estilo CSS para las animaciones del código de búsqueda
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translateY(-20px); }
+                    10% { opacity: 1; transform: translateY(0); }
+                    90% { opacity: 1; transform: translateY(0); }
+                    100% { opacity: 0; transform: translateY(-20px); }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
