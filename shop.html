@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZYX SHOP - Pack Completo de Optimización Gaming</title>
+    <link rel="icon" type="image/png" href="https://imgur.com/BdsZBUT.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* COLORES PERSONALIZADOS PARA ZYX SHOP */
+            --primary-color: #642c9b;
+            --accent-color: #f7b82d;
+            --dark-bg: #0e0e0e;
+            --card-bg: #1a1a1a;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --nav-bg: #1a1a1a;
+            --nav-text: #ffffff;
+            
+            /* GRADIENTES */
+            --gradient-primary: linear-gradient(135deg, #642c9b 0%, #8a4bc9 100%);
+            --gradient-accent: linear-gradient(135deg, #f7b82d 0%, #ffd166 100%);
+            
+            /* EFECTOS */
+            --shadow: 0 0 20px rgba(100, 44, 155, 0.3);
+            --shadow-accent: 0 0 15px rgba(247, 184, 45, 0.4);
+            --neon-shadow: 0 0 10px rgba(100, 44, 155, 0.5), 0 0 20px rgba(100, 44, 155, 0.3);
+            
+            /* TIPOGRAFÍA */
+            --font-heading: 'Orbitron', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== HEADER ========== */
+        header {
+            background-color: var(--nav-bg);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .logo-text {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 28px;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .cart-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-accent);
+        }
+        
+        /* ========== HERO SECTION ========== */
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(14, 14, 14, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(100, 44, 155, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(247, 184, 45, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hero-logo-container {
+            position: relative;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: var(--neon-shadow);
+            border: 3px solid var(--accent-color);
+            animation: pulse 3s infinite alternate;
+        }
+        
+        .logo-circle img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 20px rgba(100, 44, 155, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(100, 44, 155, 1);
+            }
+        }
+        
+        .hero-text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .logo-zyx {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 60px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(247, 184, 45, 0.7);
+            margin-bottom: 10px;
+        }
+        
+        .logo-shop {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 40px;
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            line-height: 1;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 30px auto 40px;
+            color: var(--text-secondary);
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(247, 184, 45, 0.5);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-accent);
+        }
+        
+        .btn-accent {
+            background: var(--gradient-accent);
+            color: var(--dark-bg);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(247, 184, 45, 0.4);
+        }
+        
+        /* ========== PRODUCT SECTION ========== */
+        .product-section {
+            padding: 100px 0;
+            background-color: rgba(14, 14, 14, 0.9);
+        }
+        
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .product-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 3px solid var(--primary-color);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            box-shadow: var(--shadow);
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-accent);
+            border-color: var(--accent-color);
+        }
+        
+        .product-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .product-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .product-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            font-weight: 900;
+        }
+        
+        .product-price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(247, 184, 45, 0.3);
+        }
+        
+        .product-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.7;
+            text-align: center;
+        }
+        
+        .optimizations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .optimization-item {
+            background: rgba(100, 44, 155, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        
+        .optimization-item:hover {
+            background: rgba(100, 44, 155, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .optimization-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 900;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .optimization-title {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .optimization-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .add-to-cart-large {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px auto 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .add-to-cart-large:hover {
+            background: var(--gradient-accent);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(247, 184, 45, 0.3);
+        }
+        
+        /* ========== FEATURES SECTION ========== */
+        .features-section {
+            padding: 100px 0;
+            background-color: rgba(26, 26, 26, 0.9);
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(100, 44, 155, 0.3);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* ========== CART MODAL ========== */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 400px;
+            height: 100%;
+            background-color: var(--card-bg);
+            z-index: 2000;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+            transition: right 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-modal.open {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 25px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-cart:hover {
+            color: var(--accent-color);
+        }
+        
+        .cart-content {
+            padding: 25px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            padding: 40px 0;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(100, 44, 155, 0.2);
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        .cart-item-price {
+            color: var(--accent-color);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .remove-item:hover {
+            color: #ff3333;
+        }
+        
+        .cart-footer {
+            padding: 25px;
+            border-top: 2px solid var(--primary-color);
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .total-label {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+        
+        .total-price {
+            color: var(--accent-color);
+            font-weight: 900;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .checkout-btn:hover {
+            background: var(--gradient-accent);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(247, 184, 45, 0.3);
+        }
+        
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 60px 0 30px;
+            border-top: 2px solid var(--primary-color);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .footer-logo img {
+            height: 60px;
+            width: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .footer-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--gradient-accent);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #AAAAAA;
+            font-size: 0.9rem;
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .logo-zyx {
+                font-size: 50px;
+            }
+            
+            .logo-shop {
+                font-size: 30px;
+            }
+            
+            .product-title {
+                font-size: 2rem;
+            }
+            
+            .optimizations-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-modal {
+                width: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 220px 0 80px;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .product-card {
+                padding: 25px;
+            }
+            
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .footer-logo {
+                align-items: center;
+            }
+            
+            .cart-modal {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .logo-zyx {
+                font-size: 40px;
+            }
+            
+            .logo-shop {
+                font-size: 24px;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .product-title {
+                font-size: 1.7rem;
+            }
+            
+            .product-price {
+                font-size: 2.2rem;
+            }
+            
+            .add-to-cart-large {
+                font-size: 1.1rem;
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="https://imgur.com/BdsZBUT.png" alt="ZYX SHOP Logo" class="logo-img">
+                <span class="logo-text">ZYX SHOP</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#product" class="nav-link">Pack Optimización</a>
+                <a href="#features" class="nav-link">Características</a>
+                <a href="#contact" class="nav-link">Contacto</a>
+            </nav>
+            
+            <button class="cart-btn" id="open-cart">
+                <i class="fas fa-shopping-cart"></i> Carrito (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-logo-container">
+                <div class="logo-circle">
+                    <img src="https://imgur.com/BdsZBUT.png" alt="ZYX SHOP Logo">
+                </div>
+                <div class="hero-text-container">
+                    <div class="logo-zyx">ZYX</div>
+                    <div class="logo-shop">SHOP</div>
+                </div>
+            </div>
+            
+            <p>Pack completo de optimización gaming por solo <span class="highlight">15€</span>. Maximiza el rendimiento de tu PC con nuestras 6 optimizaciones profesionales en un solo paquete.</p>
+            
+            <div class="hero-buttons">
+                <a href="#product" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Ver Pack Completo
+                </a>
+                <a href="#features" class="btn btn-accent">
+                    <i class="fas fa-star"></i> Características
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Section -->
+    <section class="product-section" id="product">
+        <div class="container">
+            <h2 class="section-title">PACK COMPLETO DE OPTIMIZACIÓN</h2>
+            <p class="section-subtitle">6 optimizaciones profesionales en un solo paquete por solo 15€. Mejora radicalmente el rendimiento de tu PC para gaming.</p>
+            
+            <div class="product-container">
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="product-title">Pack Optimización Gaming Pro</h3>
+                        <div class="product-price">15€</div>
+                        <p class="product-description">Pack completo que incluye las 6 optimizaciones esenciales para maximizar el rendimiento de tu PC en juegos como Fortnite y Valorant.</p>
+                    </div>
+                    
+                    <div class="optimizations-container">
+                        <!-- Optimization 1 -->
+                        <div class="optimization-item">
+                            <div class="optimization-number">1</div>
+                            <h4 class="optimization-title">Punto de Restauración</h4>
+                            <p class="optimization-description">Crea un punto de restauración seguro antes de cualquier modificación. Tu PC estará protegido ante cualquier problema.</p>
+                        </div>
+                        
+                        <!-- Optimization 2 -->
+                        <div class="optimization-item">
+                            <div class="optimization-number">2</div>
+                            <h4 class="optimization-title">NVIDIA</h4>
+                            <p class="optimization-description">Optimización específica para tarjetas gráficas NVIDIA. Ajustes de drivers y configuración para máximo rendimiento.</p>
+                        </div>
+                        
+                        <!-- Optimization 3 -->
+                        <div class="optimization-item">
+                            <div class="optimization-number">3</div>
+                            <h4 class="optimization-title">Limpieza General</h4>
+                            <p class="optimization-description">Limpieza profunda del sistema: archivos temporales, registro, caché y más. Libera espacio y mejora el rendimiento.</p>
+                        </div>
+                        
+                        <!-- Optimization 4 -->
+                        <div class="optimization-item">
+                            <div class="optimization-number">4</div>
+                            <h4 class="optimization-title">-PING, +FPS, -DELAY</h4>
+                            <p class="optimization-description">Reducción de latencia, aumento de FPS y eliminación de retrasos. Configuración de red y sistema para gaming competitivo.</p>
+                        </div>
+                        
+                        <!-- Optimization 5 -->
+                        <div class="optimization-item">
+                            <div class="optimization-number">5</div>
+                            <h4 class="optimization-title">Optimizador</h4>
+                            <p class="optimization-description">Optimización completa del sistema: servicios, inicio, procesos y configuración de Windows para máximo rendimiento.</p>
+                        </div>
+                        
+                        <!-- Optimization 6 -->
+                        <div class="optimization-item">
+                            <div class="optimization-number">6</div>
+                            <h4 class="optimization-title">Gráficos Fortnite y Valorant</h4>
+                            <p class="optimization-description">Configuración específica para Fortnite y Valorant. Ajustes de gráficos, prioridades de proceso y optimización para competitivo.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="add-to-cart-large" id="add-to-cart">
+                        <i class="fas fa-cart-plus"></i> AGREGAR PACK AL CARRITO - 15€
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="section-title">¿POR QUÉ ELEGIR NUESTRO PACK?</h2>
+            <p class="section-subtitle">Características que hacen de nuestro pack la mejor opción para optimizar tu PC para gaming.</p>
+            
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Rendimiento Máximo</h3>
+                    <p class="feature-description">Incrementa hasta un 40% el rendimiento de tu PC en juegos competitivos como Fortnite y Valorant.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Totalmente Seguro</h3>
+                    <p class="feature-description">Creamos un punto de restauración antes de cualquier cambio. Tu sistema estará siempre protegido.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">Soporte Incluido</h3>
+                    <p class="feature-description">Asistencia personalizada para resolver cualquier duda durante el proceso de optimización.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-header">
+            <h3 class="cart-title">TU CARRITO</h3>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-content" id="cart-content">
+            <!-- Cart items will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span class="total-label">Total:</span>
+                <span class="total-price" id="cart-total">0€</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">
+                <i class="fas fa-credit-card"></i> Proceder al pago (15€)
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://imgur.com/BdsZBUT.png" alt="ZYX SHOP Logo">
+                    <div>
+                        <div class="logo-zyx" style="font-size: 30px;">ZYX</div>
+                        <div class="logo-shop" style="font-size: 20px;">SHOP</div>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#product" class="footer-link">Pack Optimización</a>
+                    <a href="#features" class="footer-link">Características</a>
+                    <a href="#" class="footer-link">Términos y condiciones</a>
+                    <a href="#" class="footer-link">Política de privacidad</a>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 ZYX SHOP. Todos los derechos reservados. | Pack completo de optimización gaming por 15€</p>
+                <p style="margin-top: 10px;">Esta tienda es propiedad de ZYX SHOP. Cualquier uso no autorizado está prohibido.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        
+        // DOM elements
+        const cartModal = document.getElementById('cart-modal');
+        const openCartBtn = document.getElementById('open-cart');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartContent = document.getElementById('cart-content');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const addToCartBtn = document.getElementById('add-to-cart');
+        
+        // Open cart modal
+        openCartBtn.addEventListener('click', () => {
+            cartModal.classList.add('open');
+        });
+        
+        // Close cart modal
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.classList.remove('open');
+        });
+        
+        // Close cart when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.remove('open');
+            }
+        });
+        
+        // Add to cart functionality
+        addToCartBtn.addEventListener('click', () => {
+            const product = "Pack Completo de Optimización Gaming";
+            const price = 15;
+            
+            // Clear cart and add only this product (since it's the only one)
+            cart = [{ product, price }];
+            
+            // Update UI
+            updateCart();
+            
+            // Show notification
+            showNotification(`¡${product} agregado al carrito!`);
+            
+            // Open cart modal
+            cartModal.classList.add('open');
+        });
+        
+        // Remove item from cart
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+        
+        // Update cart UI
+        function updateCart() {
+            // Update cart count
+            cartCount.textContent = cart.length;
+            
+            // Update cart content
+            if (cart.length === 0) {
+                cartContent.innerHTML = '<p class="cart-empty">Tu carrito está vacío</p>';
+                cartTotal.textContent = '0€';
+            } else {
+                let html = '';
+                let total = 0;
+                
+                cart.forEach((item, index) => {
+                    html += `
+                        <div class="cart-item">
+                            <div>
+                                <div class="cart-item-name">${item.product}</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div class="cart-item-price">${item.price}€</div>
+                                <button class="remove-item" onclick="removeFromCart(${index})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    total += item.price;
+                });
+                
+                cartContent.innerHTML = html;
+                cartTotal.textContent = `${total}€`;
+            }
+        }
+        
+        // Checkout button
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío. Agrega el pack de optimización primero.');
+                return;
+            }
+            
+            // Show checkout message
+            alert(`¡Gracias por tu compra del Pack de Optimización por 15€! Te enviaremos las instrucciones de instalación en breve.`);
+            
+            // Clear cart
+            cart = [];
+            updateCart();
+            
+            // Close cart modal
+            cartModal.classList.remove('open');
+        });
+        
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: var(--shadow);
+                z-index: 3000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+                animation-fill-mode: forwards;
+            `;
+            notification.textContent = message;
+            
+            // Add styles for animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(notification);
+                document.head.removeChild(style);
+            }, 3000);
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Initialize cart
+        updateCart();
+    </script>
+</body>
+</html>
