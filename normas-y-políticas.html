@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Operativo ZYX eSports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #0a0a0a;
+            --secondary-black: #111111;
+            --accent-gray: #1a1a1a;
+            --border-gray: #333333;
+            --text-light: #e0e0e0;
+            --text-gray: #a0a0a0;
+            --zyx-purple: #9c27b0;
+            --red-accent: #c62828;
+            --green-accent: #2e7d32;
+            --yellow-accent: #f9a825;
+            --blue-accent: #1565c0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--primary-black);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .manual-container {
+            background: var(--secondary-black);
+            padding: 40px;
+            border: 1px solid var(--border-gray);
+            position: relative;
+        }
+        
+        .manual-header {
+            text-align: center;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--zyx-purple);
+        }
+        
+        .manual-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        .manual-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        
+        .manual-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+        
+        .version {
+            background: var(--zyx-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        
+        /* CONTENIDO DEL MANUAL */
+        .section {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--zyx-purple);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-gray);
+            text-transform: uppercase;
+        }
+        
+        .subsection {
+            margin: 35px 0;
+            padding-left: 20px;
+        }
+        
+        .clause {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        
+        .clause-number {
+            color: var(--zyx-purple);
+            font-weight: 800;
+            margin-right: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .subclause {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .subclause-number {
+            color: var(--yellow-accent);
+            font-weight: 700;
+            margin-right: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .highlight {
+            color: var(--zyx-purple);
+            font-weight: 700;
+        }
+        
+        .warning-box {
+            background: rgba(198, 40, 40, 0.1);
+            border: 2px solid var(--red-accent);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-title {
+            color: var(--red-accent);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .important-box {
+            background: rgba(249, 168, 37, 0.1);
+            border: 2px solid var(--yellow-accent);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .important-title {
+            color: var(--yellow-accent);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .protocol-box {
+            background: rgba(21, 101, 192, 0.1);
+            border: 2px solid var(--blue-accent);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .protocol-title {
+            color: var(--blue-accent);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        /* BOTÓN DE DESCARGA */
+        .download-section {
+            text-align: center;
+            padding: 50px 0;
+            margin-top: 60px;
+            background: rgba(156, 39, 176, 0.05);
+            border-radius: 10px;
+            border: 1px solid var(--border-gray);
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--zyx-purple), var(--blue-accent));
+            color: white;
+            padding: 20px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1.5px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.4);
+            background: linear-gradient(135deg, var(--blue-accent), var(--zyx-purple));
+        }
+        
+        /* FOOTER */
+        .manual-footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            border-top: 3px solid var(--border-gray);
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+        
+        .confidential-stamp {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 3px solid var(--red-accent);
+            color: var(--red-accent);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 25px;
+            transform: rotate(-3deg);
+            background: rgba(198, 40, 40, 0.05);
+            font-size: 1.1rem;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .manual-container {
+                padding: 25px;
+            }
+            
+            .manual-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .subsection {
+                padding-left: 10px;
+            }
+            
+            .manual-meta {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            
+            .clause {
+                font-size: 1.1rem;
+            }
+            
+            .subclause {
+                font-size: 1rem;
+                margin-left: 15px;
+            }
+        }
+        
+        /* LISTAS ESPECIALES */
+        .team-list {
+            margin: 20px 0 20px 40px;
+        }
+        
+        .team-list li {
+            margin-bottom: 15px;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            position: relative;
+        }
+        
+        .team-list li:before {
+            content: '▸';
+            color: var(--zyx-purple);
+            position: absolute;
+            left: -25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* SEPARADORES */
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--zyx-purple), transparent);
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="manual-container">
+        <!-- HEADER -->
+        <div class="manual-header">
+            <h1 class="manual-title">ACUERDO DE INGRESO Y MANUAL OPERATIVO</h1>
+            <p class="manual-subtitle">ZYX ESPORTS - DIVISIÓN FORTNITE COMPETITIVO</p>
+            <div class="manual-meta">
+                <div><strong>Clasificación:</strong> CONFIDENCIAL - Uso Interno</div>
+                <div class="version">VERSIÓN 5.0</div>
+                <div><strong>Actualizado:</strong> 15/01/2025</div>
+            </div>
+        </div>
+
+        <!-- INTRODUCCIÓN -->
+        <div class="section">
+            <h2 class="section-title">INTRODUCCIÓN</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 1</span> FILOSOFÍA ZYX</p>
+                <div class="subclause">En <span class="highlight">ZYX ESPORTS</span> no buscamos números, buscamos <span class="highlight">CALIDAD</span> absoluta. Somos un team competitivo de <span class="highlight">FORTNITE</span> enfocado exclusivamente en jugadores con mentalidad profesional, disciplina férrea y ambición competitiva genuina.</div>
+                <div class="subclause">Este no es un club social. No somos una comunidad recreativa. No aceptamos "jugadores por diversión". Aquí se entra para <span class="highlight">REPRESENTAR</span>, para <span class="highlight">DEMOSTRAR</span> y para <span class="highlight">COMPETIR</span> al más alto nivel.</div>
+                <div class="subclause">La permanencia en ZYX es un <span class="highlight">PRIVILEGIO</span> que se gana diariamente con rendimiento, actitud y compromiso. No es un derecho adquirido.</div>
+                <div class="subclause">Al solicitar ingreso o permanecer en ZYX, aceptas automáticamente, íntegramente y sin reservas TODAS las cláusulas, normas y condiciones establecidas en este documento.</div>
+                <div class="subclause">La ignorancia de estas normas no exime de su cumplimiento. Es responsabilidad de cada miembro conocer y entender completamente este acuerdo.</div>
+                <div class="subclause">ZYX se reserva el derecho de interpretación final de todas las cláusulas aquí contenidas.</div>
+                <div class="subclause">Este documento prevalece sobre cualquier acuerdo verbal o escrito anterior.</div>
+                <div class="subclause">Las modificaciones a este acuerdo serán comunicadas por canales oficiales y serán efectivas inmediatamente tras su publicación.</div>
+                <div class="subclause">La permanencia en ZYX tras modificaciones implica aceptación automática de los cambios.</div>
+                <div class="subclause">Este acuerdo es vinculante desde el momento de la solicitud de ingreso hasta la finalización de la relación con ZYX.</div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">DECLARACIÓN DE ACEPTACIÓN</div>
+                <div class="subclause">"Yo, el solicitante/miembro, declaro bajo mi entera responsabilidad que he leído, comprendido y acepto todas y cada una de las cláusulas contenidas en este Acuerdo de Ingreso. Reconozco que ZYX ESPORTS opera bajo estándares profesionales y que mi permanencia está sujeta al estricto cumplimiento de estas normas."</div>
+            </div>
+        </div>
+
+        <!-- OBJETIVOS DEL TEAM -->
+        <div class="section">
+            <h2 class="section-title">OBJETIVOS Y FILOSOFÍA OPERATIVA</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 2</span> MISIÓN PRINCIPAL</p>
+                <div class="subclause">Desarrollar y potenciar jugadores de Fortnite con potencial competitivo real, transformando talento bruto en competencia profesional estructurada.</div>
+                <div class="subclause">Construir un ecosistema competitivo cerrado donde la excelencia sea el único standard aceptable y la mediocridad sea eliminada sistemáticamente.</div>
+                <div class="subclause">Crear una marca reconocida en el competitivo de Fortnite basada en resultados concretos, no en presencia mediática vacía.</div>
+                <div class="subclause">Establecer protocolos y sistemas que maximicen el rendimiento individual y colectivo, eliminando variables subjetivas de la ecuación competitiva.</div>
+                <div class="subclause">Desarrollar metodologías de entrenamiento propietarias que diferencien a los jugadores ZYX del resto de la competencia.</div>
+                <div class="subclause">Cultivar una cultura de mejora constante donde el conformismo sea la principal herejía y la ambición sea la norma.</div>
+                <div class="subclause">Implementar sistemas de evaluación objetiva que midan progreso real, no percepciones o popularidad.</div>
+                <div class="subclause">Construir una infraestructura competitiva que permita a los miembros enfocarse exclusivamente en su rendimiento in-game.</div>
+                <div class="subclause">Desarrollar sinergias de squad que trasciendan el juego individual y creen ventajas competitivas estructurales.</div>
+                <div class="subclause">Posicionar a ZYX como referencia indiscutible en el desarrollo de talento competitivo en Fortnite.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 3</span> STANDARDS DE CALIDAD</p>
+                <div class="subclause">Solo se aceptarán jugadores con mentalidad competitiva genuina, no aspirantes a "streamers" o "content creators".</div>
+                <div class="subclause">La edad mínima mental requerida es 18 años. Jugadores menores con madurez excepcional serán evaluados caso por caso.</div>
+                <div class="subclause">Se exige compromiso horario real, no declaraciones de intenciones. El tiempo de entrenamiento será monitoreado y verificado.</div>
+                <div class="subclause">El rendimiento in-game es la única métrica de valor real. Las excusas, explicaciones y justificaciones no tienen lugar en ZYX.</div>
+                <div class="subclause">La capacidad de aceptar críticas constructivas y trabajar en deficiencias es obligatoria. La susceptibilidad no es compatible con la mejora competitiva.</div>
+                <div class="subclause">Se requiere autonomía en el entrenamiento individual. ZYX provee estructura, no niñera competitiva.</div>
+                <div class="subclause">La consistencia en el rendimiento es más valorada que los picos ocasionales de habilidad.</div>
+                <div class="subclause">La capacidad de trabajar en equipo prevalece sobre el individualismo brillante pero descoordinado.</div>
+                <div class="subclause">La adaptabilidad a metas cambiantes y estrategias evolutivas es requisito fundamental.</div>
+                <div class="subclause">La ética de trabajo debe ser incuestionable. Atajos, trampas o comportamientos cuestionables resultan en expulsión inmediata.</div>
+            </div>
+
+            <div class="important-box">
+                <div class="important-title">PRINCIPIOS OPERATIVOS FUNDAMENTALES</div>
+                <div class="subclause">Resultados sobre promesas. Acciones sobre palabras. Rendimiento sobre potencial.</div>
+                <div class="subclause">El equipo siempre prevalece sobre el individuo. Los logros colectivos superan cualquier logro personal.</div>
+                <div class="subclause">La responsabilidad es personal e intransferible. Cada miembro responde por sus acciones y decisiones.</div>
+                <div class="subclause">La transparencia en la comunicación es obligatoria. Los problemas se afrontan directamente, no se evaden.</div>
+                <div class="subclause">La confidencialidad es sagrada. Lo que sucede en ZYX permanece en ZYX.</div>
+            </div>
+        </div>
+
+        <!-- USO DE CONTENIDO -->
+        <div class="section">
+            <h2 class="section-title">USO DE CONTENIDO Y PROPIEDAD INTELECTUAL</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 4</span> AUTORIZACIÓN DE CONTENIDO</p>
+                <div class="subclause">Al ingresar a ZYX, cedes irrevocablemente los derechos de uso de tu <span class="highlight">VOZ</span>, <span class="highlight">GAMEPLAY</span>, <span class="highlight">IMAGEN</span> (cuando aplique) y <span class="highlight">NOMBRE IN-GAME</span> para fines promocionales, comerciales y competitivos de la organización.</div>
+                <div class="subclause">ZYX puede grabar, almacenar, editar, modificar, distribuir y publicar cualquier contenido generado durante actividades oficiales del team sin notificación previa ni compensación económica adicional.</div>
+                <div class="subclause">Los canales de distribución incluyen, pero no se limitan a: streams en vivo, plataformas de video (YouTube, Twitch, TikTok), redes sociales, material promocional, presentaciones comerciales y cualquier medio actual o futuro.</div>
+                <div class="subclause">Esta autorización es <span class="highlight">INDEFINIDA</span> y permanece vigente incluso tras la salida del miembro de la organización, para contenido ya generado.</div>
+                <div class="subclause">ZYX no requiere aprobación específica para cada uso del material. La autorización es global y comprensiva.</div>
+                <div class="subclause">El miembro renuncia expresamente a cualquier reclamación por derechos de imagen, voz o propiedad intelectual sobre contenido generado en actividades de ZYX.</div>
+                <div class="subclause">Los highlights, compilaciones, momentos destacados y cualquier edición del gameplay son propiedad exclusiva de ZYX.</div>
+                <div class="subclause">El miembro no puede oponerse ni impedir el uso comercial del contenido en el que aparezca.</div>
+                <div class="subclause">ZYX puede sublicenciar el contenido a terceros (patrocinadores, partners, medios) sin requerir autorización adicional.</div>
+                <div class="subclause">Esta cláusula sobrevive a la terminación de la relación contractual entre el miembro y ZYX.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 5</span> PROPIEDAD INTELECTUAL DEL TEAM</p>
+                <div class="subclause">Todas las estrategias, tácticas, composiciones, rotaciones, plays y sistemas desarrollados dentro de ZYX son <span class="highlight">PROPIEDAD INTELECTUAL EXCLUSIVA</span> de la organización.</div>
+                <div class="subclause">Está estrictamente prohibido compartir, enseñar, revelar o utilizar fuera de ZYX cualquier conocimiento táctico desarrollado internamente.</div>
+                <div class="subclause">Los playbooks, documentos de estrategia, análisis de VODs y cualquier material de entrenamiento son confidenciales y de uso exclusivo interno.</div>
+                <div class="subclause">El miembro no retiene derechos sobre tácticas o estrategias co-desarrolladas durante su permanencia en ZYX.</div>
+                <div class="subclause">Tras salir de ZYX, el miembro tiene prohibido utilizar conocimientos específicos desarrollados internamente en otros equipos o contextos competitivos.</div>
+                <div class="subclause">La infracción de esta cláusula puede resultar en acciones legales además de la expulsión inmediata.</div>
+                <div class="subclause">ZYX mantendrá registro de todas las innovaciones tácticas desarrolladas internamente para protección legal.</div>
+                <div class="subclause">Los miembros deben reportar inmediatamente cualquier intento externo de obtener información táctica confidencial.</div>
+                <div class="subclause">La colaboración con otros equipos o jugadores externos requiere autorización explícita por escrito de la dirección.</div>
+                <div class="subclause">El incumplimiento de esta cláusula es considerado traición competitiva y será tratado con máxima severidad.</div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">ADVERTENCIA LEGAL</div>
+                <div class="subclause">Cualquier violación de las cláusulas de propiedad intelectual resultará en: 1) Expulsión inmediata e irreversible de ZYX, 2) Acciones legales por daños y perjuicios, 3) Comunicación pública de la violación a la comunidad competitiva, 4) Reclamación económica por daños a la propiedad intelectual.</div>
+            </div>
+        </div>
+
+        <!-- NORMAS DE CONDUCTA -->
+        <div class="section">
+            <h2 class="section-title">NORMAS DE CONDUCTA Y COMPORTAMIENTO</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 6</span> COMPORTAMIENTO INTERNO</p>
+                <div class="subclause">El respeto hacia todos los miembros del team, staff y dirección es <span class="highlight">ABSOLUTO E INCONDICIONAL</span>.</div>
+                <div class="subclause">Está terminantemente prohibida cualquier forma de toxicidad, acoso, bullying o comportamiento discriminatorio dentro de ZYX.</div>
+                <div class="subclause">Las discusiones constructivas sobre gameplay son fomentadas. Las discusiones personales o emocionales están prohibidas.</div>
+                <div class="subclause">Las críticas deben ser constructivas, específicas y orientadas a la mejora. Las quejas vagas o destructivas no tienen cabida.</div>
+                <div class="subclause">El lenguaje soez excesivo, los insultos y el comportamiento vulgar no serán tolerados en ningún canal oficial de ZYX.</div>
+                <div class="subclause">La humildad en la victoria y la dignidad en la derrota son comportamientos obligatorios.</div>
+                <div class="subclause">La envidia hacia el éxito de compañeros está prohibida. El éxito colectivo beneficia a todos los miembros.</div>
+                <div class="subclause">La colaboración y ayuda entre miembros es esperada y requerida. El individualismo egoísta no es compatible con ZYX.</div>
+                <div class="subclause">La puntualidad es muestra de respeto. Las tardanzas recurrentes serán sancionadas progresivamente.</div>
+                <div class="subclause">La honestidad en la comunicación es fundamental. Las mentiras u omisiones deliberadas resultan en expulsión.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 7</span> REPRESENTACIÓN EXTERNA</p>
+                <div class="subclause">Todo miembro de ZYX es un <span class="highlight">EMBAJADOR</span> de la marca en todo momento, dentro y fuera del juego.</div>
+                <div class="subclause">El comportamiento en partidas públicas, scrims y torneos debe reflejar los valores de profesionalismo y excelencia de ZYX.</div>
+                <div class="subclause">Está prohibido utilizar el tag de ZYX para comportarse de manera cuestionable, tóxica o no profesional en ningún contexto.</div>
+                <div class="subclause">En redes sociales, los miembros deben mantener un tono profesional cuando hablen de o representen a ZYX.</div>
+                <div class="subclause">Las quejas públicas sobre el team, compañeros o staff están estrictamente prohibidas y resultan en expulsión inmediata.</div>
+                <div class="subclause">La interacción con otros equipos y jugadores debe ser respetuosa y profesional en todo momento.</div>
+                <div class="subclause">En eventos presenciales (cuando apliquen), el comportamiento debe ser ejemplar en todo aspecto.</div>
+                <div class="subclause">El uso del nombre, logo o cualquier identificación de ZYX para beneficio personal sin autorización está prohibido.</div>
+                <div class="subclause">Los miembros deben reportar cualquier uso no autorizado de la marca ZYX que detecten.</div>
+                <div class="subclause">La imagen pública de ZYX es responsabilidad colectiva de todos sus miembros.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 8</span> INTERACCIÓN CON STAFF Y DIRECCIÓN</p>
+                <div class="subclause">Las instrucciones del staff durante operaciones competitivas son <span class="highlight">OBLIGATORIAS</span> e <span class="highlight">INAPELABLES</span> en el momento.</div>
+                <div class="subclause">Las discusiones sobre decisiones tácticas o estratégicas se reservan para sesiones de análisis post-game, nunca durante partidas activas.</div>
+                <div class="subclause">El respeto a la cadena de mando es fundamental. Saltarse niveles jerárquicos sin causa justificada está prohibido.</div>
+                <div class="subclause">La dirección tiene la autoridad final en todas las decisiones organizativas, sin excepción.</div>
+                <div class="subclause">Las quejas o sugerencias sobre staff deben canalizarse a través de los procedimientos establecidos, nunca públicamente.</div>
+                <div class="subclause">La confidencialidad de las decisiones internas del staff debe respetarse absolutamente.</div>
+                <div class="subclause">Los miembros no tienen derecho a conocer todos los motivos detrás de cada decisión del staff o dirección.</div>
+                <div class="subclause">La confianza en el criterio del staff es requisito para permanecer en ZYX.</div>
+                <div class="subclause">Los intentos de manipular o influir indebidamente en el staff resultarán en expulsión inmediata.</div>
+                <div class="subclause">La relación con el staff debe mantenerse estrictamente profesional en todo momento.</div>
+            </div>
+
+            <div class="important-box">
+                <div class="important-title">CÓDIGO DE HONOR ZYX</div>
+                <div class="subclause">Hablaré con respeto a todos los miembros del team.</div>
+                <div class="subclause">Representaré a ZYX con dignidad y profesionalismo en todo momento.</div>
+                <div class="subclause">Aceptaré las decisiones del staff durante operaciones competitivas.</div>
+                <div class="subclause">Mantendré confidencial toda información interna del team.</div>
+                <div class="subclause">Priorizaré el éxito del equipo sobre mi éxito personal.</div>
+                <div class="subclause">Asumiré responsabilidad por mis errores y trabajaré para corregirlos.</div>
+                <div class="subclause">Respetaré la cadena de mando y los procedimientos establecidos.</div>
+                <div class="subclause">Comunicaré problemas a través de los canales adecuados, no públicamente.</div>
+                <div class="subclause">Protegeré la propiedad intelectual y los secretos competitivos de ZYX.</div>
+                <div class="subclause">Entenderé que mi permanencia en ZYX es un privilegio, no un derecho.</div>
+            </div>
+        </div>
+
+        <!-- CONFIDENCIALIDAD -->
+        <div class="section">
+            <h2 class="section-title">CONFIDENCIALIDAD Y SEGURIDAD</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 9</span> ACUERDO DE NO DIVULGACIÓN</p>
+                <div class="subclause">Todo miembro de ZYX firma implícitamente un <span class="highlight">ACUERDO DE NO DIVULGACIÓN</span> integral al ingresar al team.</div>
+                <div class="subclause">Está <span class="highlight">TERMINANTEMENTE PROHIBIDO</span> filtrar cualquier información interna de ZYX a personas, equipos o entidades externas.</div>
+                <div class="subclause">La información protegida incluye, pero no se limita a: estrategias, composiciones, rotaciones, playbooks, métodos de entrenamiento, evaluaciones de jugadores, decisiones de staff, planes futuros, problemas internos, conversaciones privadas y cualquier dato no público.</div>
+                <div class="subclause">Las filtraciones pueden ser intencionales o por negligencia. Ambas son igualmente sancionables.</div>
+                <div class="subclause">Los miembros deben verificar que están en un entorno privado antes de discutir temas sensibles del team.</div>
+                <div class="subclause">Está prohibido discutir asuntos internos de ZYX en streams, redes sociales o cualquier plataforma pública.</div>
+                <div class="subclause">Los problemas internos se resuelven internamente. Llevarlos a foros públicos es motivo de expulsión inmediata.</div>
+                <div class="subclause">Los miembros deben reportar inmediatamente cualquier intento externo de obtener información confidencial.</div>
+                <div class="subclause">La confidencialidad se mantiene incluso tras abandonar ZYX. Los secretos competitivos no expiran.</div>
+                <div class="subclause">Las violaciones de confidencialidad serán perseguidas con todos los medios disponibles, incluyendo acciones legales cuando corresponda.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 10</span> USO DEL NOMBRE ZYX</p>
+                <div class="subclause">El nombre ZYX, sus logos, variaciones y cualquier identificación visual son propiedad exclusiva de la organización.</div>
+                <div class="subclause">El uso del tag "ZYX" in-game es un privilegio que puede ser revocado en cualquier momento por violación de normas.</div>
+                <div class="subclause">Está prohibido utilizar el nombre ZYX para promocionar contenido personal, productos o servicios sin autorización explícita por escrito.</div>
+                <div class="subclause">Los miembros no pueden firmar acuerdos o compromisos en nombre de ZYX sin autorización de la dirección.</div>
+                <div class="subclause">El uso del nombre ZYX para obtener beneficios personales (invitaciones a torneos, tryouts, etc.) está prohibido.</div>
+                <div class="subclause">Al abandonar ZYX, el miembro debe eliminar inmediatamente cualquier referencia a ZYX en sus perfiles públicos, salvo autorización explícita.</div>
+                <div class="subclause">Está prohibido crear cuentas, canales o perfiles que utilicen el nombre ZYX sin autorización.</div>
+                <div class="subclause">Los miembros deben proteger la reputación del nombre ZYX activamente, reportando usos indebidos que detecten.</div>
+                <div class="subclause">El mal uso del nombre ZYX puede resultar en acciones legales por daño a la marca.</div>
+                <div class="subclause">La dirección de ZYX tiene discreción absoluta sobre quién puede usar el nombre y en qué contextos.</div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">CONSECUENCIAS POR FILTRACIÓN</div>
+                <div class="subclause">Nivel 1 (Filtración menor): Amonestación escrita, suspensión temporal, eliminación de acceso a información sensible.</div>
+                <div class="subclause">Nivel 2 (Filtración moderada): Expulsión inmediata del team, comunicación pública de la violación, prohibición de reingreso permanente.</div>
+                <div class="subclause">Nivel 3 (Filtración grave): Todas las anteriores más acciones legales por daños a propiedad intelectual, comunicación a otras organizaciones competitivas, reclamación económica por daños.</div>
+                <div class="subclause">La gravedad será determinada exclusivamente por la dirección de ZYX, cuyo criterio es inapelable.</div>
+            </div>
+        </div>
+
+        <!-- AUTORIDAD Y SANCIONES -->
+        <div class="section">
+            <h2 class="section-title">AUTORIDAD, SANCIONES Y EXPULSIÓN</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 11</span> AUTORIDAD DEL STAFF</p>
+                <div class="subclause">El <span class="highlight">STAFF TIENE LA ÚLTIMA PALABRA</span> en cualquier decisión relacionada con ZYX, sin excepción.</div>
+                <div class="subclause">Las decisiones del staff durante operaciones competitivas son inmediatamente ejecutivas y no admiten discusión en el momento.</div>
+                <div class="subclause">El staff puede tomar decisiones que los miembros no comprendan o no estén de acuerdo. Esto no invalida la obligación de cumplirlas.</div>
+                <div class="subclause">La dirección se reserva el derecho de no explicar el razonamiento detrás de cada decisión.</div>
+                <div class="subclause">La confianza en el criterio del staff es condición fundamental para pertenecer a ZYX.</div>
+                <div class="subclause">Los intentos de cuestionar públicamente la autoridad del staff resultan en expulsión inmediata.</div>
+                <div class="subclause">El staff opera como un organismo unificado. Las decisiones de un miembro del staff representan decisiones de todo el staff.</div>
+                <div class="subclause">La cadena de mando debe respetarse en todo momento. Saltarse niveles jerárquicos sin causa justificada está prohibido.</div>
+                <div class="subclause">El staff tiene discreción absoluta sobre la interpretación y aplicación de estas normas.</div>
+                <div class="subclause">La autoridad del staff se extiende a todas las actividades relacionadas con ZYX, dentro y fuera del juego.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 12</span> SISTEMA DE SANCIONES</p>
+                <div class="subclause">Las sanciones en ZYX son <span class="highlight">PROGRESIVAS, INMEDIATAS Y NO NEGOCIABLES</span>.</div>
+                <div class="subclause">Nivel 1 (Advertencia): Amonestación privada, registro en expediente, advertencia formal por escrito.</div>
+                <div class="subclause">Nivel 2 (Suspensión): Suspensión temporal de actividades competitivas, eliminación temporal del tag, restricción de acceso a canales internos.</div>
+                <div class="subclause">Nivel 3 (Expulsión): Eliminación permanente de ZYX, comunicación pública (cuando corresponda), prohibición de reingreso permanente.</div>
+                <div class="subclause">Algunas violaciones graves saltan directamente al Nivel 3, sin pasar por niveles inferiores.</div>
+                <div class="subclause">El staff determina unilateralmente el nivel de sanción aplicable a cada infracción.</div>
+                <div class="subclause">Las sanciones pueden aplicarse retroactivamente si se descubren violaciones pasadas.</div>
+                <div class="subclause">El historial de sanciones se mantiene indefinidamente y afecta futuras decisiones sobre el miembro.</div>
+                <div class="subclause">Los miembros sancionados no tienen derecho a conocer todos los detalles del proceso decisorio.</div>
+                <div class="subclause">Las sanciones son acumulativas. Múltiples infracciones menores pueden resultar en sanciones mayores.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 13</span> PROCEDIMIENTO DE APELACIÓN</p>
+                <div class="subclause">Solo las sanciones de Nivel 2 y 3 son apelables. Las advertencias (Nivel 1) no admiten apelación.</div>
+                <div class="subclause">Las apelaciones deben presentarse por escrito a través del canal oficial designado dentro de las 48 horas posteriores a la notificación de la sanción.</div>
+                <div class="subclause">La apelación debe contener: 1) Identificación clara de la sanción apelada, 2) Argumentos específicos de por qué se considera injusta, 3) Evidencia que respalde la apelación, 4) Propuesta de sanción alternativa (si aplica).</div>
+                <div class="subclause">Las apelaciones emocionales, vagas o sin sustancia serán desestimadas inmediatamente.</div>
+                <div class="subclause">El proceso de apelación es interno y confidencial. Hacerlo público resulta en desestimación automática.</div>
+                <div class="subclause">La decisión del comité de apelación es <span class="highlight">FINAL E INAPELABLE</span>.</div>
+                <div class="subclause">Durante el proceso de apelación, la sanción original permanece en efecto.</div>
+                <div class="subclause">Solo se permite una apelación por sanción. No hay segundas instancias.</div>
+                <div class="subclause">Las apelaciones que cuestionen la autoridad del staff serán desestimadas automáticamente.</div>
+                <div class="subclause">El comité de apelación puede, a su discreción, mantener, reducir o aumentar la sanción original.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 14</span> CAUSAS DE EXPULSIÓN INMEDIATA</p>
+                <div class="subclause">Filtrar información confidencial del team a entidades externas.</div>
+                <div class="subclause">Utilizar el nombre ZYX para actividades ilegales, fraudulentas o no éticas.</div>
+                <div class="subclause">Comportamiento tóxico grave hacia compañeros, staff o miembros de la comunidad.</div>
+                <div class="subclause">Cheating, hacking, uso de exploits o cualquier forma de trampa en competencia.</div>
+                <div class="subclause">Faltas de respeto graves hacia la dirección o cuestionamiento público de su autoridad.</div>
+                <div class="subclause">Robo de propiedad intelectual, estrategias o materiales de entrenamiento.</div>
+                <div class="subclause">Actividades que dañen gravemente la reputación pública de ZYX.</div>
+                <div class="subclause">Incumplimiento deliberado y reiterado de normas establecidas.</div>
+                <div class="subclause">Conflictos de interés no declarados con otros equipos o organizaciones.</div>
+                <div class="subclause">Cualquier acción que la dirección considere, a su exclusivo criterio, motivo de expulsión inmediata.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 15</span> DERECHOS DE EXPULSIÓN</p>
+                <div class="subclause">ZYX se reserva el <span class="highlight">DERECHO INALIENABLE</span> de expulsar a cualquier miembro en cualquier momento, con o sin causa explícita.</div>
+                <div class="subclause">No estamos obligados a dar "avisos previos", "oportunidades de mejora" o "segundas chances" en casos graves.</div>
+                <div class="subclause">La dirección puede determinar unilateralmente que un miembro ya no encaja en la visión o cultura de ZYX y expulsarlo sin necesidad de violación específica de normas.</div>
+                <div class="subclause">Las expulsiones por "falta de fit cultural" no requieren justificación detallada ni son apelables.</div>
+                <div class="subclause">No existe "derecho a permanencia" en ZYX. La membresía es discrecional y revocable en cualquier momento.</div>
+                <div class="subclause">Tras expulsión, todos los privilegios y acceso a recursos de ZYX cesan inmediatamente.</div>
+                <div class="subclause">Los miembros expulsados deben eliminar cualquier referencia a ZYX de sus perfiles públicos dentro de las 24 horas.</div>
+                <div class="subclause">ZYX puede comunicar públicamente las expulsiones cuando lo considere necesario para proteger la reputación del team.</div>
+                <div class="subclause">Las expulsiones pueden incluir prohibición de reingreso temporal o permanente, según determine la dirección.</div>
+                <div class="subclause">Los miembros expulsados pierden todos los derechos sobre contenido generado durante su permanencia en ZYX.</div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">DECLARACIÓN FINAL SOBRE AUTORIDAD</div>
+                <div class="subclause">"ZYX ESPORTS opera como una organización meritocrática donde la autoridad final reside exclusivamente en su dirección y staff. Los miembros aceptan voluntariamente esta estructura al ingresar. La participación en ZYX es un privilegio que puede revocarse en cualquier momento, por cualquier razón, según el exclusivo criterio de la dirección. No existen derechos adquiridos, garantías de permanencia ni procedimientos que restrinjan la autoridad de ZYX para tomar decisiones sobre su propio equipo."</div>
+            </div>
+        </div>
+
+        <!-- MODIFICACIONES Y DISPOSICIONES FINALES -->
+        <div class="section">
+            <h2 class="section-title">MODIFICACIONES Y DISPOSICIONES FINALES</h2>
+            
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 16</span> MODIFICACIÓN DEL ACUERDO</p>
+                <div class="subclause">ZYX se reserva el derecho de <span class="highlight">MODIFICAR ESTE ACUERDO EN CUALQUIER MOMENTO</span>, sin previo aviso y por cualquier motivo.</div>
+                <div class="subclause">Las modificaciones entrarán en vigor inmediatamente tras su publicación en los canales oficiales de ZYX.</div>
+                <div class="subclause">No se requiere consentimiento explícito de los miembros para que las modificaciones sean efectivas.</div>
+                <div class="subclause">La permanencia en ZYX tras una modificación constituye <span class="highlight">ACEPTACIÓN AUTOMÁTICA E INCONDICIONAL</span> de los cambios.</div>
+                <div class="subclause">Los miembros son responsables de revisar periódicamente este acuerdo para estar al tanto de modificaciones.</div>
+                <div class="subclause">La ignorancia de modificaciones no exime de su cumplimiento.</div>
+                <div class="subclause">Las modificaciones pueden ser retroactivas si la dirección así lo determina.</div>
+                <div class="subclause">Los cambios sustanciales serán comunicados prominentemente, pero la falta de comunicación no invalida los cambios.</div>
+                <div class="subclause">Este acuerdo prevalece sobre cualquier versión anterior, oral o escrita.</div>
+                <div class="subclause">ZYX puede, a su discreción, requerir reafirmación explícita de este acuerdo tras modificaciones importantes.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 17</span> DISPOSICIONES FINALES</p>
+                <div class="subclause">Este acuerdo constituye el <span class="highlight">CONTRATO COMPLETO</span> entre el miembro y ZYX ESPORTS, reemplazando cualquier acuerdo anterior.</div>
+                <div class="subclause">La invalidez de una cláusula no afecta la validez de las restantes, que permanecen en pleno vigor.</div>
+                <div class="subclause">Este acuerdo se interpretará de manera que favorezca los intereses competitivos y operativos de ZYX.</div>
+                <div class="subclause">Las renuncias a derechos por parte de ZYX deben ser explícitas y por escrito para ser efectivas.</div>
+                <div class="subclause">Los títulos de los artículos son solo para referencia y no afectan la interpretación del contenido.</div>
+                <div class="subclause">Este acuerdo está sujeto a la legislación aplicable en la jurisdicción de ZYX.</div>
+                <div class="subclause">Cualquier disputa será resuelta exclusivamente a través de los mecanismos internos de ZYX establecidos en este acuerdo.</div>
+                <div class="subclause">Los miembros renuncian expresamente a llevar disputas a foros públicos o sistemas externos.</div>
+                <div class="subclause">Este acuerdo no crea relación laboral, societaria o de partnership entre el miembro y ZYX.</div>
+                <div class="subclause">La relación es estrictamente de membresía en una organización competitiva, regulada exclusivamente por este documento.</div>
+            </div>
+
+            <div class="subsection">
+                <p class="clause"><span class="clause-number">ARTÍCULO 18</span> ACEPTACIÓN Y CONFIRMACIÓN</p>
+                <div class="subclause">Al solicitar ingreso a ZYX, el candidato declara haber leído, comprendido y aceptado íntegramente este acuerdo.</div>
+                <div class="subclause">La aceptación se produce automáticamente al enviar la solicitud de ingreso o, para miembros actuales, al permanecer en el team tras cualquier modificación.</div>
+                <div class="subclause">No se requiere firma física para que este acuerdo sea vinculante. La acción de solicitar ingreso o permanecer en ZYX constituye aceptación.</div>
+                <div class="subclause">El miembro reconoce que ha tenido oportunidad de consultar dudas sobre este acuerdo antes de aceptarlo.</div>
+                <div class="subclause">El miembro declara que no ha recibido promesas, garantías o representaciones distintas a las contenidas en este documento.</div>
+                <div class="subclause">El miembro acepta que ZYX puede verificar el cumplimiento de este acuerdo mediante los medios que considere apropiados.</div>
+                <div class="subclause">El miembro autoriza a ZYX a tomar las medidas necesarias para hacer cumplir este acuerdo, incluyendo medidas correctivas, sanciones y acciones legales.</div>
+                <div class="subclause">El miembro reconoce que las sanciones por incumplimiento pueden incluir, pero no limitarse a, las descritas en este documento.</div>
+                <div class="subclause">El miembro acepta que las decisiones de ZYX sobre interpretación y aplicación de este acuerdo son finales.</div>
+                <div class="subclause">Este acuerdo permanece vigente desde la aceptación hasta la finalización de la relación con ZYX, cualquiera que sea su causa.</div>
+            </div>
+
+            <div class="important-box">
+                <div class="important-title">ÚLTIMA OPORTUNIDAD DE RECONSIDERACIÓN</div>
+                <div class="subclause">Si no estás dispuesto a aceptar TODAS las condiciones establecidas en este Acuerdo de Ingreso, NO SOLICITES EL INGRESO A ZYX. Si ya eres miembro y no aceptas alguna modificación, DEBES ABANDONAR VOLUNTARIAMENTE EL TEAM INMEDIATAMENTE. Tu permanencia constituye aceptación irrevocable.</div>
+            </div>
+        </div>
+
+        <!-- BOTÓN DE DESCARGA -->
+        <div class="download-section">
+            <button id="downloadPdf" class="download-btn">
+                <i class="fas fa-file-pdf"></i> DESCARGAR ACUERDO COMPLETO EN PDF
+            </button>
+            <p style="color: var(--text-gray); margin-top: 20px; font-size: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Este documento constituye el Acuerdo Oficial de Ingreso a ZYX ESPORTS. Descárgalo, consérvalo y consúltalo regularmente. Tu firma digital se genera automáticamente al descargar este documento.
+            </p>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="manual-footer">
+            <p><strong>ZYX ESPORTS - FORTNITE COMPETITIVE DIVISION</strong></p>
+            <p>© 2025 ZYX ESPORTS. TODOS LOS DERECHOS RESERVADOS.</p>
+            <p>Este documento es propiedad intelectual de ZYX ESPORTS. Cualquier reproducción, distribución o uso no autorizado está estrictamente prohibido y será perseguido legalmente.</p>
+            <div class="confidential-stamp">DOCUMENTO CONFIDENCIAL</div>
+            <p style="margin-top: 30px; font-size: 0.8rem; color: #666;">
+                Última revisión y actualización: 15 de Enero de 2025<br>
+                Generado automáticamente por el sistema interno de ZYX ESPORTS
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        document.getElementById('downloadPdf').addEventListener('click', function() {
+            const element = document.querySelector('.manual-container');
+            const opt = {
+                margin:       15,
+                filename:     'Acuerdo_Ingreso_ZYX_eSports_Fortnite.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#0a0a0a',
+                    letterRendering: true
+                },
+                jsPDF:        { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait',
+                    compress: true,
+                    hotfixes: ["px_scaling"]
+                },
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+
+            // Agregar marca de agua temporal
+            const watermark = document.createElement('div');
+            watermark.style.position = 'fixed';
+            watermark.style.top = '50%';
+            watermark.style.left = '50%';
+            watermark.style.transform = 'translate(-50%, -50%) rotate(-45deg)';
+            watermark.style.opacity = '0.05';
+            watermark.style.fontSize = '70px';
+            watermark.style.fontFamily = 'Orbitron, sans-serif';
+            watermark.style.fontWeight = '900';
+            watermark.style.color = '#9c27b0';
+            watermark.style.zIndex = '9999';
+            watermark.style.pointerEvents = 'none';
+            watermark.style.whiteSpace = 'nowrap';
+            watermark.textContent = 'ZYX ESPORTS - ACUERDO CONFIDENCIAL';
+            document.body.appendChild(watermark);
+
+            // Agregar firma digital automática
+            const signatureSection = document.createElement('div');
+            signatureSection.style.position = 'fixed';
+            signatureSection.style.bottom = '50px';
+            signatureSection.style.left = '0';
+            signatureSection.style.width = '100%';
+            signatureSection.style.textAlign = 'center';
+            signatureSection.style.zIndex = '10000';
+            signatureSection.style.pointerEvents = 'none';
+            signatureSection.style.opacity = '0.7';
+            signatureSection.innerHTML = `
+                <div style="font-family: 'Orbitron', sans-serif; color: #9c27b0; font-size: 14px; margin-top: 20px;">
+                    <div>FIRMA DIGITAL AUTOMÁTICA</div>
+                    <div>Fecha de aceptación: ${new Date().toLocaleDateString('es-ES')}</div>
+                    <div>Documento válido y vinculante</div>
+                    <div>ID de aceptación: ZYX-${Date.now().toString().slice(-8)}</div>
+                </div>
+            `;
+            document.body.appendChild(signatureSection);
+
+            // Generar PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Remover elementos temporales después de generar PDF
+                document.body.removeChild(watermark);
+                document.body.removeChild(signatureSection);
+                
+                // Confirmación visual
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> DOCUMENTO DESCARGADO';
+                this.style.background = 'linear-gradient(135deg, #2e7d32, #4caf50)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.background = 'linear-gradient(135deg, var(--zyx-purple), var(--blue-accent))';
+                }, 3000);
+            });
+        });
+
+        // Agregar iconos de FontAwesome
+        const faLink = document.createElement('link');
+        faLink.rel = 'stylesheet';
+        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        document.head.appendChild(faLink);
+
+        // Efecto de scroll suave para cláusulas
+        document.querySelectorAll('.clause').forEach(clause => {
+            clause.style.cursor = 'pointer';
+            clause.addEventListener('click', function() {
+                this.style.color = this.style.color === 'rgb(156, 39, 176)' ? 'var(--text-light)' : 'var(--zyx-purple)';
+            });
+        });
+
+        // Marcar como leído automáticamente después de 30 segundos
+        setTimeout(() => {
+            const readStamp = document.createElement('div');
+            readStamp.style.textAlign = 'center';
+            readStamp.style.marginTop = '30px';
+            readStamp.style.padding = '15px';
+            readStamp.style.borderTop = '1px solid var(--border-gray)';
+            readStamp.style.color = 'var(--green-accent)';
+            readStamp.style.fontFamily = "'Orbitron', sans-serif";
+            readStamp.style.fontSize = '0.9rem';
+            readStamp.innerHTML = '<i class="fas fa-eye"></i> DOCUMENTO REVISADO - ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'});
+            
+            document.querySelector('.download-section').parentNode.insertBefore(readStamp, document.querySelector('.download-section'));
+        }, 30000);
+    </script>
+</body>
+</html>
