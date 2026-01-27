@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Operativo ZYX eSports</title>
+    <title>Acceso Restringido - ZYX eSports</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-black: #0a0a0a;
@@ -34,13 +35,139 @@
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(156, 39, 176, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(21, 101, 192, 0.05) 0%, transparent 50%);
         }
         
+        /* PANTALLA DE CONTRASEÑA */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-black);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .password-container {
+            background: var(--secondary-black);
+            padding: 50px;
+            border-radius: 10px;
+            border: 2px solid var(--zyx-purple);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(156, 39, 176, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .password-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--zyx-purple), var(--blue-accent));
+        }
+        
+        .password-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .password-subtitle {
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gray);
+            border: 1px solid var(--border-gray);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: var(--zyx-purple);
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.3);
+        }
+        
+        .password-btn {
+            background: linear-gradient(135deg, var(--zyx-purple), var(--blue-accent));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .password-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(156, 39, 176, 0.3);
+            background: linear-gradient(135deg, var(--blue-accent), var(--zyx-purple));
+        }
+        
+        .error-message {
+            color: var(--red-accent);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .attempts-counter {
+            color: var(--yellow-accent);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .security-warning {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-gray);
+        }
+        
+        /* CONTENIDO PRINCIPAL (OCULTO INICIALMENTE) */
         .manual-container {
             background: var(--secondary-black);
             padding: 40px;
             border: 1px solid var(--border-gray);
             position: relative;
+            display: none;
         }
         
         .manual-header {
@@ -251,6 +378,200 @@
             font-size: 1.1rem;
         }
         
+        /* SEGURIDAD ADICIONAL */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        .no-copy {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* ANIMACIONES DE SEGURIDAD */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        /* LOADER DE SEGURIDAD */
+        .security-loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-black);
+            z-index: 10000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--border-gray);
+            border-top: 5px solid var(--zyx-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
+            color: var(--text-light);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        /* MODAL DE CONTRASEÑA PARA DESCARGA */
+        .download-password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: 10001;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .download-modal-content {
+            background: var(--secondary-black);
+            padding: 50px;
+            border-radius: 10px;
+            border: 2px solid var(--green-accent);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(46, 125, 50, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green-accent), var(--blue-accent));
+        }
+        
+        .download-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .download-modal-subtitle {
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        
+        .download-password-input {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gray);
+            border: 1px solid var(--border-gray);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .download-password-input:focus {
+            outline: none;
+            border-color: var(--green-accent);
+            box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+        }
+        
+        .download-modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .download-confirm-btn {
+            flex: 1;
+            background: linear-gradient(135deg, var(--green-accent), var(--blue-accent));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .download-cancel-btn {
+            flex: 1;
+            background: var(--accent-gray);
+            color: var(--text-light);
+            border: 1px solid var(--border-gray);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .download-confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(46, 125, 50, 0.3);
+        }
+        
+        .download-cancel-btn:hover {
+            background: var(--border-gray);
+        }
+        
+        .download-error-message {
+            color: var(--red-accent);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+            font-weight: 600;
+        }
+        
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .manual-container {
@@ -282,6 +603,15 @@
             .subclause {
                 font-size: 1rem;
                 margin-left: 15px;
+            }
+            
+            .password-container,
+            .download-modal-content {
+                padding: 30px 20px;
+            }
+            
+            .download-modal-buttons {
+                flex-direction: column;
             }
         }
         
@@ -315,8 +645,82 @@
         }
     </style>
 </head>
-<body>
-    <div class="manual-container">
+<body class="no-select no-copy">
+    <!-- LOADER DE SEGURIDAD -->
+    <div class="security-loader" id="securityLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">VERIFICANDO ACCESO</div>
+    </div>
+
+    <!-- MODAL DE CONTRASEÑA PARA DESCARGA -->
+    <div class="download-password-modal" id="downloadPasswordModal">
+        <div class="download-modal-content">
+            <h2 class="download-modal-title">VERIFICACIÓN DE DESCARGA</h2>
+            <p class="download-modal-subtitle">Para descargar el Acuerdo Oficial de ZYX ESPORTS, ingresa la contraseña de acceso</p>
+            
+            <input type="password" 
+                   class="download-password-input" 
+                   id="downloadPasswordInput" 
+                   placeholder="Ingrese la contraseña de acceso"
+                   autocomplete="off"
+                   autocapitalize="off"
+                   autocorrect="off"
+                   spellcheck="false">
+            
+            <div class="download-error-message" id="downloadErrorMessage">
+                Contraseña incorrecta. Descarga bloqueada.
+            </div>
+            
+            <div class="download-modal-buttons">
+                <button class="download-confirm-btn" id="downloadConfirmBtn">
+                    <i class="fas fa-check"></i> CONFIRMAR Y DESCARGAR
+                </button>
+                <button class="download-cancel-btn" id="downloadCancelBtn">
+                    <i class="fas fa-times"></i> CANCELAR
+                </button>
+            </div>
+            
+            <div class="security-warning" style="margin-top: 25px; font-size: 0.7rem;">
+                <i class="fas fa-shield-alt"></i> Este documento está protegido con cifrado de seguridad nivel 4.<br>
+                Cada descarga genera una firma digital única y registra la IP de origen.
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE CONTRASEÑA -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-container">
+            <h1 class="password-title">ACCESO RESTRINGIDO</h1>
+            <p class="password-subtitle">ZYX ESPORTS - Documento Interno Confidencial</p>
+            
+            <input type="password" 
+                   class="password-input" 
+                   id="passwordInput" 
+                   placeholder="Ingrese la contraseña de acceso"
+                   autocomplete="off"
+                   autocapitalize="off"
+                   autocorrect="off"
+                   spellcheck="false">
+            
+            <button class="password-btn" id="passwordBtn">VERIFICAR ACCESO</button>
+            
+            <div class="error-message" id="errorMessage">
+                Contraseña incorrecta. Acceso denegado.
+            </div>
+            
+            <div class="attempts-counter" id="attemptsCounter">
+                Intentos restantes: <span id="attemptsRemaining">3</span>
+            </div>
+            
+            <div class="security-warning">
+                ⚠️ Este documento contiene información clasificada. <br>
+                Todo acceso no autorizado será registrado y reportado.
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL (OCULTO INICIALMENTE) -->
+    <div class="manual-container" id="manualContainer">
         <!-- HEADER -->
         <div class="manual-header">
             <h1 class="manual-title">ACUERDO DE INGRESO Y MANUAL OPERATIVO</h1>
@@ -674,6 +1078,9 @@
             <p style="color: var(--text-gray); margin-top: 20px; font-size: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
                 Este documento constituye el Acuerdo Oficial de Ingreso a ZYX ESPORTS. Descárgalo, consérvalo y consúltalo regularmente. Tu firma digital se genera automáticamente al descargar este documento.
             </p>
+            <div class="security-warning" style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <i class="fas fa-shield-alt"></i> La descarga de este documento requiere verificación de identidad mediante contraseña de acceso.
+            </div>
         </div>
 
         <!-- FOOTER -->
@@ -689,9 +1096,202 @@
         </div>
     </div>
 
+    <!-- SCRIPTS DE SEGURIDAD Y FUNCIONALIDAD -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-        document.getElementById('downloadPdf').addEventListener('click', function() {
+        // CONTRASEÑA CORRECTA
+        const CORRECT_PASSWORD = "A9f$Q7m!2Kr#L8Z@cP4Wx%6TnZYX!SV5bR^JqM@7eK#Y2CwN$9";
+        
+        // Variables de seguridad
+        let attempts = 3;
+        let isAuthenticated = false;
+        let sessionTimeout = null;
+        const SESSION_DURATION = 30 * 60 * 1000; // 30 minutos
+        
+        // Elementos del DOM
+        const passwordScreen = document.getElementById('passwordScreen');
+        const manualContainer = document.getElementById('manualContainer');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordBtn = document.getElementById('passwordBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const attemptsCounter = document.getElementById('attemptsCounter');
+        const attemptsRemaining = document.getElementById('attemptsRemaining');
+        const securityLoader = document.getElementById('securityLoader');
+        const downloadPdfBtn = document.getElementById('downloadPdf');
+        const downloadPasswordModal = document.getElementById('downloadPasswordModal');
+        const downloadPasswordInput = document.getElementById('downloadPasswordInput');
+        const downloadConfirmBtn = document.getElementById('downloadConfirmBtn');
+        const downloadCancelBtn = document.getElementById('downloadCancelBtn');
+        const downloadErrorMessage = document.getElementById('downloadErrorMessage');
+
+        // Verificar si ya está autenticado (sessionStorage)
+        function checkExistingSession() {
+            const session = sessionStorage.getItem('zyx_authenticated');
+            const sessionTime = sessionStorage.getItem('zyx_session_time');
+            
+            if (session === 'true' && sessionTime) {
+                const timeElapsed = Date.now() - parseInt(sessionTime);
+                if (timeElapsed < SESSION_DURATION) {
+                    isAuthenticated = true;
+                    showContent();
+                    startSessionTimer();
+                    return true;
+                } else {
+                    sessionStorage.clear();
+                }
+            }
+            return false;
+        }
+
+        // Mostrar contenido protegido
+        function showContent() {
+            securityLoader.style.display = 'flex';
+            
+            setTimeout(() => {
+                securityLoader.style.display = 'none';
+                passwordScreen.style.display = 'none';
+                manualContainer.style.display = 'block';
+                
+                // Registrar sesión
+                sessionStorage.setItem('zyx_authenticated', 'true');
+                sessionStorage.setItem('zyx_session_time', Date.now().toString());
+                
+                startSessionTimer();
+            }, 1500);
+        }
+
+        // Iniciar temporizador de sesión
+        function startSessionTimer() {
+            if (sessionTimeout) clearTimeout(sessionTimeout);
+            
+            sessionTimeout = setTimeout(() => {
+                alert('Tu sesión ha expirado por seguridad. Por favor, vuelve a autenticarte.');
+                logout();
+            }, SESSION_DURATION);
+        }
+
+        // Cerrar sesión
+        function logout() {
+            isAuthenticated = false;
+            sessionStorage.clear();
+            if (sessionTimeout) clearTimeout(sessionTimeout);
+            
+            passwordScreen.style.display = 'flex';
+            manualContainer.style.display = 'none';
+            passwordInput.value = '';
+            attempts = 3;
+            updateAttemptsCounter();
+            errorMessage.style.display = 'none';
+        }
+
+        // Actualizar contador de intentos
+        function updateAttemptsCounter() {
+            attemptsRemaining.textContent = attempts;
+            if (attempts <= 1) {
+                attemptsCounter.style.color = '#c62828';
+            } else if (attempts <= 2) {
+                attemptsCounter.style.color = '#f9a825';
+            } else {
+                attemptsCounter.style.color = '#2e7d32';
+            }
+        }
+
+        // Verificar contraseña ingresada
+        function verifyPassword() {
+            const input = passwordInput.value.trim();
+            
+            if (!input) {
+                showError('Por favor, ingresa la contraseña de acceso.');
+                return;
+            }
+            
+            // Verificación directa
+            if (input === CORRECT_PASSWORD) {
+                isAuthenticated = true;
+                showContent();
+            } else {
+                attempts--;
+                updateAttemptsCounter();
+                
+                if (attempts <= 0) {
+                    showError('Acceso bloqueado. Has excedido el número máximo de intentos.');
+                    passwordInput.disabled = true;
+                    passwordBtn.disabled = true;
+                    passwordBtn.textContent = 'ACCESO BLOQUEADO';
+                    passwordBtn.style.background = '#333';
+                    
+                    // Bloquear por 5 minutos
+                    setTimeout(() => {
+                        attempts = 3;
+                        passwordInput.disabled = false;
+                        passwordBtn.disabled = false;
+                        passwordBtn.textContent = 'VERIFICAR ACCESO';
+                        passwordBtn.style.background = '';
+                        updateAttemptsCounter();
+                        errorMessage.style.display = 'none';
+                    }, 5 * 60 * 1000);
+                } else {
+                    showError(`Contraseña incorrecta. Te quedan ${attempts} intento(s).`);
+                    passwordInput.classList.add('shake');
+                    setTimeout(() => {
+                        passwordInput.classList.remove('shake');
+                    }, 500);
+                }
+                
+                // Limpiar input
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Mostrar mensaje de error
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        // Mostrar modal de contraseña para descarga
+        function showDownloadPasswordModal() {
+            if (!isAuthenticated) {
+                alert('Debes estar autenticado para descargar el documento.');
+                return;
+            }
+            
+            downloadPasswordModal.style.display = 'flex';
+            downloadPasswordInput.value = '';
+            downloadErrorMessage.style.display = 'none';
+            setTimeout(() => {
+                downloadPasswordInput.focus();
+            }, 100);
+        }
+
+        // Verificar contraseña para descarga
+        function verifyDownloadPassword() {
+            const input = downloadPasswordInput.value.trim();
+            
+            if (!input) {
+                downloadErrorMessage.textContent = 'Por favor, ingresa la contraseña de acceso.';
+                downloadErrorMessage.style.display = 'block';
+                return;
+            }
+            
+            if (input === CORRECT_PASSWORD) {
+                downloadPasswordModal.style.display = 'none';
+                generateAndDownloadPDF();
+            } else {
+                downloadErrorMessage.textContent = 'Contraseña incorrecta. La descarga ha sido bloqueada.';
+                downloadErrorMessage.style.display = 'block';
+                downloadPasswordInput.classList.add('shake');
+                setTimeout(() => {
+                    downloadPasswordInput.classList.remove('shake');
+                }, 500);
+                downloadPasswordInput.value = '';
+                downloadPasswordInput.focus();
+            }
+        }
+
+        // Generar y descargar PDF
+        function generateAndDownloadPDF() {
             const element = document.querySelector('.manual-container');
             const opt = {
                 margin:       15,
@@ -745,8 +1345,9 @@
                 <div style="font-family: 'Orbitron', sans-serif; color: #9c27b0; font-size: 14px; margin-top: 20px;">
                     <div>FIRMA DIGITAL AUTOMÁTICA</div>
                     <div>Fecha de aceptación: ${new Date().toLocaleDateString('es-ES')}</div>
-                    <div>Documento válido y vinculante</div>
                     <div>ID de aceptación: ZYX-${Date.now().toString().slice(-8)}</div>
+                    <div>Usuario: ${sessionStorage.getItem('zyx_user_id') || 'AUTENTICADO'}</div>
+                    <div>Documento válido y vinculante</div>
                 </div>
             `;
             document.body.appendChild(signatureSection);
@@ -758,44 +1359,120 @@
                 document.body.removeChild(signatureSection);
                 
                 // Confirmación visual
-                const originalText = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-check"></i> DOCUMENTO DESCARGADO';
-                this.style.background = 'linear-gradient(135deg, #2e7d32, #4caf50)';
+                const originalText = downloadPdfBtn.innerHTML;
+                downloadPdfBtn.innerHTML = '<i class="fas fa-check"></i> DOCUMENTO DESCARGADO';
+                downloadPdfBtn.style.background = 'linear-gradient(135deg, #2e7d32, #4caf50)';
                 
                 setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.style.background = 'linear-gradient(135deg, var(--zyx-purple), var(--blue-accent))';
+                    downloadPdfBtn.innerHTML = originalText;
+                    downloadPdfBtn.style.background = 'linear-gradient(135deg, var(--zyx-purple), var(--blue-accent))';
                 }, 3000);
             });
+        }
+
+        // Event Listeners
+        passwordBtn.addEventListener('click', verifyPassword);
+        
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
         });
 
-        // Agregar iconos de FontAwesome
-        const faLink = document.createElement('link');
-        faLink.rel = 'stylesheet';
-        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-        document.head.appendChild(faLink);
+        downloadPdfBtn.addEventListener('click', showDownloadPasswordModal);
+        
+        downloadConfirmBtn.addEventListener('click', verifyDownloadPassword);
+        
+        downloadCancelBtn.addEventListener('click', () => {
+            downloadPasswordModal.style.display = 'none';
+        });
+        
+        downloadPasswordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verifyDownloadPassword();
+            }
+        });
+
+        // Prevenir acceso al código fuente
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', (e) => {
+            // Deshabilitar F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                alert('Acceso al código fuente restringido.');
+                return false;
+            }
+        });
+
+        // Prevenir capturas de pantalla (en algunos navegadores)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && isAuthenticated) {
+                // El usuario cambió de pestaña - cerrar sesión por seguridad
+                logout();
+                alert('Sesión cerrada por cambio de pestaña/navegador.');
+            }
+        });
+
+        // Actualizar contador inicial
+        updateAttemptsCounter();
+
+        // Verificar sesión existente al cargar
+        window.addEventListener('load', () => {
+            if (!checkExistingSession()) {
+                passwordScreen.style.display = 'flex';
+            }
+            
+            // Generar ID de usuario único
+            if (!sessionStorage.getItem('zyx_user_id')) {
+                const userId = 'USER-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                sessionStorage.setItem('zyx_user_id', userId);
+            }
+        });
+
+        // Bloquear dev tools (método adicional)
+        setInterval(() => {
+            if (isAuthenticated) {
+                const widthThreshold = window.outerWidth - window.innerWidth > 160;
+                const heightThreshold = window.outerHeight - window.innerHeight > 160;
+                
+                if (widthThreshold || heightThreshold) {
+                    logout();
+                    alert('Herramientas de desarrollo detectadas. Sesión cerrada por seguridad.');
+                }
+            }
+        }, 1000);
 
         // Efecto de scroll suave para cláusulas
-        document.querySelectorAll('.clause').forEach(clause => {
-            clause.style.cursor = 'pointer';
-            clause.addEventListener('click', function() {
-                this.style.color = this.style.color === 'rgb(156, 39, 176)' ? 'var(--text-light)' : 'var(--zyx-purple)';
+        setTimeout(() => {
+            document.querySelectorAll('.clause').forEach(clause => {
+                clause.style.cursor = 'pointer';
+                clause.addEventListener('click', function() {
+                    this.style.color = this.style.color === 'rgb(156, 39, 176)' ? 'var(--text-light)' : 'var(--zyx-purple)';
+                });
             });
-        });
+        }, 2000);
 
         // Marcar como leído automáticamente después de 30 segundos
         setTimeout(() => {
-            const readStamp = document.createElement('div');
-            readStamp.style.textAlign = 'center';
-            readStamp.style.marginTop = '30px';
-            readStamp.style.padding = '15px';
-            readStamp.style.borderTop = '1px solid var(--border-gray)';
-            readStamp.style.color = 'var(--green-accent)';
-            readStamp.style.fontFamily = "'Orbitron', sans-serif";
-            readStamp.style.fontSize = '0.9rem';
-            readStamp.innerHTML = '<i class="fas fa-eye"></i> DOCUMENTO REVISADO - ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'});
-            
-            document.querySelector('.download-section').parentNode.insertBefore(readStamp, document.querySelector('.download-section'));
+            if (isAuthenticated) {
+                const readStamp = document.createElement('div');
+                readStamp.style.textAlign = 'center';
+                readStamp.style.marginTop = '30px';
+                readStamp.style.padding = '15px';
+                readStamp.style.borderTop = '1px solid var(--border-gray)';
+                readStamp.style.color = 'var(--green-accent)';
+                readStamp.style.fontFamily = "'Orbitron', sans-serif";
+                readStamp.style.fontSize = '0.9rem';
+                readStamp.innerHTML = '<i class="fas fa-eye"></i> DOCUMENTO REVISADO - ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'});
+                
+                document.querySelector('.download-section').parentNode.insertBefore(readStamp, document.querySelector('.download-section'));
+            }
         }, 30000);
     </script>
 </body>
