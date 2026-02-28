@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen UE - ONU | Test interactivo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            border-left: 8px solid #ffcc00;
+            padding-left: 20px;
+        }
+        .sub {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-style: italic;
+            padding-left: 28px;
+        }
+        .resumen {
+            background: white;
+            border-radius: 24px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #e0e7ef;
+        }
+        .resumen h2 {
+            color: #0b2b4a;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .resumen h2 i {
+            font-size: 1.8rem;
+            color: #f39c12;
+        }
+        .resumen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 15px;
+        }
+        .resumen-card {
+            background: #f8fafd;
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 5px solid;
+            transition: transform 0.2s;
+        }
+        .resumen-card:hover {
+            transform: translateY(-3px);
+        }
+        .resumen-card h3 {
+            margin-bottom: 12px;
+            color: #1e3a5f;
+            font-weight: 600;
+        }
+        .resumen-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .resumen-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+        .resumen-card li::before {
+            content: "•";
+            color: #e67e22;
+            font-weight: bold;
+            position: absolute;
+            left: 4px;
+        }
+        .test {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            box-shadow: 0 20px 30px rgba(0,20,50,0.1);
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        .test-header h2 {
+            color: #0b2b4a;
+        }
+        .info-score {
+            background: #e9ecf3;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+        .info-score span {
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 18px 20px;
+            border: 1px solid #dee6f0;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        .question-card.correct {
+            background: #e1f7e7;
+            border-color: #2ecc71;
+        }
+        .question-card.incorrect {
+            background: #fde9e9;
+            border-color: #e74c3c;
+        }
+        .question-card.unanswered {
+            background: #fbfbfb;
+            border-color: #bdc3c7;
+            opacity: 0.8;
+        }
+        .q-num {
+            font-weight: 600;
+            color: #2c3e50;
+            background: #f1f5f9;
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #1e2b39;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafd;
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid transparent;
+            transition: 0.1s;
+        }
+        .option:hover {
+            background: #e3eaf2;
+        }
+        input[type=radio] {
+            accent-color: #1e3a5f;
+            width: 16px;
+            height: 16px;
+        }
+        button {
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            margin: 30px 0 15px;
+            box-shadow: 0 8px 16px rgba(0,40,80,0.2);
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #123153;
+            transform: scale(1.02);
+        }
+        .result-box {
+            background: #fef9e7;
+            border-radius: 40px;
+            padding: 20px 30px;
+            margin: 25px 0;
+            border: 2px solid #f1c40f;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .result-box .score {
+            font-size: 2.5rem;
+            color: #27ae60;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #5d6d7e;
+            font-size: 0.95rem;
+            border-top: 1px dashed #b0c4d9;
+            padding-top: 20px;
+        }
+        .leyenda {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .leyenda-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .color-correct {
+            width: 20px;
+            height: 20px;
+            background: #e1f7e7;
+            border: 2px solid #2ecc71;
+            border-radius: 8px;
+        }
+        .color-incorrect {
+            width: 20px;
+            height: 20px;
+            background: #fde9e9;
+            border: 2px solid #e74c3c;
+            border-radius: 8px;
+        }
+        .color-unanswered {
+            width: 20px;
+            height: 20px;
+            background: #fbfbfb;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+        }
+        @media (max-width: 700px) {
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🇪🇺 Unión Europea · 🇺🇳 Naciones Unidas</h1>
+    <div class="sub">Examen tipo test · 35 preguntas · Nivel medio-alto</div>
+
+    <!-- RESUMEN COMPLETO (apartado visual) -->
+    <div class="resumen">
+        <h2><i>📘</i> Resumen de contenidos (UE + ONU + Estado)</h2>
+        <div class="resumen-grid">
+            <div class="resumen-card" style="border-left-color: #003399;">
+                <h3>🇪🇺 Unión Europea</h3>
+                <ul>
+                    <li><strong>Origen:</strong> CECA (1952) por Schuman (9 mayo, Día de Europa).</li>
+                    <li><strong>1957:</strong> Tratado de Roma → CEE (unión aduanera, libre circulación).</li>
+                    <li><strong>1987:</strong> Acta Única (cohesión económica y social).</li>
+                    <li><strong>1993:</strong> Tratado de Maastricht → UE, moneda única (euro 2002).</li>
+                    <li><strong>Miembros:</strong> 27 (salida Reino Unido).</li>
+                    <li><strong>Símbolos:</strong> lema “Unida en la diversidad”, bandera, himno (Oda a la Alegría).</li>
+                    <li><strong>Retos:</strong> antieuropeísmo, política migratoria común, crecimiento sostenible (empleo, I+D+i, clima, educación), solidaridad regional.</li>
+                </ul>
+            </div>
+            <div class="resumen-card" style="border-left-color: #4b7bec;">
+                <h3>🇺🇳 ONU</h3>
+                <ul>
+                    <li><strong>Fundación:</strong> 1945 (tras II GM), reemplaza a Sociedad de Naciones.</li>
+                    <li><strong>Objetivos:</strong> DDHH (Declaración 1948, Derechos del Niño 1959), mantenimiento de la paz, progreso económico y social.</li>
+                    <li><strong>Consejo de Seguridad:</strong> 15 miembros (5 permanentes con veto: China, EEUU, Rusia, Francia, R. Unido).</li>
+                    <li><strong>Cascos Azules:</strong> fuerzas de paz.</li>
+                    <li><strong>Fondos:</strong> UNICEF, PNUD. <strong>Agencias:</strong> Banco Mundial, UNESCO, OIT, ACNUR, FAO, OMS, ONU Mujeres.</li>
+                    <li><strong>Asamblea General:</strong> 193 países. Secretario General: António Guterres.</li>
+                    <li><strong>Sedes:</strong> Nueva York (principal), Ginebra (europea). Idiomas: 6.</li>
+                </ul>
+            </div>
+            <div class="resumen-card" style="border-left-color: #e67e22;">
+                <h3>🏛️ Estado y política</h3>
+                <ul>
+                    <li><strong>Elementos del Estado:</strong> territorio, población, gobierno e instituciones.</li>
+                    <li><strong>Funciones:</strong> bienestar, seguridad, justicia, etc.</li>
+                    <li><strong>Sistemas políticos:</strong> democracia (separación poderes), dictadura.</li>
+                    <li><strong>Formas de jefatura:</strong> monarquía (parlamentaria/constitucional) o república (parlamentaria/presidencialista).</li>
+                    <li><strong>Distribución territorial:</strong> centralizado / descentralizado.</li>
+                    <li><strong>Religión:</strong> estados laicos, confesionales, teocráticos.</li>
+                    <li><strong>Conflictos actuales:</strong> Siria, Afganistán, Ucrania, árabe-israelí, Sáhara.</li>
+                    <li><strong>España:</strong> Estado social y democrático de derecho, CCAA, municipios, provincias.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ZONA DE TEST -->
+    <div class="test">
+        <div class="test-header">
+            <h2>📝 Examen: 35 preguntas</h2>
+            <div class="info-score">🔵 Base 10 · ❌ Fallo resta 0,25 · ⚪ Sin responder resta 0,15</div>
+        </div>
+        <div class="leyenda">
+            <div class="leyenda-item"><span class="color-correct"></span> Correcta</div>
+            <div class="leyenda-item"><span class="color-incorrect"></span> Incorrecta</div>
+            <div class="leyenda-item"><span class="color-unanswered"></span> Sin responder</div>
+        </div>
+
+        <form id="quizForm">
+            <div class="quiz-grid" id="quizContainer">
+                <!-- Las 35 preguntas se generan con JS -->
+            </div>
+            <div style="text-align: center;">
+                <button type="button" id="corregirBtn">🔍 Corregir examen</button>
+            </div>
+        </form>
+
+        <div id="resultado" class="result-box" style="display: none;">
+            <span>Puntuación final:</span>
+            <span class="score" id="puntuacion">0.00</span>
+        </div>
+        <div id="detalles" style="margin-top: 10px;"></div>
+    </div>
+
+    <div class="footer">
+        ⚡ Dev by Fonsi · Contenido basado en presentaciones UE, ONU y unidad didáctica.
+    </div>
+</div>
+
+<script>
+(function() {
+    // --------------------------------------------------------------
+    // BASE DE DATOS DE 35 PREGUNTAS (dificultad media-alta)
+    // --------------------------------------------------------------
+    const questions = [
+        {
+            question: "¿En qué año propuso Robert Schuman la creación de la CECA (Comunidad Europea del Carbón y del Acero)?",
+            options: ["1945", "1950", "1957", "1963"],
+            correct: 1,
+            explanation: "9 de mayo de 1950 (Declaración Schuman)."
+        },
+        {
+            question: "¿Qué países fundaron la CECA en 1952?",
+            options: ["Francia, Alemania, Italia, Bélgica, Países Bajos, Luxemburgo", "Francia, Reino Unido, Alemania, Italia, España, Portugal", "Alemania, Francia, Italia, Austria, Dinamarca, Grecia", "Francia, Italia, Bélgica, Países Bajos, Luxemburgo, Reino Unido"],
+            correct: 0,
+            explanation: "Los seis miembros fundadores: Bélgica, Luxemburgo, Países Bajos, RFA, Francia e Italia."
+        },
+        {
+            question: "¿Qué tratado creó la Comunidad Económica Europea (CEE) en 1957?",
+            options: ["Tratado de París", "Tratado de Maastricht", "Tratado de Roma", "Acta Única Europea"],
+            correct: 2,
+            explanation: "El Tratado de Roma (1957) estableció la CEE."
+        },
+        {
+            question: "¿Cuál era el objetivo principal de la CEE en sus inicios?",
+            options: ["Una unión política", "Una unión aduanera y libre circulación", "Una defensa común", "Una moneda única"],
+            correct: 1,
+            explanation: "Crear una unión aduanera para permitir la libre circulación de mercancías, personas, capitales y servicios."
+        },
+        {
+            question: "¿Qué incorporó el Acta Única Europea de 1987?",
+            options: ["La moneda única", "El principio de cohesión económica y social", "La ciudadanía europea", "La política exterior común"],
+            correct: 1,
+            explanation: "El Acta Única incorporó la cohesión económica y social para un desarrollo equilibrado."
+        },
+        {
+            question: "¿En qué año entró en vigor el Tratado de Maastricht que dio nombre a la Unión Europea?",
+            options: ["1987", "1993", "2002", "1999"],
+            correct: 1,
+            explanation: "1993, y la CEE pasó a denominarse Unión Europea."
+        },
+        {
+            question: "¿Qué introdujo principalmente el Tratado de Maastricht?",
+            options: ["La unión monetaria (euro)", "La adhesión de España", "El Acta Única", "Los Cascos Azules"],
+            correct: 0,
+            explanation: "Decidió la unión monetaria; el euro comenzó a circular en 2002."
+        },
+        {
+            question: "¿Cuántos Estados miembros tiene actualmente la Unión Europea?",
+            options: ["28", "25", "27", "30"],
+            correct: 2,
+            explanation: "27 (tras la salida del Reino Unido)."
+        },
+        {
+            question: "¿Qué país protagonizó el Brexit (salida de la UE)?",
+            options: ["Francia", "Alemania", "Reino Unido", "Dinamarca"],
+            correct: 2,
+            explanation: "Reino Unido abandonó la UE en 2020."
+        },
+        {
+            question: "¿Cuál es el lema de la Unión Europea?",
+            options: ["'En paz y libertad'", "'Unida en la diversidad'", "'Juntos por Europa'", "'Fuerza en la unión'"],
+            correct: 1,
+            explanation: "Lema oficial: 'Unida en la diversidad'."
+        },
+        {
+            question: "¿Qué composición musical es el himno de la UE desde 1985?",
+            options: ["La Marsellesa", "Oda a la Alegría (Beethoven)", "El himno de la Alegría", "Europeia"],
+            correct: 1,
+            explanation: "La Oda a la Alegría del último movimiento de la Novena Sinfonía de Beethoven."
+        },
+        {
+            question: "¿Qué día se celebra el Día de Europa?",
+            options: ["9 de mayo", "5 de junio", "1 de noviembre", "18 de abril"],
+            correct: 0,
+            explanation: "En conmemoración de la Declaración Schuman del 9 de mayo de 1950."
+        },
+        {
+            question: "Uno de los retos actuales de la UE es establecer...",
+            options: ["una política migratoria común", "un ejército único", "una religión oficial", "una moneda diferente"],
+            correct: 0,
+            explanation: "La necesidad de una política migratoria y de asilo común ante las discrepancias entre países."
+        },
+        {
+            question: "¿Cuál de estos NO es un objetivo del crecimiento sostenible de la UE?",
+            options: ["Crear empleo", "Invertir en I+D+i", "Aumentar la contaminación", "Mejorar el nivel educativo"],
+            correct: 2,
+            explanation: "Frenar el cambio climático y reducir la contaminación es el objetivo, no aumentarla."
+        },
+        {
+            question: "¿Qué órgano de la ONU es responsable de mantener la paz y la seguridad?",
+            options: ["Asamblea General", "Consejo de Seguridad", "Corte Internacional de Justicia", "Consejo Económico y Social"],
+            correct: 1,
+            explanation: "El Consejo de Seguridad, con 15 miembros y 5 permanentes con veto."
+        },
+        {
+            question: "¿Cuántos miembros tiene el Consejo de Seguridad de la ONU?",
+            options: ["10", "15", "20", "25"],
+            correct: 1,
+            explanation: "15 miembros totales, de los cuales 5 son permanentes."
+        },
+        {
+            question: "¿Qué países tienen derecho a veto en el Consejo de Seguridad?",
+            options: ["EE. UU., Rusia, China, Francia, Reino Unido", "EE. UU., Alemania, Japón, Francia, China", "Rusia, China, India, Brasil, Sudáfrica", "Francia, Italia, España, Polonia, Suecia"],
+            correct: 0,
+            explanation: "Los cinco miembros permanentes: China, EE. UU., Rusia, Francia y Reino Unido."
+        },
+        {
+            question: "¿Cómo se denominan las fuerzas militares de paz de la ONU?",
+            options: ["Boinas verdes", "Cascos Azules", "Soldados de la paz", "Ejército azul"],
+            correct: 1,
+            explanation: "Cascos Azules, por el color de sus cascos."
+        },
+        {
+            question: "¿En qué año se fundó la Organización de las Naciones Unidas?",
+            options: ["1919", "1945", "1950", "1939"],
+            correct: 1,
+            explanation: "1945, al finalizar la Segunda Guerra Mundial."
+        },
+        {
+            question: "¿Qué organización precedió a la ONU y no pudo evitar la Segunda Guerra Mundial?",
+            options: ["Sociedad de Naciones", "Liga de las Naciones", "Conferencia de Paz", "Acuerdo de Ginebra"],
+            correct: 0,
+            explanation: "La Sociedad de Naciones (fundada en 1919) fue el antecedente."
+        },
+        {
+            question: "¿Cuál es el fondo de la ONU dedicado a la infancia?",
+            options: ["UNESCO", "UNICEF", "PNUD", "ACNUR"],
+            correct: 1,
+            explanation: "UNICEF: Fondo de las Naciones Unidas para la Infancia."
+        },
+        {
+            question: "¿Qué agencia especializada de la ONU se ocupa de la educación, ciencia y cultura?",
+            options: ["OMS", "OIT", "UNESCO", "FAO"],
+            correct: 2,
+            explanation: "UNESCO (Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura)."
+        },
+        {
+            question: "¿Quién es el actual secretario general de la ONU?",
+            options: ["Ban Ki-moon", "António Guterres", "Kofi Annan", "Javier Pérez de Cuéllar"],
+            correct: 1,
+            explanation: "António Guterres (Portugal) desde 2017."
+        },
+        {
+            question: "¿Dónde se encuentra la sede principal de la ONU?",
+            options: ["Ginebra", "París", "Nueva York", "La Haya"],
+            correct: 2,
+            explanation: "Sede central en Nueva York; la europea está en Ginebra."
+        },
+        {
+            question: "¿Qué documento de 1948 proclamó los derechos humanos fundamentales?",
+            options: ["Carta de la ONU", "Declaración Universal de los Derechos Humanos", "Pacto de San José", "Convención de Ginebra"],
+            correct: 1,
+            explanation: "Declaración Universal de los Derechos Humanos (1948)."
+        },
+        {
+            question: "¿Qué elemento NO es parte esencial de la definición de un Estado?",
+            options: ["Territorio", "Población", "Gobierno", "Religión oficial"],
+            correct: 3,
+            explanation: "Un Estado puede ser laico o confesional, pero la religión no es un elemento definitorio básico."
+        },
+        {
+            question: "¿Qué sistema político se basa en la separación de poderes (legislativo, ejecutivo, judicial)?",
+            options: ["Dictadura", "Democracia", "Monarquía absoluta", "Teocracia"],
+            correct: 1,
+            explanation: "La democracia se caracteriza por la división de poderes y el respeto a los derechos."
+        },
+        {
+            question: "¿Qué tipo de Estado tiene un jefe de Estado hereditario?",
+            options: ["República", "Monarquía", "Federación", "Confederación"],
+            correct: 1,
+            explanation: "En la monarquía, el jefe del Estado (rey/reina) accede por herencia."
+        },
+        {
+            question: "¿Cómo se llama el Estado que no tiene religión oficial y respeta todas las creencias?",
+            options: ["Confesional", "Teocrático", "Laico", "Ateo"],
+            correct: 2,
+            explanation: "Estado laico: neutral en materia religiosa."
+        },
+        {
+            question: "¿Cuál de los siguientes conflictos actuales aparece en los materiales como ejemplo?",
+            options: ["Guerra de Corea", "Conflicto de Siria", "Guerra de Vietnam", "Conflicto de Kosovo"],
+            correct: 1,
+            explanation: "Siria, Afganistán, Ucrania, árabe-israelí, Sáhara son mencionados."
+        },
+        {
+            question: "¿Qué organismo de la ONU se encarga de los refugiados?",
+            options: ["OMS", "ACNUR", "OIT", "FAO"],
+            correct: 1,
+            explanation: "ACNUR: Alto Comisionado de las Naciones Unidas para los Refugiados."
+        },
+        {
+            question: "¿Qué programa de la ONU promueve el desarrollo (siglas PNUD)?",
+            options: ["Programa de Naciones Unidas para el Desarrollo", "Programa Mundial de Alimentos", "Fondo de Población", "Conferencia de Comercio"],
+            correct: 0,
+            explanation: "PNUD es el Programa de Naciones Unidas para el Desarrollo."
+        },
+        {
+            question: "¿Cuál es la sede europea de la ONU?",
+            options: ["Bruselas", "Estrasburgo", "Ginebra", "Viena"],
+            correct: 2,
+            explanation: "Oficina de la ONU en Ginebra (Suiza)."
+        },
+        {
+            question: "¿Qué institución sucedió a la CEE tras el Tratado de Maastricht?",
+            options: ["Comunidad Europea", "Unión Europea", "Comunidad del Carbón y del Acero", "Espacio Económico Europeo"],
+            correct: 1,
+            explanation: "La CEE pasó a llamarse Unión Europea en 1993."
+        },
+        {
+            question: "¿Qué tipo de Estado es España según la Constitución?",
+            options: ["Estado centralizado", "Estado social y democrático de Derecho", "República federal", "Confederación"],
+            correct: 1,
+            explanation: "Artículo 1: España se constituye en un Estado social y democrático de Derecho."
+        }
+    ];
+
+    // Renderizar preguntas
+    const container = document.getElementById('quizContainer');
+    questions.forEach((q, idx) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question-card';
+        qDiv.id = `q-${idx}`;
+        qDiv.setAttribute('data-index', idx);
+        const qNum = idx + 1;
+        let radiosHtml = '';
+        q.options.forEach((opt, optIdx) => {
+            radiosHtml += `
+                <label class="option">
+                    <input type="radio" name="q${idx}" value="${optIdx}">
+                    <span>${opt}</span>
+                </label>
+            `;
+        });
+        qDiv.innerHTML = `
+            <div class="q-num">Pregunta ${qNum}</div>
+            <div class="q-text">${q.question}</div>
+            <div class="options">${radiosHtml}</div>
+        `;
+        container.appendChild(qDiv);
+    });
+
+    // Lógica de corrección
+    const corregirBtn = document.getElementById('corregirBtn');
+    const resultadoDiv = document.getElementById('resultado');
+    const puntuacionSpan = document.getElementById('puntuacion');
+    const detallesDiv = document.getElementById('detalles');
+
+    corregirBtn.addEventListener('click', () => {
+        let correctas = 0;
+        let incorrectas = 0;
+        let sinResponder = 0;
+
+        // Evaluar cada pregunta
+        for (let i = 0; i < questions.length; i++) {
+            const radios = document.getElementsByName(`q${i}`);
+            let selectedVal = null;
+            for (let r of radios) {
+                if (r.checked) {
+                    selectedVal = parseInt(r.value);
+                    break;
+                }
+            }
+            const card = document.getElementById(`q-${i}`);
+            // Quitar clases previas
+            card.classList.remove('correct', 'incorrect', 'unanswered');
+
+            if (selectedVal === null) {
+                sinResponder++;
+                card.classList.add('unanswered');
+            } else if (selectedVal === questions[i].correct) {
+                correctas++;
+                card.classList.add('correct');
+            } else {
+                incorrectas++;
+                card.classList.add('incorrect');
+            }
+        }
+
+        // Calcular puntuación: base 10, descuentos
+        let puntuacion = 10 - (incorrectas * 0.25) - (sinResponder * 0.15);
+        puntuacion = Math.max(0, Math.round(puntuacion * 100) / 100); // positivo y 2 decimales
+
+        resultadoDiv.style.display = 'flex';
+        puntuacionSpan.innerText = puntuacion.toFixed(2) + ' / 10';
+
+        // Detalle adicional
+        detallesDiv.innerHTML = `
+            <div style="display: flex; gap: 25px; flex-wrap: wrap; background: #edf2f9; padding: 15px; border-radius: 30px; margin-top: 10px;">
+                <div style="color:#27ae60;">✅ Correctas: ${correctas}</div>
+                <div style="color:#c0392b;">❌ Incorrectas: ${incorrectas}</div>
+                <div style="color:#7f8c8d;">⚪ Sin responder: ${sinResponder}</div>
+                <div><strong>Descuento:</strong> ${(incorrectas * 0.25 + sinResponder * 0.15).toFixed(2)} puntos</div>
+            </div>
+        `;
+    });
+
+})();
+</script>
+</body>
+</html>
