@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAKES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', 'Segoe UI', 'Impact', system-ui, sans-serif;
+        }
+
+        /* Contenedor principal */
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        /* Título FAKES enorme */
+        .fakes-title {
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FF8C00, #FF4500, #FF8C00);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 3s linear infinite;
+            text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
+            margin-bottom: 3rem;
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Lista de enlaces */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* Estilo de cada enlace */
+        .link-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1.5px solid #FF8C00;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #FF8C00;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efecto hover naranja brillante */
+        .link-item:hover {
+            background: #FF8C00;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
+            transform: scale(1.02);
+            border-color: #FF8C00;
+        }
+
+        /* Efecto de brillo al pasar el mouse */
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .link-item:hover::before {
+            left: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .fakes-title {
+                font-size: 4.5rem;
+            }
+            .link-item {
+                font-size: 0.9rem;
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="fakes-title">FAKES</div>
+        <div class="links">
+            <a href="https://cxfakes.com/" class="link-item" target="_blank" rel="noopener noreferrer">https://cxfakes.com/</a>
+            <a href="https://noodlemagazine.com/" class="link-item" target="_blank" rel="noopener noreferrer">https://noodlemagazine.com/</a>
+            <a href="https://cfake.com/home/" class="link-item" target="_blank" rel="noopener noreferrer">https://cfake.com/home/</a>
+            <a href="https://sexcelebrity.net/" class="link-item" target="_blank" rel="noopener noreferrer">https://sexcelebrity.net/</a>
+        </div>
+    </div>
+</body>
+</html>
