@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Layers Studio | Objetos, Capas, Snap, Deshacer, Imágenes</title>
+    <!-- Google Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0B1120;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Layout principal: lateral + lienzo */
+        .app-layout {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Panel lateral (biblioteca de elementos) */
+        .sidebar {
+            width: 280px;
+            background: rgba(15, 25, 40, 0.95);
+            backdrop-filter: blur(8px);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .sidebar-section {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-title {
+            color: #94a3b8;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .library-item {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid transparent;
+        }
+
+        .library-item:hover {
+            background: #3b82f6;
+            transform: scale(0.98);
+        }
+
+        .library-item i {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Panel derecho de capas y propiedades */
+        .right-panel {
+            width: 280px;
+            background: rgba(15, 25, 40, 0.95);
+            backdrop-filter: blur(8px);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .prop-group {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .layer-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .layer-item {
+            background: #0f172a;
+            margin: 4px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #e2e8f0;
+            font-size: 0.8rem;
+        }
+
+        .layer-item.active-layer {
+            background: #3b82f6;
+            color: white;
+        }
+
+        button, .color-swatch {
+            background: #2d3e5a;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .toolbar-top {
+            background: rgba(0,0,0,0.5);
+            padding: 8px 20px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1a1f2e;
+            position: relative;
+            overflow: auto;
+        }
+
+        .canvas-container {
+            background: #eef2f5;
+            border-radius: 16px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+            display: inline-block;
+        }
+
+        canvas {
+            display: block;
+            cursor: grab;
+            background: white;
+            border-radius: 12px;
+        }
+
+        canvas:active { cursor: grabbing; }
+
+        .status-bar {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <!-- SIDEBAR IZQUIERDA: Biblioteca -->
+    <div class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title"><i class="fas fa-shapes"></i> FORMAS</div>
+            <div class="library-grid">
+                <div class="library-item" data-type="rect"><i class="fas fa-square"></i> Rectángulo</div>
+                <div class="library-item" data-type="circle"><i class="far fa-circle"></i> Círculo</div>
+                <div class="library-item" data-type="triangle"><i class="fas fa-play"></i> Triángulo</div>
+                <div class="library-item" data-type="star"><i class="fas fa-star"></i> Estrella</div>
+                <div class="library-item" data-type="heart"><i class="fas fa-heart"></i> Corazón</div>
+            </div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title"><i class="fas fa-image"></i> IMÁGENES</div>
+            <div class="library-grid">
+                <div class="library-item" id="uploadImageBtn"><i class="fas fa-upload"></i> Subir imagen</div>
+                <div class="library-item" data-img="https://picsum.photos/id/20/100/100"><i class="fas fa-tree"></i> Naturaleza</div>
+                <div class="library-item" data-img="https://picsum.photos/id/26/100/100"><i class="fas fa-city"></i> Ciudad</div>
+            </div>
+            <input type="file" id="imageUploadInput" accept="image/*" style="display:none">
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title"><i class="fas fa-font"></i> TEXTO</div>
+            <button id="addTextLibBtn"><i class="fas fa-plus"></i> Añadir texto</button>
+        </div>
+    </div>
+
+    <!-- ZONA CENTRAL: LIENZO + HERRAMIENTAS SUPERIORES -->
+    <div style="flex:1; display: flex; flex-direction: column;">
+        <div class="toolbar-top">
+            <button id="undoBtn"><i class="fas fa-undo-alt"></i> Deshacer</button>
+            <button id="redoBtn"><i class="fas fa-redo-alt"></i> Rehacer</button>
+            <button id="deleteSelectedBtn"><i class="fas fa-trash"></i> Eliminar</button>
+            <button id="duplicateSelectedBtn"><i class="fas fa-copy"></i> Duplicar</button>
+            <button id="bringForwardBtn"><i class="fas fa-arrow-up"></i> Traer al frente</button>
+            <button id="sendBackBtn"><i class="fas fa-arrow-down"></i> Enviar atrás</button>
+            <button id="exportImageBtn"><i class="fas fa-camera"></i> Exportar PNG</button>
+            <button id="exportPDFBtn"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+        </div>
+        <div class="canvas-area" id="canvasArea">
+            <div class="canvas-container">
+                <canvas id="mainCanvas" width="1000" height="600" style="width:100%; height:auto; aspect-ratio:1000/600"></canvas>
+            </div>
+            <div class="status-bar" id="statusMsg">✅ Snap activo | Arrastra objetos</div>
+        </div>
+    </div>
+
+    <!-- PANEL DERECHO: CAPAS Y PROPIEDADES -->
+    <div class="right-panel">
+        <div class="prop-group">
+            <div class="sidebar-title"><i class="fas fa-layer-group"></i> CAPAS (orden)</div>
+            <div id="layerListContainer" class="layer-list"></div>
+        </div>
+        <div class="prop-group">
+            <div class="sidebar-title"><i class="fas fa-palette"></i> Estilo</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <div><span style="color:#aaa;">Relleno</span><div id="fillPropSwatch" style="width:32px; height:32px; background:#FF8C42; border-radius:8px; cursor:pointer;"></div></div>
+                <div><span style="color:#aaa;">Borde</span><div id="strokePropSwatch" style="width:32px; height:32px; background:#1E2A47; border-radius:8px; cursor:pointer;"></div></div>
+                <div><span style="color:#aaa;">Grosor</span><input type="range" id="propStrokeWidth" min="0" max="12" value="2" style="width:80px;"></div>
+            </div>
+            <div style="margin-top:12px;">
+                <label style="color:#aaa;">Rotación</label>
+                <input type="range" id="propRotation" min="0" max="360" value="0" step="1">
+                <span id="rotValue" style="color:white;">0°</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    (function(){
+        // ---------- SISTEMA DE OBJETOS CON CAPAS ----------
+        let objects = [];      // cada objeto: { id, type, x, y, w, h, fill, stroke, strokeWidth, rotation, content?, fontSize?, fontFamily?, img? }
+        let selectedId = null;
+        let historyStack = [];
+        let historyIndex = -1;
+        const MAX_HISTORY = 50;
+
+        // Configuración lienzo
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 1000;
+        canvas.height = 600;
+
+        let nextId = 500;
+        function generateId() { return nextId++; }
+
+        // Estado de interacción
+        let isDragging = false;
+        let dragOffsetX = 0, dragOffsetY = 0;
+        let resizeActive = false;
+        let resizeEdge = null;
+        let resizeStart = null;
+        const HANDLE_SIZE = 10;
+        let currentRotation = 0; // para el panel
+
+        // snap settings (ajuste automático a 10px y alineación central)
+        const SNAP_THRESHOLD = 8;
+
+        // ---------- Guardar estado para historial ----------
+        function saveToHistory() {
+            const clone = JSON.parse(JSON.stringify(objects));
+            historyStack = historyStack.slice(0, historyIndex+1);
+            historyStack.push(clone);
+            if(historyStack.length > MAX_HISTORY) historyStack.shift();
+            else historyIndex = historyStack.length-1;
+        }
+
+        function undo() {
+            if(historyIndex > 0) {
+                historyIndex--;
+                objects = JSON.parse(JSON.stringify(historyStack[historyIndex]));
+                selectedId = null;
+                renderAndUpdateLayers();
+            }
+        }
+        function redo() {
+            if(historyIndex < historyStack.length-1) {
+                historyIndex++;
+                objects = JSON.parse(JSON.stringify(historyStack[historyIndex]));
+                selectedId = null;
+                renderAndUpdateLayers();
+            }
+        }
+
+        function recordAction() { saveToHistory(); }
+
+        // Funciones de capas: reordenar
+        function bringToFront(id) {
+            const index = objects.findIndex(obj => obj.id === id);
+            if(index !== -1 && index < objects.length-1) {
+                const obj = objects.splice(index,1)[0];
+                objects.push(obj);
+                recordAction();
+                renderAndUpdateLayers();
+            }
+        }
+        function sendToBack(id) {
+            const index = objects.findIndex(obj => obj.id === id);
+            if(index !== -1 && index > 0) {
+                const obj = objects.splice(index,1)[0];
+                objects.unshift(obj);
+                recordAction();
+                renderAndUpdateLayers();
+            }
+        }
+
+        // Dibujar todo
+        function drawObject(obj, ctxTarget) {
+            ctxTarget.save();
+            ctxTarget.translate(obj.x + obj.w/2, obj.y + obj.h/2);
+            ctxTarget.rotate((obj.rotation || 0) * Math.PI/180);
+            ctxTarget.translate(-(obj.x + obj.w/2), -(obj.y + obj.h/2));
+            ctxTarget.fillStyle = obj.fill;
+            ctxTarget.strokeStyle = obj.stroke;
+            ctxTarget.lineWidth = obj.strokeWidth || 2;
+
+            if(obj.type === 'rect') {
+                ctxTarget.fillRect(obj.x, obj.y, obj.w, obj.h);
+                ctxTarget.strokeRect(obj.x, obj.y, obj.w, obj.h);
+            } else if(obj.type === 'circle') {
+                ctxTarget.beginPath();
+                ctxTarget.ellipse(obj.x+obj.w/2, obj.y+obj.h/2, obj.w/2, obj.h/2, 0, 0, 2*Math.PI);
+                ctxTarget.fill(); ctxTarget.stroke();
+            } else if(obj.type === 'triangle') {
+                ctxTarget.beginPath();
+                ctxTarget.moveTo(obj.x+obj.w/2, obj.y);
+                ctxTarget.lineTo(obj.x, obj.y+obj.h);
+                ctxTarget.lineTo(obj.x+obj.w, obj.y+obj.h);
+                ctxTarget.fill(); ctxTarget.stroke();
+            } else if(obj.type === 'star') {
+                drawStar(ctxTarget, obj.x+obj.w/2, obj.y+obj.h/2, Math.min(obj.w,obj.h)/2, Math.min(obj.w,obj.h)/4, 5);
+                ctxTarget.fill(); ctxTarget.stroke();
+            } else if(obj.type === 'heart') {
+                drawHeart(ctxTarget, obj.x+obj.w/2, obj.y+obj.h/2, obj.w/2);
+                ctxTarget.fill(); ctxTarget.stroke();
+            } else if(obj.type === 'text') {
+                ctxTarget.font = `${obj.fontWeight || '500'} ${obj.fontSize}px ${obj.fontFamily || 'Inter'}`;
+                ctxTarget.fillStyle = obj.fill;
+                ctxTarget.fillText(obj.content, obj.x, obj.y);
+                if(obj.strokeWidth > 0) ctxTarget.strokeText(obj.content, obj.x, obj.y);
+            } else if(obj.type === 'image' && obj.imgElement) {
+                ctxTarget.drawImage(obj.imgElement, obj.x, obj.y, obj.w, obj.h);
+                if(obj.strokeWidth > 0) ctxTarget.strokeRect(obj.x, obj.y, obj.w, obj.h);
+            }
+            ctxTarget.restore();
+        }
+
+        function drawStar(ctx, cx, cy, or, ir, points) { ctx.beginPath(); let step=Math.PI/points; let rot=Math.PI/2*3; for(let i=0;i<points;i++){ let x1=cx+Math.cos(rot)*or; let y1=cy+Math.sin(rot)*or; ctx.lineTo(x1,y1); rot+=step; let x2=cx+Math.cos(rot)*ir; let y2=cy+Math.sin(rot)*ir; ctx.lineTo(x2,y2); rot+=step; } ctx.closePath(); }
+        function drawHeart(ctx, cx, cy, size){ ctx.beginPath(); let x=cx, y=cy-size*0.3; ctx.moveTo(x,y); ctx.bezierCurveTo(x-size, y-size, x-size, y+size/1.5, x, y+size); ctx.bezierCurveTo(x+size, y+size/1.5, x+size, y-size, x, y); ctx.closePath(); }
+
+        function renderAndUpdateLayers() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            for(let obj of objects) drawObject(obj, ctx);
+            if(selectedId) {
+                let obj = objects.find(o=>o.id===selectedId);
+                if(obj) {
+                    ctx.save();
+                    ctx.strokeStyle = "#3b82f6"; ctx.lineWidth=2.5; ctx.setLineDash([6,8]);
+                    ctx.strokeRect(obj.x, obj.y, obj.w, obj.h);
+                    ctx.setLineDash([]);
+                    ctx.fillStyle="#3b82f6";
+                    drawHandle(obj.x+obj.w, obj.y+obj.h); drawHandle(obj.x, obj.y+obj.h);
+                    drawHandle(obj.x+obj.w, obj.y); drawHandle(obj.x, obj.y);
+                    ctx.restore();
+                    // sincronizar panel propiedades
+                    document.getElementById('fillPropSwatch').style.backgroundColor = obj.fill;
+                    document.getElementById('strokePropSwatch').style.backgroundColor = obj.stroke;
+                    document.getElementById('propStrokeWidth').value = obj.strokeWidth;
+                    document.getElementById('propRotation').value = obj.rotation || 0;
+                    document.getElementById('rotValue').innerText = (obj.rotation||0)+"°";
+                }
+            }
+            // actualizar lista de capas
+            const layerDiv = document.getElementById('layerListContainer');
+            layerDiv.innerHTML = '';
+            [...objects].reverse().forEach(obj => {
+                const div = document.createElement('div');
+                div.className = `layer-item ${selectedId === obj.id ? 'active-layer' : ''}`;
+                div.innerHTML = `<i class="fas fa-${obj.type === 'text' ? 'font' : (obj.type==='image'?'image':'shapes')}"></i> ${obj.type} ${obj.id}`;
+                div.onclick = (e) => { e.stopPropagation(); selectedId = obj.id; renderAndUpdateLayers(); };
+                layerDiv.appendChild(div);
+            });
+        }
+        function drawHandle(x,y){ ctx.fillRect(x-HANDLE_SIZE/2, y-HANDLE_SIZE/2, HANDLE_SIZE, HANDLE_SIZE); ctx.strokeRect(x-HANDLE_SIZE/2, y-HANDLE_SIZE/2, HANDLE_SIZE, HANDLE_SIZE); }
+
+        // Snapping: retorna coordenadas ajustadas
+        function applySnap(val, targetVal, isCenter=false) { let diff = Math.abs(val - targetVal); if(diff < SNAP_THRESHOLD) return targetVal; return val; }
+        function snapObject(obj, newX, newY) {
+            let bestX = newX, bestY = newY;
+            for(let other of objects) {
+                if(other.id === obj.id) continue;
+                // snap izquierda/derecha
+                bestX = applySnap(bestX, other.x); bestX = applySnap(bestX, other.x+other.w);
+                bestY = applySnap(bestY, other.y); bestY = applySnap(bestY, other.y+other.h);
+                // centros
+                bestX = applySnap(bestX+obj.w/2, other.x+other.w/2, true)-obj.w/2;
+                bestY = applySnap(bestY+obj.h/2, other.y+other.h/2, true)-obj.h/2;
+            }
+            bestX = Math.min(Math.max(0, bestX), canvas.width-obj.w);
+            bestY = Math.min(Math.max(0, bestY), canvas.height-obj.h);
+            return { x: bestX, y: bestY };
+        }
+
+        // Eventos del canvas (arrastrar, redimensionar)
+        function getMouseCoord(e) {
+            const rect = canvas.getBoundingClientRect();
+            const sx = canvas.width/rect.width, sy = canvas.height/rect.height;
+            let mx = (e.clientX - rect.left)*sx, my = (e.clientY - rect.top)*sy;
+            mx = Math.min(Math.max(0,mx),canvas.width); my = Math.min(Math.max(0,my),canvas.height);
+            return { mx, my };
+        }
+        function hitTest(mx, my, obj) {
+            if(obj.type === 'text') {
+                ctx.font = `${obj.fontWeight||'500'} ${obj.fontSize}px ${obj.fontFamily||'Inter'}`;
+                let metrics = ctx.measureText(obj.content); let tw = metrics.width, th = obj.fontSize*1.2;
+                return (mx>=obj.x-5 && mx<=obj.x+tw+10 && my>=obj.y-th && my<=obj.y+8);
+            } else return (mx>=obj.x && mx<=obj.x+obj.w && my>=obj.y && my<=obj.y+obj.h);
+        }
+        function getResizeHandle(mx, my, obj) {
+            if(!obj) return null; let pts = [{edge:'se',x:obj.x+obj.w,y:obj.y+obj.h},{edge:'sw',x:obj.x,y:obj.y+obj.h},{edge:'ne',x:obj.x+obj.w,y:obj.y},{edge:'nw',x:obj.x,y:obj.y}];
+            for(let p of pts) if(Math.abs(mx-p.x)<=HANDLE_SIZE && Math.abs(my-p.y)<=HANDLE_SIZE) return p.edge; return null;
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const { mx, my } = getMouseCoord(e);
+            if(selectedId !== null) {
+                let sel = objects.find(o=>o.id===selectedId);
+                if(sel) { let handle = getResizeHandle(mx,my,sel); if(handle) { resizeActive=true; resizeEdge=handle; resizeStart={x:sel.x,y:sel.y,w:sel.w,h:sel.h}; return; } }
+            }
+            for(let i=objects.length-1; i>=0; i--) {
+                if(hitTest(mx, my, objects[i])) { selectedId=objects[i].id; dragOffsetX = mx - objects[i].x; dragOffsetY = my - objects[i].y; isDragging=true; renderAndUpdateLayers(); return; }
+            }
+            selectedId = null; renderAndUpdateLayers();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if(resizeActive && selectedId) {
+                let obj = objects.find(o=>o.id===selectedId); if(!obj) return;
+                let { mx, my } = getMouseCoord(e); let nx=obj.x, ny=obj.y, nw=obj.w, nh=obj.h;
+                if(resizeEdge==='se'){ nw=Math.max(10, mx-resizeStart.x); nh=Math.max(10, my-resizeStart.y); }
+                if(resizeEdge==='sw'){ nw=Math.max(10, resizeStart.x+resizeStart.w-mx); nx=mx; nh=Math.max(10, my-resizeStart.y); }
+                if(resizeEdge==='ne'){ nw=Math.max(10, mx-resizeStart.x); ny=my; nh=Math.max(10, resizeStart.y+resizeStart.h-my); }
+                if(resizeEdge==='nw'){ nw=Math.max(10, resizeStart.x+resizeStart.w-mx); nx=mx; nh=Math.max(10, resizeStart.y+resizeStart.h-my); ny=my; }
+                obj.x=nx; obj.y=ny; obj.w=nw; obj.h=nh; renderAndUpdateLayers(); return;
+            }
+            if(isDragging && selectedId) {
+                let obj = objects.find(o=>o.id===selectedId); if(!obj) return;
+                let { mx, my } = getMouseCoord(e); let newX = mx - dragOffsetX, newY = my - dragOffsetY;
+                let snapped = snapObject(obj, newX, newY); obj.x = snapped.x; obj.y = snapped.y;
+                renderAndUpdateLayers();
+            }
+        });
+        canvas.addEventListener('mouseup', () => { if(isDragging || resizeActive) recordAction(); isDragging=false; resizeActive=false; });
+
+        // funciones de objeto
+        function addObject(objData) { objects.push(objData); selectedId = objData.id; recordAction(); renderAndUpdateLayers(); }
+        function duplicateSelected() { if(selectedId) { let idx = objects.findIndex(o=>o.id===selectedId); if(idx!==-1) { let clone = JSON.parse(JSON.stringify(objects[idx])); clone.id=generateId(); clone.x+=20; clone.y+=20; objects.splice(idx+1,0,clone); selectedId=clone.id; recordAction(); renderAndUpdateLayers(); } } }
+        function deleteSelected() { if(selectedId) { objects = objects.filter(o=>o.id!==selectedId); selectedId=null; recordAction(); renderAndUpdateLayers(); } }
+
+        // ---- PANEL BIBLIOTECA ----
+        document.querySelectorAll('.library-item[data-type]').forEach(el => {
+            el.addEventListener('click', () => {
+                let type = el.getAttribute('data-type');
+                let newObj = { id: generateId(), type: type, x: 100+Math.random()*200, y: 100+Math.random()*150, w: 100, h: 100, fill: '#FF8C42', stroke: '#1E2A47', strokeWidth: 3, rotation:0 };
+                if(type==='circle') newObj.w=90; if(type==='heart') newObj.w=90;
+                addObject(newObj);
+            });
+        });
+        // Imagen subida
+        const uploadBtn = document.getElementById('uploadImageBtn');
+        const fileInput = document.getElementById('imageUploadInput');
+        uploadBtn.addEventListener('click',()=>fileInput.click());
+        fileInput.addEventListener('change',(e)=>{
+            const file = e.target.files[0]; if(!file) return;
+            const reader = new FileReader(); reader.onload = (ev)=>{
+                const img = new Image(); img.onload = ()=>{
+                    let newImg = { id: generateId(), type: 'image', x: 80, y: 80, w: 180, h: 140, imgElement: img, fill:'#fff', stroke:'#333', strokeWidth:2, rotation:0 };
+                    addObject(newImg);
+                }; img.src = ev.target.result;
+            }; reader.readAsDataURL(file);
+        });
+        document.querySelectorAll('.library-item[data-img]').forEach(el=>{
+            el.addEventListener('click',()=>{
+                let src = el.getAttribute('data-img'); let img=new Image(); img.crossOrigin="Anonymous";
+                img.onload=()=>{ addObject({ id:generateId(), type:'image', x:120, y:120, w:160, h:120, imgElement:img, fill:'#fff', stroke:'#000', strokeWidth:1, rotation:0 }); };
+                img.src=src;
+            });
+        });
+        document.getElementById('addTextLibBtn').addEventListener('click',()=>{
+            addObject({ id:generateId(), type:'text', x:80, y:80, content:'Edita este texto', fontSize:28, fontFamily:'Inter', fill:'#1E293B', stroke:'#000', strokeWidth:0, rotation:0 });
+        });
+
+        // propiedades estilo y rotacion
+        document.getElementById('fillPropSwatch').addEventListener('click',()=>{ let inp=document.createElement('input'); inp.type='color'; inp.value='#FF8C42'; inp.addEventListener('input',(e)=>{ if(selectedId){ let obj=objects.find(o=>o.id===selectedId); obj.fill=e.target.value; renderAndUpdateLayers(); recordAction(); } }); inp.click(); });
+        document.getElementById('strokePropSwatch').addEventListener('click',()=>{ let inp=document.createElement('input'); inp.type='color'; inp.value='#1E2A47'; inp.addEventListener('input',(e)=>{ if(selectedId){ let obj=objects.find(o=>o.id===selectedId); obj.stroke=e.target.value; renderAndUpdateLayers(); recordAction(); } }); inp.click(); });
+        document.getElementById('propStrokeWidth').addEventListener('input',(e)=>{ if(selectedId){ let obj=objects.find(o=>o.id===selectedId); obj.strokeWidth=parseInt(e.target.value); renderAndUpdateLayers(); recordAction(); } });
+        document.getElementById('propRotation').addEventListener('input',(e)=>{ if(selectedId){ let obj=objects.find(o=>o.id===selectedId); obj.rotation=parseInt(e.target.value); document.getElementById('rotValue').innerText=obj.rotation+"°"; renderAndUpdateLayers(); recordAction(); } });
+
+        // Botones capas y demás
+        document.getElementById('deleteSelectedBtn').addEventListener('click',deleteSelected);
+        document.getElementById('duplicateSelectedBtn').addEventListener('click',duplicateSelected);
+        document.getElementById('bringForwardBtn').addEventListener('click',()=>{ if(selectedId) bringToFront(selectedId); });
+        document.getElementById('sendBackBtn').addEventListener('click',()=>{ if(selectedId) sendToBack(selectedId); });
+        document.getElementById('undoBtn').addEventListener('click',undo);
+        document.getElementById('redoBtn').addEventListener('click',redo);
+        document.getElementById('exportImageBtn').addEventListener('click',()=>{
+            let exportCanvas = document.createElement('canvas'); exportCanvas.width=canvas.width; exportCanvas.height=canvas.height;
+            let eCtx = exportCanvas.getContext('2d'); eCtx.fillStyle='#fff'; eCtx.fillRect(0,0,canvas.width,canvas.height);
+            for(let obj of objects) drawObject(obj, eCtx);
+            let link = document.createElement('a'); link.download='mi_diseno.png'; link.href=exportCanvas.toDataURL(); link.click();
+        });
+        document.getElementById('exportPDFBtn').addEventListener('click',async()=>{
+            let { jsPDF } = window.jspdf; let pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [canvas.width, canvas.height] });
+            let exportCanvas = document.createElement('canvas'); exportCanvas.width=canvas.width; exportCanvas.height=canvas.height;
+            let eCtx = exportCanvas.getContext('2d'); eCtx.fillStyle='#fff'; eCtx.fillRect(0,0,canvas.width,canvas.height);
+            for(let obj of objects) drawObject(obj, eCtx);
+            let imgData = exportCanvas.toDataURL('image/png');
+            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height, undefined, 'FAST');
+            pdf.save('diseno_layers.pdf');
+        });
+
+        // Objetos iniciales de demostración
+        function initDemo(){
+            objects = [
+                { id:generateId(), type:'rect', x:40, y:40, w:140, h:120, fill:'#FDE047', stroke:'#CA8A04', strokeWidth:3, rotation:0 },
+                { id:generateId(), type:'circle', x:250, y:70, w:100, h:100, fill:'#60A5FA', stroke:'#1E3A8A', strokeWidth:3, rotation:0 },
+                { id:generateId(), type:'text', x:420, y:140, content:'✨ Capas y Snap ✨', fontSize:32, fontFamily:'Inter', fill:'#0f172a', strokeWidth:0, rotation:0 },
+                { id:generateId(), type:'star', x:600, y:60, w:100, h:100, fill:'#F472B6', stroke:'#9D174D', strokeWidth:2, rotation:0 }
+            ];
+            selectedId=null;
+            renderAndUpdateLayers();
+            saveToHistory();
+        }
+        initDemo();
+    })();
+</script>
+</body>
+</html>
