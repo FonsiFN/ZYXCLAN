@@ -73,7 +73,7 @@
     display:flex; align-items:center; justify-content:space-between;
   }
   .logo-mark{display:flex; align-items:center; gap:12px;}
-  .logo-mark .z-svg{width:34px;height:34px;}
+  .logo-mark .z-svg{width:34px;height:34px;object-fit:cover;border-radius:50%;border:1px solid var(--line);background:var(--black-3);}
   .logo-mark span{
     font-family:var(--font-display); font-weight:700; font-size:1.3rem; letter-spacing:.06em;
   }
@@ -150,7 +150,12 @@
   .hero-mark{
     position:relative; display:flex; align-items:center; justify-content:center;
   }
-  .hero-mark .z-big{width:min(100%, 380px); filter:drop-shadow(0 30px 60px rgba(124,58,237,.35));}
+  .hero-mark .z-big{
+    width:min(78%, 300px); aspect-ratio:1/1; object-fit:cover; border-radius:50%;
+    border:3px solid var(--purple-light);
+    filter:drop-shadow(0 30px 60px rgba(124,58,237,.35));
+    background:var(--black-3);
+  }
   .hero-mark .ring{
     position:absolute; inset:0; border:1px solid var(--line); border-radius:50%;
     transform:scale(1.35); animation:spin 40s linear infinite;
@@ -192,12 +197,6 @@
 
   /* ---------- roles ---------- */
   .roles{background:var(--black);}
-  .cantera-label{
-    font-family:var(--font-display); font-weight:600; letter-spacing:.16em; text-transform:uppercase;
-    font-size:.78rem; color:var(--purple-light); margin:44px 0 18px; display:flex; align-items:center; gap:14px;
-  }
-  .cantera-label::after{content:''; flex:1; height:1px; background:var(--line);}
-  .cantera-label:first-of-type{margin-top:0;}
   .role-card{
     display:grid; grid-template-columns:70px 1fr; gap:24px;
     background:var(--black-2); border:1px solid var(--line); padding:26px 28px;
@@ -240,21 +239,16 @@
   }
   .mapa-art{
     position:relative; min-height:340px;
-    background:
-      repeating-linear-gradient(115deg, rgba(124,58,237,.16) 0 22px, transparent 22px 46px),
-      linear-gradient(160deg, #241533, #0a0810 70%);
-    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    display:flex; align-items:flex-end; justify-content:center; flex-direction:column; gap:14px;
     border-right:1px solid var(--line);
+    padding:26px;
   }
-  .mapa-art .badge-oficial{
-    font-family:var(--font-impact); font-size:1.15rem; letter-spacing:.06em;
-    color:transparent; -webkit-text-stroke:1.4px var(--purple-light);
-    padding:10px 22px; border:2px solid var(--purple-light);
-    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
-    text-transform:uppercase;
+  .mapa-art::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(8,7,11,.92) 0%, rgba(8,7,11,.35) 45%, rgba(8,7,11,.55) 100%);
   }
-  .mapa-art .fn-icon{width:64px; height:64px; opacity:.9;}
   .mapa-art .fn-caption{
+    position:relative; z-index:2;
     font-family:var(--font-display); font-weight:600; letter-spacing:.12em; text-transform:uppercase;
     font-size:.75rem; color:var(--gray);
   }
@@ -303,6 +297,39 @@
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.3rem; margin-bottom:12px;
   }
   .banner-card p{color:var(--gray); font-size:.92rem; line-height:1.65;}
+
+  /* ---------- discord ---------- */
+  .discord-section{
+    background:
+      radial-gradient(ellipse 55% 60% at 90% 30%, rgba(124,58,237,.16), transparent 60%),
+      var(--black-2);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .discord-container{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+  }
+  .discord-copy h2{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+    font-size:clamp(1.9rem,3.4vw,2.6rem); line-height:1.05; margin-bottom:18px;
+  }
+  .discord-copy p{color:var(--gray); font-size:1rem; line-height:1.7; max-width:440px; margin-bottom:30px;}
+  .discord-copy p b{color:var(--white);}
+  .discord-widget-wrapper{position:relative;}
+  .discord-widget-wrapper::before{
+    content:''; position:absolute; inset:-14px; border:1px solid var(--line); z-index:0;
+  }
+  .discord-widget-frame{
+    position:relative; z-index:1; border:1px solid var(--purple-light);
+    background:var(--black); padding:14px;
+    box-shadow:0 20px 60px rgba(124,58,237,.22);
+  }
+  .discord-widget{
+    width:100%; height:420px; border:none; display:block;
+  }
+  .reveal-left{opacity:0; transform:translateX(-24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal-left.in{opacity:1; transform:none;}
+  .reveal-right{opacity:0; transform:translateX(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal-right.in{opacity:1; transform:none;}
 
   /* ---------- acuerdo ---------- */
   .acuerdo{background:var(--black);}
@@ -364,6 +391,7 @@
     .mapa-card{grid-template-columns:1fr;}
     .mapa-art{border-right:none; border-bottom:1px solid var(--line); min-height:220px;}
     .banner-grid{grid-template-columns:1fr;}
+    .discord-container{grid-template-columns:1fr;}
     .role-card{grid-template-columns:40px 1fr;}
   }
 </style>
@@ -379,10 +407,7 @@
 <header>
   <nav>
     <a href="#top" class="logo-mark">
-      <svg class="z-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 15 L75 15 L28 62 L62 62 L62 40 L88 40 L88 85 L23 85 L70 38 L38 38 Z" fill="#7C3AED"/>
-        <path d="M62 62 L88 40 L88 85 L62 85 Z" fill="#0f0d13"/>
-      </svg>
+      <img class="z-svg" src="https://i.imgur.com/18uCets.png" alt="Logo ZYX eSports">
       <span>ZYX <b>ESPORTS</b></span>
     </a>
     <ul>
@@ -392,7 +417,7 @@
       <li><a href="#streamers">Streamers</a></li>
       <li><a href="#acuerdo">Acuerdo</a></li>
     </ul>
-    <a href="#acuerdo" class="nav-cta">Unirse</a>
+    <a href="https://discord.gg/vJxaYh7Xmw" target="_blank" rel="noopener" class="nav-cta">Unirse</a>
   </nav>
 </header>
 
@@ -410,22 +435,13 @@
         actitud profesional y ganas reales de crecer. Aquí se entra a <b>representar y demostrar</b>, no a pasar el rato.
       </p>
       <div class="hero-ctas">
-        <a href="#acuerdo" class="btn-primary">Leer acuerdo de ingreso</a>
+        <a href="https://discord.gg/vJxaYh7Xmw" target="_blank" rel="noopener" class="btn-primary">Unirte</a>
         <a href="#roles" class="btn-ghost">Ver progresión de roles</a>
       </div>
     </div>
     <div class="hero-mark">
       <div class="ring"></div>
-      <svg class="z-big" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="zgrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#A78BFA"/>
-            <stop offset="1" stop-color="#5B21B6"/>
-          </linearGradient>
-        </defs>
-        <path d="M45 65 L300 65 L115 250 L245 250 L245 165 L350 165 L350 335 L100 335 L280 155 L155 155 Z" fill="url(#zgrad)"/>
-        <path d="M245 250 L350 165 L350 335 L245 335 Z" fill="#0c0a10"/>
-      </svg>
+      <img class="z-big" src="https://i.imgur.com/18uCets.png" alt="Logo ZYX eSports">
     </div>
   </div>
 </section>
@@ -467,8 +483,6 @@
       <p>Un camino claro de 7 escalones, desde tu primer paso en la cantera hasta formar parte de ZYX OFICIAL.</p>
     </div>
 
-    <div class="cantera-label reveal">Cantera Baja</div>
-
     <div class="role-card reveal">
       <div class="role-num">01</div>
       <div>
@@ -487,8 +501,6 @@
       </div>
     </div>
 
-    <div class="cantera-label reveal">Cantera Media</div>
-
     <div class="role-card reveal">
       <div class="role-num">03</div>
       <div>
@@ -497,8 +509,6 @@
         <p>Cantera media. Se valorará a quienes han pasado muchas horas en llamadas y han demostrado una actitud positiva dentro del servidor. Con un mínimo de <b>200 PR en EU</b>, tendrás acceso a todo lo anterior y a canales de voz adicionales.</p>
       </div>
     </div>
-
-    <div class="cantera-label reveal">Cantera Alta</div>
 
     <div class="role-card reveal">
       <div class="role-num">04</div>
@@ -509,8 +519,6 @@
       </div>
     </div>
 
-    <div class="cantera-label reveal">Top Cantera</div>
-
     <div class="role-card reveal">
       <div class="role-num">05</div>
       <div>
@@ -519,8 +527,6 @@
         <p>Top de la cantera. Aquí la cosa ya va en serio. Se necesita contar con al menos <b>600 PR en EU y 1k PR global, o 200€ OFICIALES</b>, nada de scrims, y mostrar una actitud destacada dentro del servidor de ZYX. Acceso a todo lo anterior junto con las llamadas correspondientes.</p>
       </div>
     </div>
-
-    <div class="cantera-label reveal">Oficial</div>
 
     <div class="role-card oficial reveal">
       <div class="role-num">06</div>
@@ -551,12 +557,7 @@
     </div>
 
     <div class="mapa-card reveal">
-      <div class="mapa-art">
-        <div class="badge-oficial">ZYX OFICIAL</div>
-        <svg class="fn-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="50,8 90,30 90,70 50,92 10,70 10,30" fill="none" stroke="#A78BFA" stroke-width="3"/>
-          <path d="M35 35 L68 35 L42 62 L60 62 L60 48 L72 48 L72 68 L40 68 L64 42 L47 42 Z" fill="#A78BFA"/>
-        </svg>
+      <div class="mapa-art" style="background-image:url('https://i.imgur.com/cBDzdL2.png'); background-size:cover; background-position:center;">
         <div class="fn-caption">Isla de práctica y edición · Fortnite</div>
       </div>
       <div class="mapa-info">
@@ -599,6 +600,30 @@
         <div class="banner-preview"><span>TU NOMBRE <b>| ZYX PRO</b></span></div>
         <h3>Banner PRO</h3>
         <p>Exclusivo para ZYX Pro y ZYX Oficial. Versión V2 con más detalle y acabado premium, pensada para representar al equipo oficial en tus streams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DISCORD ================= -->
+<section class="discord-section" id="discord">
+  <div class="wrap discord-container">
+    <div class="discord-copy reveal reveal-left">
+      <div class="eyebrow"><span class="bar"></span> COMUNIDAD</div>
+      <h2>Entra al servidor</h2>
+      <p>Todo pasa en Discord: subidas de rango, scrims, avisos del staff y el canal para solicitar tu ingreso. Únete y empieza por <b>#📚・como-entrar-zyx</b>.</p>
+      <a href="https://discord.gg/vJxaYh7Xmw" target="_blank" rel="noopener" class="btn-primary">Entrar al Discord</a>
+    </div>
+    <div class="discord-widget-wrapper reveal reveal-right">
+      <div class="discord-widget-frame">
+        <iframe
+          src="https://discord.com/widget?id=1320892099264122940&theme=dark"
+          class="discord-widget"
+          allowtransparency="true"
+          frameborder="0"
+          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+          title="Servidor Discord de ZYX eSports">
+        </iframe>
       </div>
     </div>
   </div>
@@ -708,10 +733,7 @@
   <div class="foot-wrap">
     <div class="foot-left">
       <a href="#top" class="logo-mark">
-        <svg class="z-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 15 L75 15 L28 62 L62 62 L62 40 L88 40 L88 85 L23 85 L70 38 L38 38 Z" fill="#7C3AED"/>
-          <path d="M62 62 L88 40 L88 85 L62 85 Z" fill="#0f0d13"/>
-        </svg>
+        <img class="z-svg" src="https://i.imgur.com/18uCets.png" alt="Logo ZYX eSports">
         <span>ZYX <b>ESPORTS</b></span>
       </a>
       <p>Team competitivo de Fortnite fundado por Fonsi. No buscamos números, buscamos calidad.</p>
@@ -752,7 +774,7 @@
       if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); }
     });
   }, {threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el=>observer.observe(el));
 </script>
 
 </body>
