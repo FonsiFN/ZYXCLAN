@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZYX ESPORTS — Team Competitivo de Fortnite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black: #08070b;
+    --black-2: #121017;
+    --black-3: #1a1720;
+    --purple: #7C3AED;
+    --purple-light: #A78BFA;
+    --purple-dark: #4C1D95;
+    --purple-glow: rgba(124,58,237,.35);
+    --white: #F6F5F8;
+    --gray: #948FA0;
+    --gray-dim: #5F5A6C;
+    --line: rgba(167,139,250,.22);
+    --font-display: 'Rajdhani', sans-serif;
+    --font-impact: 'Archivo Black', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:var(--font-body);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--purple);color:#fff;}
+
+  /* ---------- diagonal slash motif (from brand banner) ---------- */
+  .slash-row{display:flex;gap:6px;align-items:center;}
+  .slash{width:16px;height:9px;background:var(--purple);transform:skewX(-25deg);}
+  .slash.dim{background:var(--purple-dark);}
+  .diag-line{
+    position:absolute; width:2px; background:linear-gradient(var(--purple),transparent);
+    transform:rotate(28deg);
+  }
+  .corner-cut{
+    position:absolute; pointer-events:none; z-index:1;
+  }
+  .corner-cut svg{display:block;}
+
+  /* ---------- top ribbon (uses the real uploaded banner) ---------- */
+  .brand-ribbon{
+    width:100%;
+    border-bottom:1px solid var(--line);
+    background:var(--black);
+  }
+  .brand-ribbon img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(8,7,11,.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1240px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo-mark{display:flex; align-items:center; gap:12px;}
+  .logo-mark .z-svg{width:34px;height:34px;}
+  .logo-mark span{
+    font-family:var(--font-display); font-weight:700; font-size:1.3rem; letter-spacing:.06em;
+  }
+  .logo-mark span b{color:var(--purple-light);}
+  nav ul{list-style:none; display:flex; gap:32px;}
+  nav ul li a{
+    font-family:var(--font-display); font-weight:600; font-size:.95rem;
+    letter-spacing:.05em; text-transform:uppercase; color:var(--gray);
+    transition:color .2s;
+  }
+  nav ul li a:hover{color:var(--purple-light);}
+  .nav-cta{
+    font-family:var(--font-display); font-weight:700; font-size:.85rem;
+    letter-spacing:.05em; text-transform:uppercase;
+    background:var(--purple); color:#fff; padding:10px 20px;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    transition: background .2s, transform .2s;
+  }
+  .nav-cta:hover{background:var(--purple-light); transform:translateY(-1px);}
+  .nav-toggle{display:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; min-height:88vh; display:flex; align-items:center;
+    padding:80px 28px 60px;
+    background:
+      radial-gradient(ellipse 60% 50% at 15% 20%, var(--purple-glow), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 80%, rgba(124,58,237,.18), transparent 60%),
+      var(--black);
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero::before, .hero::after{
+    content:''; position:absolute; width:520px; height:2px; background:linear-gradient(90deg,transparent,var(--purple-light),transparent);
+    opacity:.5;
+  }
+  .hero::before{ top:12%; left:-120px; transform:rotate(-18deg); }
+  .hero::after{ bottom:10%; right:-160px; transform:rotate(-18deg); }
+  .hero-inner{
+    max-width:1240px; margin:0 auto; width:100%;
+    display:grid; grid-template-columns:1.15fr .85fr; gap:60px; align-items:center;
+    position:relative; z-index:2;
+  }
+  .eyebrow{
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+    font-family:var(--font-display); font-weight:600; letter-spacing:.18em;
+    text-transform:uppercase; font-size:.8rem; color:var(--purple-light);
+  }
+  .eyebrow .bar{width:28px;height:2px;background:var(--purple-light);}
+  h1.hero-title{
+    font-family:var(--font-display); font-weight:700; letter-spacing:.01em;
+    font-size:clamp(2.6rem, 5.4vw, 4.6rem); line-height:.98; text-transform:uppercase;
+  }
+  h1.hero-title .thin{ font-weight:500; color:var(--gray); display:block; font-size:.42em; letter-spacing:.14em; margin-top:14px;}
+  h1.hero-title em{
+    font-style:normal; color:transparent; -webkit-text-stroke:1.5px var(--purple-light);
+  }
+  .hero-desc{
+    margin-top:26px; max-width:520px; color:var(--gray); font-size:1.06rem; line-height:1.7;
+  }
+  .hero-desc b{color:var(--white); font-weight:600;}
+  .hero-ctas{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap;}
+  .btn-primary, .btn-ghost{
+    font-family:var(--font-display); font-weight:700; font-size:.95rem;
+    letter-spacing:.04em; text-transform:uppercase; padding:15px 30px;
+    clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+    display:inline-block; transition:.2s;
+  }
+  .btn-primary{background:var(--purple); color:#fff;}
+  .btn-primary:hover{background:var(--purple-light); transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line); color:var(--white);}
+  .btn-ghost:hover{border-color:var(--purple-light); color:var(--purple-light);}
+
+  .hero-mark{
+    position:relative; display:flex; align-items:center; justify-content:center;
+  }
+  .hero-mark .z-big{width:min(100%, 380px); filter:drop-shadow(0 30px 60px rgba(124,58,237,.35));}
+  .hero-mark .ring{
+    position:absolute; inset:0; border:1px solid var(--line); border-radius:50%;
+    transform:scale(1.35); animation:spin 40s linear infinite;
+  }
+  .hero-mark .ring::before, .hero-mark .ring::after{
+    content:''; position:absolute; width:8px; height:8px; background:var(--purple-light); border-radius:50%;
+  }
+  .hero-mark .ring::before{top:-4px; left:50%;}
+  .hero-mark .ring::after{bottom:-4px; left:50%;}
+  @keyframes spin{ to{ transform:scale(1.35) rotate(360deg); } }
+
+  /* ---------- section shells ---------- */
+  section{position:relative; padding:110px 28px;}
+  .wrap{max-width:1240px; margin:0 auto;}
+  .section-head{max-width:640px; margin-bottom:60px;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+    font-size:clamp(1.9rem,3.4vw,2.9rem); line-height:1.05; letter-spacing:.01em;
+  }
+  .section-head p{margin-top:18px; color:var(--gray); font-size:1.02rem; line-height:1.7;}
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  /* ---------- objetivo ---------- */
+  .objetivo{background:var(--black-2); border-bottom:1px solid var(--line);}
+  .obj-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
+  .obj-card{
+    background:var(--black-2); padding:38px 32px; position:relative;
+  }
+  .obj-card .num{
+    font-family:var(--font-impact); font-size:2.6rem; color:var(--purple-dark); line-height:1;
+  }
+  .obj-card h3{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.15rem;
+    margin:18px 0 12px; letter-spacing:.03em;
+  }
+  .obj-card p{color:var(--gray); font-size:.94rem; line-height:1.65;}
+
+  /* ---------- roles ---------- */
+  .roles{background:var(--black);}
+  .cantera-label{
+    font-family:var(--font-display); font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+    font-size:.78rem; color:var(--purple-light); margin:44px 0 18px; display:flex; align-items:center; gap:14px;
+  }
+  .cantera-label::after{content:''; flex:1; height:1px; background:var(--line);}
+  .cantera-label:first-of-type{margin-top:0;}
+  .role-card{
+    display:grid; grid-template-columns:70px 1fr; gap:24px;
+    background:var(--black-2); border:1px solid var(--line); padding:26px 28px;
+    margin-bottom:14px; position:relative; overflow:hidden;
+  }
+  .role-card::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--purple);
+  }
+  .role-card.oficial{border-color:var(--purple-light); background:linear-gradient(120deg, rgba(124,58,237,.14), var(--black-2) 55%);}
+  .role-card.oficial::before{background:var(--purple-light); box-shadow:0 0 14px var(--purple-light);}
+  .role-num{
+    font-family:var(--font-impact); font-size:1.9rem; color:var(--purple-dark); line-height:1; align-self:start; padding-top:4px;
+  }
+  .role-card.oficial .role-num{color:var(--purple-light);}
+  .role-top{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px;}
+  .role-top h3{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.28rem; letter-spacing:.02em;
+  }
+  .role-tag{
+    font-family:var(--font-display); font-weight:600; font-size:.7rem; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--purple-light); border:1px solid var(--line); padding:3px 10px;
+  }
+  .role-handle{
+    font-family:var(--font-display); font-weight:600; font-size:.82rem; color:var(--gray-dim); margin-bottom:10px; letter-spacing:.02em;
+  }
+  .role-card p{color:var(--gray); font-size:.92rem; line-height:1.65;}
+  .role-card p a{color:var(--purple-light); border-bottom:1px solid var(--purple-dark);}
+
+  /* ---------- mapa ---------- */
+  .mapa{
+    background:
+      linear-gradient(180deg, var(--black-2), var(--black));
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .mapa-card{
+    position:relative; border:1px solid var(--purple-light);
+    background:linear-gradient(135deg, #17131f 0%, #0c0a10 55%, #150e1c 100%);
+    padding:0; overflow:hidden;
+    display:grid; grid-template-columns:1.1fr 1fr;
+  }
+  .mapa-art{
+    position:relative; min-height:340px;
+    background:
+      repeating-linear-gradient(115deg, rgba(124,58,237,.16) 0 22px, transparent 22px 46px),
+      linear-gradient(160deg, #241533, #0a0810 70%);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    border-right:1px solid var(--line);
+  }
+  .mapa-art .badge-oficial{
+    font-family:var(--font-impact); font-size:1.15rem; letter-spacing:.06em;
+    color:transparent; -webkit-text-stroke:1.4px var(--purple-light);
+    padding:10px 22px; border:2px solid var(--purple-light);
+    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    text-transform:uppercase;
+  }
+  .mapa-art .fn-icon{width:64px; height:64px; opacity:.9;}
+  .mapa-art .fn-caption{
+    font-family:var(--font-display); font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+    font-size:.75rem; color:var(--gray);
+  }
+  .mapa-info{padding:44px 46px;}
+  .mapa-info .eyebrow{margin-bottom:14px;}
+  .mapa-info h3{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.9rem; margin-bottom:14px;
+  }
+  .mapa-info p{color:var(--gray); font-size:.98rem; line-height:1.7; margin-bottom:26px;}
+  .code-box{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    background:var(--black); border:1px dashed var(--purple-light); padding:16px 20px; margin-bottom:22px;
+  }
+  .code-box .code-label{font-family:var(--font-display); font-size:.72rem; letter-spacing:.14em; color:var(--gray-dim); text-transform:uppercase; display:block; margin-bottom:4px;}
+  .code-box .code-val{font-family:var(--font-display); font-weight:700; font-size:1.35rem; letter-spacing:.06em; color:var(--white);}
+  .copy-btn{
+    font-family:var(--font-display); font-weight:700; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    background:var(--purple); color:#fff; border:none; padding:10px 16px; cursor:pointer;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    transition:.2s;
+  }
+  .copy-btn:hover{background:var(--purple-light);}
+  .mapa-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+
+  /* ---------- streamers ---------- */
+  .streamers{background:var(--black-2);}
+  .banner-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .banner-card{
+    border:1px solid var(--line); background:var(--black); padding:36px 32px; position:relative;
+  }
+  .banner-card .tag{
+    font-family:var(--font-display); font-weight:700; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--purple-light); margin-bottom:16px; display:inline-block;
+  }
+  .banner-preview{
+    height:96px; margin-bottom:22px; position:relative; overflow:hidden;
+    background:repeating-linear-gradient(-25deg, rgba(124,58,237,.18) 0 10px, transparent 10px 20px), #0d0b12;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .banner-preview span{
+    font-family:var(--font-display); font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:1.05rem;
+  }
+  .banner-preview span b{color:var(--purple-light);}
+  .banner-card h3{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.3rem; margin-bottom:12px;
+  }
+  .banner-card p{color:var(--gray); font-size:.92rem; line-height:1.65;}
+
+  /* ---------- acuerdo ---------- */
+  .acuerdo{background:var(--black);}
+  .doc-shell{
+    border:1px solid var(--line); background:var(--black-2); position:relative;
+  }
+  .doc-header{
+    padding:30px 40px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  .doc-header h3{font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.4rem; letter-spacing:.04em;}
+  .doc-header .stamp{
+    font-family:var(--font-display); font-weight:700; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--purple-light); border:1px solid var(--purple-light); padding:6px 14px;
+  }
+  .doc-body{padding:12px 40px 20px; max-height:560px; overflow-y:auto;}
+  .doc-body::-webkit-scrollbar{width:8px;}
+  .doc-body::-webkit-scrollbar-thumb{background:var(--purple-dark);}
+  .doc-body::-webkit-scrollbar-track{background:var(--black);}
+  .doc-intro{color:var(--gray); font-size:.98rem; line-height:1.75; padding:20px 0 6px;}
+  .doc-intro b{color:var(--white);}
+  .clause{padding:26px 0; border-top:1px solid var(--line);}
+  .clause h4{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:1.02rem;
+    color:var(--purple-light); letter-spacing:.04em; margin-bottom:12px;
+  }
+  .clause ul{padding-left:20px; color:var(--gray); font-size:.93rem; line-height:1.7;}
+  .clause ul li{margin-bottom:6px;}
+  .clause p{color:var(--gray); font-size:.93rem; line-height:1.7;}
+  .doc-warning{
+    margin:30px 0 10px; padding:20px 22px; border:1px solid var(--purple-light);
+    background:rgba(124,58,237,.08); font-size:.9rem; color:var(--white); line-height:1.7;
+  }
+  .doc-warning b{color:var(--purple-light);}
+  .doc-footer{
+    padding:22px 40px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  .doc-footer p{color:var(--gray-dim); font-size:.82rem;}
+
+  /* ---------- footer ---------- */
+  footer{
+    padding:60px 28px 34px; border-top:1px solid var(--line); background:var(--black-2);
+  }
+  .foot-wrap{max-width:1240px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:30px;}
+  .foot-left .logo-mark{margin-bottom:14px;}
+  .foot-left p{color:var(--gray-dim); font-size:.86rem; max-width:360px; line-height:1.6;}
+  .foot-links{display:flex; gap:40px; flex-wrap:wrap;}
+  .foot-col h5{font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:.78rem; letter-spacing:.1em; color:var(--purple-light); margin-bottom:14px;}
+  .foot-col a{display:block; color:var(--gray); font-size:.86rem; margin-bottom:10px; transition:.2s;}
+  .foot-col a:hover{color:var(--white);}
+  .foot-bottom{max-width:1240px; margin:40px auto 0; padding-top:24px; border-top:1px solid var(--line); color:var(--gray-dim); font-size:.78rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    nav ul{display:none;}
+    .hero-inner{grid-template-columns:1fr; gap:40px;}
+    .hero-mark{order:-1;}
+    .obj-grid{grid-template-columns:1fr;}
+    .mapa-card{grid-template-columns:1fr;}
+    .mapa-art{border-right:none; border-bottom:1px solid var(--line); min-height:220px;}
+    .banner-grid{grid-template-columns:1fr;}
+    .role-card{grid-template-columns:40px 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= BRAND RIBBON (banner real subido) ================= -->
+<div class="brand-ribbon">
+  <img src="banner.png" alt="ZYX TEAM banner">
+</div>
+
+<!-- ================= NAV ================= -->
+<header>
+  <nav>
+    <a href="#top" class="logo-mark">
+      <svg class="z-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 15 L75 15 L28 62 L62 62 L62 40 L88 40 L88 85 L23 85 L70 38 L38 38 Z" fill="#7C3AED"/>
+        <path d="M62 62 L88 40 L88 85 L62 85 Z" fill="#0f0d13"/>
+      </svg>
+      <span>ZYX <b>ESPORTS</b></span>
+    </a>
+    <ul>
+      <li><a href="#objetivo">Objetivo</a></li>
+      <li><a href="#roles">Roles</a></li>
+      <li><a href="#mapa">Mapa</a></li>
+      <li><a href="#streamers">Streamers</a></li>
+      <li><a href="#acuerdo">Acuerdo</a></li>
+    </ul>
+    <a href="#acuerdo" class="nav-cta">Unirse</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow"><span class="bar"></span> TEAM COMPETITIVO DE FORTNITE</div>
+      <h1 class="hero-title">
+        NO BUSCAMOS <em>NÚMEROS</em>,<br>BUSCAMOS <em>CALIDAD</em>
+        <span class="thin">ZYX eSports — fundado por Fonsi</span>
+      </h1>
+      <p class="hero-desc">
+        ZYX es un team competitivo de Fortnite creado por <b>Fonsi</b>, centrado en jugadores con buen mental,
+        actitud profesional y ganas reales de crecer. Aquí se entra a <b>representar y demostrar</b>, no a pasar el rato.
+      </p>
+      <div class="hero-ctas">
+        <a href="#acuerdo" class="btn-primary">Leer acuerdo de ingreso</a>
+        <a href="#roles" class="btn-ghost">Ver progresión de roles</a>
+      </div>
+    </div>
+    <div class="hero-mark">
+      <div class="ring"></div>
+      <svg class="z-big" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="zgrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#A78BFA"/>
+            <stop offset="1" stop-color="#5B21B6"/>
+          </linearGradient>
+        </defs>
+        <path d="M45 65 L300 65 L115 250 L245 250 L245 165 L350 165 L350 335 L100 335 L280 155 L155 155 Z" fill="url(#zgrad)"/>
+        <path d="M245 250 L350 165 L350 335 L245 335 Z" fill="#0c0a10"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OBJETIVO ================= -->
+<section class="objetivo" id="objetivo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="bar"></span> OBJETIVO DEL TEAM</div>
+      <h2>En ZYX tenemos claro a dónde vamos</h2>
+      <p>Tres pilares guían todo lo que hacemos, dentro y fuera del juego.</p>
+    </div>
+  </div>
+  <div class="obj-grid reveal">
+    <div class="obj-card">
+      <div class="num">01</div>
+      <h3>Jugadores de alto rendimiento</h3>
+      <p>Desarrollar players buenos, con mentalidad competitiva real, capaces de rendir al máximo nivel.</p>
+    </div>
+    <div class="obj-card">
+      <div class="num">02</div>
+      <h3>Comunidad limpia</h3>
+      <p>Mantenemos un servidor sin niños, sin toxicidad y con gente que se toma el proyecto en serio.</p>
+    </div>
+    <div class="obj-card">
+      <div class="num">03</div>
+      <h3>Profesionalidad ante todo</h3>
+      <p>Representamos la marca ZYX con seriedad en partidas, en redes sociales y en cualquier evento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROLES ================= -->
+<section class="roles" id="roles">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="bar"></span> PROGRESIÓN</div>
+      <h2>Roles del team</h2>
+      <p>Un camino claro de 7 escalones, desde tu primer paso en la cantera hasta formar parte de ZYX OFICIAL.</p>
+    </div>
+
+    <div class="cantera-label reveal">Cantera Baja</div>
+
+    <div class="role-card reveal">
+      <div class="role-num">01</div>
+      <div>
+        <div class="role-top"><h3>Future Promise</h3><span class="role-tag">Cantera Baja</span></div>
+        <div class="role-handle">@FUTURE PROMISE | ZYX eSports</div>
+        <p>Primer rango de la cantera NO oficial. Entrarás abriendo el canal <a href="https://discord.com/channels/1320892099264122940/1328789338602868827" target="_blank" rel="noopener">#📚・como-entrar-zyx</a> y revisando la información correspondiente. Tendrás acceso a los canales oficiales de voz y a un banner exclusivo que se otorgará dentro del ticket.</p>
+      </div>
+    </div>
+
+    <div class="role-card reveal">
+      <div class="role-num">02</div>
+      <div>
+        <div class="role-top"><h3>Prospect</h3><span class="role-tag">Cantera Baja</span></div>
+        <div class="role-handle">@PROSPECT | ZYX eSports</div>
+        <p>Segundo grado de la plantilla NO oficial. Aquí empieza el juego. Deberás demostrar una actividad constante en Discord, especialmente en llamadas. No preguntes por mínimos, queremos ver que lo tomas en serio. Alternativamente, con un mínimo de <b>50 PR en EU</b>, tendrás acceso a los canales de voz correspondientes.</p>
+      </div>
+    </div>
+
+    <div class="cantera-label reveal">Cantera Media</div>
+
+    <div class="role-card reveal">
+      <div class="role-num">03</div>
+      <div>
+        <div class="role-top"><h3>Advanced</h3><span class="role-tag">Cantera Media</span></div>
+        <div class="role-handle">@ADVANCED | ZYX eSports</div>
+        <p>Cantera media. Se valorará a quienes han pasado muchas horas en llamadas y han demostrado una actitud positiva dentro del servidor. Con un mínimo de <b>200 PR en EU</b>, tendrás acceso a todo lo anterior y a canales de voz adicionales.</p>
+      </div>
+    </div>
+
+    <div class="cantera-label reveal">Cantera Alta</div>
+
+    <div class="role-card reveal">
+      <div class="role-num">04</div>
+      <div>
+        <div class="role-top"><h3>Grind</h3><span class="role-tag">Cantera Alta</span></div>
+        <div class="role-handle">@GRIND | ZYX eSports</div>
+        <p>Cantera alta. Lo tendrán jugadores con verdaderas ganas de grindear en ZYX, demostrando dedicación y compromiso. Requiere un mínimo de <b>400 PR en EU o 100€ OFICIALES</b>. Acceso a todo lo anterior más llamadas de GRIND.</p>
+      </div>
+    </div>
+
+    <div class="cantera-label reveal">Top Cantera</div>
+
+    <div class="role-card reveal">
+      <div class="role-num">05</div>
+      <div>
+        <div class="role-top"><h3>Vanguard</h3><span class="role-tag">Top Cantera</span></div>
+        <div class="role-handle">@VANGUARD | ZYX eSports</div>
+        <p>Top de la cantera. Aquí la cosa ya va en serio. Se necesita contar con al menos <b>600 PR en EU y 1k PR global, o 200€ OFICIALES</b>, nada de scrims, y mostrar una actitud destacada dentro del servidor de ZYX. Acceso a todo lo anterior junto con las llamadas correspondientes.</p>
+      </div>
+    </div>
+
+    <div class="cantera-label reveal">Oficial</div>
+
+    <div class="role-card oficial reveal">
+      <div class="role-num">06</div>
+      <div>
+        <div class="role-top"><h3>ZYX Pro</h3><span class="role-tag">Oficial</span></div>
+        <div class="role-handle">@ZYX PRO | ZYX eSports</div>
+        <p>Enhorabuena, estás a un paso más. Aquí ya lo has dado todo y pasarás a formar parte del EQUIPO OFICIAL de ZYX eSports. Solo se accede por decisión de @DIRECTIVA GENERAL. Se requiere un mínimo de <b>1k PR en EU y 1.5k PR global, o 400€ OFICIALES</b>. Serás una cara visible del team. Acceso a todo lo anterior, banner V2, anuncio en Twitter y más.</p>
+      </div>
+    </div>
+
+    <div class="role-card oficial reveal">
+      <div class="role-num">07</div>
+      <div>
+        <div class="role-top"><h3>ZYX Oficial</h3><span class="role-tag">Oficial</span></div>
+        <div class="role-handle">@ZYX OFICIAL | ZYX eSports</div>
+        <p>Si estás aquí tienes todos los respetos de la Directiva General y has pasado a formar parte de la familia ZYX. Eres el 1% del equipo. Se requiere un mínimo de <b>1.5k PR en EU y 2.5k PR global, o 600€ OFICIALES</b>. Cuando estés aquí, ya sabrás todos tus beneficios.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MAPA ================= -->
+<section class="mapa" id="mapa">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="bar"></span> ISLA CREATIVA</div>
+      <h2>Juega el mapa oficial de ZYX</h2>
+    </div>
+
+    <div class="mapa-card reveal">
+      <div class="mapa-art">
+        <div class="badge-oficial">ZYX OFICIAL</div>
+        <svg class="fn-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,8 90,30 90,70 50,92 10,70 10,30" fill="none" stroke="#A78BFA" stroke-width="3"/>
+          <path d="M35 35 L68 35 L42 62 L60 62 L60 48 L72 48 L72 68 L40 68 L64 42 L47 42 Z" fill="#A78BFA"/>
+        </svg>
+        <div class="fn-caption">Isla de práctica y edición · Fortnite</div>
+      </div>
+      <div class="mapa-info">
+        <div class="eyebrow"><span class="bar"></span> MAPA OFICIAL</div>
+        <h3>ZYX Practice Island</h3>
+        <p>Entrena builds, edits y aim en la isla oficial del team. Es el mismo mapa que usa la plantilla para calentar antes de scrims y torneos — úsalo, mejora y sube de rango en la cantera.</p>
+        <div class="code-box">
+          <div>
+            <span class="code-label">Código del mapa</span>
+            <span class="code-val" id="mapCode">8531-5214-5216</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode()">Copiar</button>
+        </div>
+        <div class="mapa-ctas">
+          <a href="https://fortnite.gg/island/8531-5214-5216/info" target="_blank" rel="noopener" class="btn-primary">Ver mapa en Fortnite.gg</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STREAMERS ================= -->
+<section class="streamers" id="streamers">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="bar"></span> PARA CREADORES</div>
+      <h2>Banners personalizados para streamers</h2>
+      <p>Si eres streamer dentro de ZYX, te hacemos un banner con tu nombre. Hay dos versiones según tu rango en el team.</p>
+    </div>
+
+    <div class="banner-grid reveal">
+      <div class="banner-card">
+        <span class="tag">Cantera</span>
+        <div class="banner-preview"><span>TU NOMBRE <b>| ZYX</b></span></div>
+        <h3>Banner Cantera</h3>
+        <p>Para streamers desde Future Promise hasta Vanguard. Diseño con la identidad visual de ZYX y tu nombre in-game, listo para usar en tu overlay o redes.</p>
+      </div>
+      <div class="banner-card">
+        <span class="tag">Pro</span>
+        <div class="banner-preview"><span>TU NOMBRE <b>| ZYX PRO</b></span></div>
+        <h3>Banner PRO</h3>
+        <p>Exclusivo para ZYX Pro y ZYX Oficial. Versión V2 con más detalle y acabado premium, pensada para representar al equipo oficial en tus streams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACUERDO ================= -->
+<section class="acuerdo" id="acuerdo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="bar"></span> LÉELO ANTES DE ENTRAR</div>
+      <h2>Acuerdo de ingreso a ZYX</h2>
+      <p>Al solicitar el ingreso y/o permanecer en ZYX, aceptas íntegra y automáticamente las siguientes cláusulas, normas y condiciones.</p>
+    </div>
+
+    <div class="doc-shell reveal">
+      <div class="doc-header">
+        <h3>Acuerdo de ingreso a ZYX</h3>
+        <span class="stamp">Vinculante</span>
+      </div>
+      <div class="doc-body">
+        <p class="doc-intro">
+          En ZYX no buscamos números, buscamos calidad. Somos un team competitivo de Fortnite enfocado en players con buen mental, así que niños no queremos. Aquí se entra a representar y demostrar, no a divertirse.
+        </p>
+
+        <div class="clause">
+          <h4>01 · Objetivo del team</h4>
+          <ul>
+            <li>Desarrollar jugadores buenos con rendimiento alto en el competitivo.</li>
+            <li>Mantener una comunidad limpia, y sin niños.</li>
+            <li>Representar la marca con profesionalidad dentro y fuera del juego.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <h4>02 · Uso de voz, imagen y contenido</h4>
+          <p>Al entrar a ZYX aceptas que:</p>
+          <ul>
+            <li>Tu voz, gameplay y nombre in-game puedan ser grabados.</li>
+            <li>Dicho contenido podrá usarse en clips, streams, vídeos, redes sociales y material promocional.</li>
+            <li>No se requerirá aviso previo ni compensación económica.</li>
+            <li>Esta autorización es indefinida mientras el contenido exista.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <h4>03 · Normas de conducta</h4>
+          <p>Todo miembro deberá:</p>
+          <ul>
+            <li>Mantener respeto absoluto dentro del team.</li>
+            <li>Evitar toxicidad, o faltas de respeto.</li>
+            <li>Seguir instrucciones del staff sin discusiones.</li>
+            <li>Cuidar la imagen del team en partidas, redes y eventos.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <h4>04 · Staff y autoridad</h4>
+          <ul>
+            <li>El staff tiene la última palabra en cualquier decisión.</li>
+            <li>Las sanciones pueden ser de advertencia, suspensión o expulsión directa.</li>
+            <li>No se exige explicación de las decisiones.</li>
+          </ul>
+        </div>
+
+        <div class="clause">
+          <h4>05 · Confidencialidad</h4>
+          <p>Queda totalmente prohibido:</p>
+          <ul>
+            <li>Filtrar información interna.</li>
+            <li>Compartir estrategias, pruebas o decisiones del team.</li>
+            <li>Usar el nombre de ZYX para beneficio propio sin permiso.</li>
+          </ul>
+          <p style="margin-top:10px;">Incumplir esto implica expulsión inmediata.</p>
+        </div>
+
+        <div class="clause">
+          <h4>06 · Expulsión</h4>
+          <p>Nosotros en ZYX nos reservamos el derecho de expulsar a cualquier miembro que:</p>
+          <ul>
+            <li>Incumpla normas.</li>
+            <li>Dañe la imagen del team.</li>
+            <li>Muestre falta de compromiso.</li>
+            <li>Actúe en contra de los valores del proyecto.</li>
+          </ul>
+          <p style="margin-top:10px;">Sin avisos largos. Sin dramas.</p>
+        </div>
+
+        <div class="clause">
+          <h4>07 · Modificaciones</h4>
+          <p>Las normas las podemos actualizar en cualquier momento. Quedarse en el team implica aceptar automáticamente los cambios.</p>
+        </div>
+
+        <div class="doc-warning">
+          <b>IMPORTANTE:</b> Este acuerdo es vinculante desde el momento en que solicitas ingresar a ZYX eSports. La permanencia en el equipo implica la aceptación total de estas condiciones.
+        </div>
+      </div>
+      <div class="doc-footer">
+        <p>ZYX eSports — Acuerdo de ingreso</p>
+        <a href="#top" class="btn-ghost">Volver arriba</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-wrap">
+    <div class="foot-left">
+      <a href="#top" class="logo-mark">
+        <svg class="z-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 15 L75 15 L28 62 L62 62 L62 40 L88 40 L88 85 L23 85 L70 38 L38 38 Z" fill="#7C3AED"/>
+          <path d="M62 62 L88 40 L88 85 L62 85 Z" fill="#0f0d13"/>
+        </svg>
+        <span>ZYX <b>ESPORTS</b></span>
+      </a>
+      <p>Team competitivo de Fortnite fundado por Fonsi. No buscamos números, buscamos calidad.</p>
+    </div>
+    <div class="foot-links">
+      <div class="foot-col">
+        <h5>Team</h5>
+        <a href="#objetivo">Objetivo</a>
+        <a href="#roles">Roles</a>
+        <a href="#acuerdo">Acuerdo de ingreso</a>
+      </div>
+      <div class="foot-col">
+        <h5>Jugar</h5>
+        <a href="https://fortnite.gg/island/8531-5214-5216/info" target="_blank" rel="noopener">Mapa oficial</a>
+        <a href="#streamers">Banners de streamer</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 ZYX eSports. Todos los derechos reservados.</span>
+    <span>Fundado por Fonsi</span>
+  </div>
+</footer>
+
+<script>
+  function copyCode(){
+    const code = document.getElementById('mapCode').innerText;
+    navigator.clipboard.writeText(code).then(()=>{
+      const btn = document.querySelector('.copy-btn');
+      const original = btn.innerText;
+      btn.innerText = '¡Copiado!';
+      setTimeout(()=>{ btn.innerText = original; }, 1600);
+    });
+  }
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
