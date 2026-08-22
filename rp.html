@@ -117,9 +117,96 @@
 
   ::-webkit-scrollbar{width:10px;height:10px;}
   ::-webkit-scrollbar-thumb{background:#232733;border-radius:6px;}
+
+  /* ---------------- Panel de contraseña ---------------- */
+  #gate{
+    position:fixed;inset:0;background:radial-gradient(circle at 50% 30%,#111621 0%,#08090d 70%);
+    display:flex;align-items:center;justify-content:center;z-index:100;
+    transition:opacity .35s ease, visibility .35s ease;
+  }
+  #gate.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  .gate-card{
+    width:100%;max-width:340px;padding:32px 28px;background:var(--bg-panel);
+    border:1px solid var(--line);border-radius:10px;text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  .gate-lock{
+    width:44px;height:44px;margin:0 auto 16px;border-radius:10px;background:#151a24;
+    display:flex;align-items:center;justify-content:center;border:1px solid var(--line);
+  }
+  .gate-card h2{margin:0 0 6px;font-size:15px;color:#f2f5f9;font-weight:700;}
+  .gate-card p{margin:0 0 20px;font-size:12px;color:var(--text-dim);}
+  .gate-card input{
+    width:100%;background:#0b0e14;border:1px solid var(--line);color:var(--text);
+    padding:10px 12px;border-radius:6px;font-family:var(--mono);font-size:13px;outline:none;
+    text-align:center;letter-spacing:1px;transition:border-color .15s;
+  }
+  .gate-card input:focus{border-color:var(--folder);}
+  .gate-card input.error{border-color:#e8536a;animation:shake .3s;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+  .gate-btn{
+    width:100%;margin-top:12px;background:var(--teal-icon);color:#052620;border:none;
+    padding:10px 12px;border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;
+    cursor:pointer;transition:filter .15s;
+  }
+  .gate-btn:hover{filter:brightness(1.1);}
+  .gate-msg{margin-top:12px;font-size:11.5px;color:#e8536a;min-height:14px;}
+
+  /* ---------------- Botón flotante de descarga ---------------- */
+  #downloadBtn{
+    position:fixed;right:22px;bottom:22px;z-index:40;
+    display:flex;align-items:center;gap:8px;
+    background:linear-gradient(135deg,#0d3a35,#0f4a41);
+    border:1px solid #1c6156;color:#7fe0c4;
+    padding:11px 16px;border-radius:999px;font-family:var(--mono);font-size:12.5px;font-weight:700;
+    cursor:pointer;box-shadow:0 8px 24px rgba(45,200,166,.18), 0 0 0 0 rgba(45,200,166,.5);
+    animation:pulse 2.6s ease-in-out infinite;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  #downloadBtn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(45,200,166,.3);}
+  #downloadBtn:active{transform:translateY(0);}
+  #downloadBtn svg{flex:none;transition:transform .2s ease;}
+  #downloadBtn.loading svg{animation:spin .8s linear infinite;}
+  #downloadBtn:disabled{opacity:.7;cursor:default;}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 8px 24px rgba(45,200,166,.18), 0 0 0 0 rgba(45,200,166,.45);}
+    50%{box-shadow:0 8px 24px rgba(45,200,166,.28), 0 0 0 10px rgba(45,200,166,0);}
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #downloadToast{
+    position:fixed;right:22px;bottom:76px;z-index:40;
+    background:var(--bg-panel);border:1px solid var(--line);color:var(--text-dim);
+    padding:8px 14px;border-radius:8px;font-size:11.5px;
+    opacity:0;transform:translateY(6px);transition:all .25s ease;pointer-events:none;
+  }
+  #downloadToast.show{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-lock">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7fe0c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    </div>
+    <h2>Acceso restringido</h2>
+    <p>Introduce la contraseña para ver la estructura del proyecto</p>
+    <input id="pwdInput" type="password" placeholder="Contraseña" autocomplete="off">
+    <button class="gate-btn" id="pwdSubmit">Entrar</button>
+    <div class="gate-msg" id="gateMsg"></div>
+  </div>
+</div>
+
+<button id="downloadBtn" title="Descargar estructura en ZIP">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+  <span id="downloadLabel">Descargar .zip</span>
+</button>
+<div id="downloadToast">Generando archivo…</div>
+
 <div class="wrap">
   <header>
     <h1><span class="dot"></span>BLACKOUT-RP — estructura de archivos</h1>
@@ -471,6 +558,111 @@ input.addEventListener("input", () => {
   });
 
   countEl.textContent = matches + (matches === 1 ? " resultado" : " resultados");
+});
+
+/* ---------------------------------------------------------------
+   Panel de contraseña
+   El hash SHA-256 se compara en el navegador; la contraseña en
+   texto plano nunca aparece en el código.
+--------------------------------------------------------------- */
+const PASSWORD_HASH = "61e97f3a81872ded8a82f567d28dd5b235f0eabffb6ed0f56e5d812c362636ab";
+
+async function sha256(text){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+const gate = document.getElementById("gate");
+const pwdInput = document.getElementById("pwdInput");
+const pwdSubmit = document.getElementById("pwdSubmit");
+const gateMsg = document.getElementById("gateMsg");
+
+async function tryUnlock(){
+  const val = pwdInput.value;
+  if(!val) return;
+  const hash = await sha256(val);
+  if(hash === PASSWORD_HASH){
+    gate.classList.add("hidden");
+  }else{
+    gateMsg.textContent = "Contraseña incorrecta";
+    pwdInput.classList.remove("error");
+    void pwdInput.offsetWidth; // reinicia la animación
+    pwdInput.classList.add("error");
+    pwdInput.value = "";
+    pwdInput.focus();
+  }
+}
+pwdSubmit.addEventListener("click", tryUnlock);
+pwdInput.addEventListener("keydown", e => { if(e.key === "Enter") tryUnlock(); });
+pwdInput.focus();
+
+/* ---------------------------------------------------------------
+   Descarga en ZIP de la estructura del proyecto
+   (carpetas reales + archivos de texto con su descripción)
+--------------------------------------------------------------- */
+function addToZip(zipFolder, items){
+  items.forEach(item => {
+    const cleanName = item.n.replace(/\/$/, "");
+    if(item.c && item.c.length){
+      const sub = zipFolder.folder(cleanName);
+      addToZip(sub, item.c);
+    }else{
+      const content = item.d ? `${item.n}\n${"=".repeat(item.n.length)}\n\n${item.d}\n` : `${item.n}\n`;
+      zipFolder.file(cleanName, content);
+    }
+  });
+}
+
+const downloadBtn = document.getElementById("downloadBtn");
+const downloadLabel = document.getElementById("downloadLabel");
+const downloadToast = document.getElementById("downloadToast");
+let jszipLoadPromise = null;
+
+function loadJSZip(){
+  if(jszipLoadPromise) return jszipLoadPromise;
+  jszipLoadPromise = new Promise((resolve, reject) => {
+    if(window.JSZip) return resolve();
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+    s.onload = resolve;
+    s.onerror = () => reject(new Error("No se pudo cargar JSZip"));
+    document.head.appendChild(s);
+  });
+  return jszipLoadPromise;
+}
+
+downloadBtn.addEventListener("click", async () => {
+  if(downloadBtn.disabled) return;
+  downloadBtn.disabled = true;
+  downloadBtn.classList.add("loading");
+  downloadLabel.textContent = "Generando…";
+  downloadToast.textContent = "Generando archivo…";
+  downloadToast.classList.add("show");
+
+  try{
+    await loadJSZip();
+    const zip = new JSZip();
+    const root = zip.folder("BLACKOUT-RP");
+    addToZip(root, DATA);
+    const blob = await zip.generateAsync({type:"blob"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "BLACKOUT-RP-estructura.zip";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    downloadToast.textContent = "¡Descarga lista!";
+  }catch(err){
+    downloadToast.textContent = "Error al generar el ZIP";
+    console.error(err);
+  }finally{
+    downloadBtn.disabled = false;
+    downloadBtn.classList.remove("loading");
+    downloadLabel.textContent = "Descargar .zip";
+    setTimeout(() => downloadToast.classList.remove("show"), 2200);
+  }
 });
 </script>
 </body>
