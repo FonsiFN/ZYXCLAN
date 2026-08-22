@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>BLACKOUT-RP — estructura de archivos</title>
+<style>
+  :root{
+    --bg:#0b0e14;
+    --bg-panel:#0f131b;
+    --line:#232733;
+    --text:#cfd6e2;
+    --text-dim:#7b8496;
+    --text-faint:#4c5566;
+    --accent-file:#5b6472;
+    --folder:#6f97e8;
+    --teal-bar:#0d3a35; --teal-text:#7fe0c4; --teal-desc:#5fb89f; --teal-icon:#2dc8a6;
+    --purple-bar:#221b4d; --purple-text:#b7b6f7; --purple-desc:#9490d6; --purple-icon:#7a78e8;
+    --orange-bar:#3d2210; --orange-text:#ffb27a; --orange-desc:#d99a63; --orange-icon:#e8853a;
+    --mono: ui-monospace, "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--mono);}
+  body{padding:28px 18px 60px;}
+  .wrap{max-width:920px;margin:0 auto;}
+
+  header h1{
+    font-size:20px;margin:0 0 6px;font-weight:700;letter-spacing:.2px;color:#f2f5f9;
+    display:flex;align-items:center;gap:10px;
+  }
+  header h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--teal-icon);box-shadow:0 0 10px var(--teal-icon);}
+  header p{margin:0 0 18px;font-size:12.5px;color:var(--text-dim);}
+
+  .toolbar{
+    display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap;
+  }
+  .search{
+    flex:1;min-width:180px;position:relative;
+  }
+  .search input{
+    width:100%;background:var(--bg-panel);border:1px solid var(--line);color:var(--text);
+    padding:8px 10px 8px 30px;border-radius:6px;font-family:var(--mono);font-size:13px;outline:none;
+    transition:border-color .15s;
+  }
+  .search input:focus{border-color:var(--folder);}
+  .search svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-faint);}
+  .btn{
+    background:var(--bg-panel);border:1px solid var(--line);color:var(--text-dim);
+    padding:8px 12px;border-radius:6px;font-family:var(--mono);font-size:12px;cursor:pointer;
+    transition:all .15s;white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--folder);color:var(--text);}
+
+  .panel{
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  }
+
+  ul.tree{list-style:none;margin:0;padding:0;}
+  ul.tree ul{list-style:none;margin:0;padding-left:20px;}
+
+  li.node{position:relative;}
+  li.node > .row{
+    display:flex;align-items:center;gap:6px;padding:5px 10px 5px 6px;
+    cursor:default;border-radius:4px;
+  }
+  li.node.dir > .row{cursor:pointer;}
+  li.node.dir > .row:hover{background:#151a24;}
+
+  .caret{
+    width:12px;height:12px;flex:none;color:var(--text-faint);
+    transition:transform .15s ease;display:flex;align-items:center;justify-content:center;
+  }
+  li.node.open > .row > .caret{transform:rotate(90deg);}
+  li.node.file > .row > .caret{visibility:hidden;}
+
+  .icon{flex:none;width:16px;height:14px;display:flex;align-items:center;justify-content:center;}
+
+  .name{font-size:13px;white-space:nowrap;color:var(--text);}
+  .desc{
+    font-size:12px;color:var(--text-dim);margin-left:14px;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap;
+  }
+
+  li.node > ul{
+    max-height:0;overflow:hidden;transition:max-height .18s ease;
+    border-left:1px solid var(--line);margin-left:16px;
+  }
+  li.node.open > ul{max-height:none;}
+  li.node:not(.open) > ul{display:none;}
+
+  /* header rows (carpetas de primer nivel / grupos) */
+  li.node.header1 > .row{background:var(--teal-bar);}
+  li.node.header1 > .row .name{color:var(--teal-text);font-weight:700;}
+  li.node.header1 > .row .desc{color:var(--teal-desc);}
+  li.node.header1 > .row:hover{background:#114941;}
+
+  li.node.header2 > .row{background:var(--purple-bar);}
+  li.node.header2 > .row .name{color:var(--purple-text);font-weight:700;}
+  li.node.header2 > .row .desc{color:var(--purple-desc);}
+  li.node.header2 > .row:hover{background:#2b2260;}
+
+  li.node.header3 > .row{background:var(--orange-bar);}
+  li.node.header3 > .row .name{color:var(--orange-text);font-weight:700;}
+  li.node.header3 > .row .desc{color:var(--orange-desc);}
+  li.node.header3 > .row:hover{background:#4a2a13;}
+
+  .badge{
+    font-size:10px;background:var(--orange-icon);color:#2a1505;padding:1px 6px;
+    border-radius:999px;font-weight:700;margin-left:6px;letter-spacing:.3px;
+  }
+
+  .hidden{display:none !important;}
+  mark{background:#5b4a12;color:#ffe9a8;border-radius:2px;padding:0 1px;}
+
+  footer{margin-top:18px;font-size:11.5px;color:var(--text-faint);border-top:1px solid var(--line);padding-top:12px;}
+
+  .count{font-size:11.5px;color:var(--text-faint);white-space:nowrap;}
+
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-thumb{background:#232733;border-radius:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="dot"></span>BLACKOUT-RP — estructura de archivos</h1>
+    <p>Árbol interactivo del proyecto · haz clic en una carpeta para expandirla/colapsarla</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="text" placeholder="Buscar archivo, carpeta o descripción…" autocomplete="off">
+    </div>
+    <button class="btn" id="expandAll">Expandir todo</button>
+    <button class="btn" id="collapseAll">Colapsar todo</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="panel">
+    <ul class="tree" id="tree"></ul>
+  </div>
+
+  <footer>BLACKOUT-RP · FiveM QBCore roleplay server · <span id="totalCount">0</span> elementos</footer>
+</div>
+
+<script>
+/* ---------------------------------------------------------------
+   Datos del árbol
+   kind: "header1" (verde), "header2" (morado), "header3" (naranja),
+         "dir" (carpeta normal), "file" (archivo)
+--------------------------------------------------------------- */
+const DATA = [
+  {n:"README.md", d:"Guía principal del proyecto, qué es y cómo se instala", k:"file"},
+  {n:"LICENSE", d:"Licencia MIT, uso y modificación libres", k:"file"},
+  {n:"CHANGELOG.md", d:"Historial de versiones y cambios", k:"file"},
+  {n:".env.example", d:"Plantilla de variables de entorno", k:"file"},
+  {n:".gitignore", d:"Archivos ignorados por Git", k:"file"},
+  {n:"server.cfg", d:"Puerto, licencia, recursos, BD", k:"file"},
+  {n:"config/", d:"CONFIGURACIÓN CENTRALIZADA", k:"header1", c:[
+    {n:"server.lua", d:"Nombre, idioma, jugadores máximos", k:"file"},
+    {n:"economy.lua", d:"Precios, salarios, impuestos, límites", k:"file"},
+    {n:"jobs.lua", d:"Trabajos y rangos disponibles", k:"file"},
+    {n:"vehicles.lua", d:"Catálogo, precios, modelos permitidos", k:"file"},
+    {n:"police.lua", d:"Departamentos, rangos, multas, salarios", k:"file"},
+    {n:"ems.lua", d:"Departamentos médicos, hospitales, equipo", k:"file"},
+    {n:"fire.lua", d:"Departamentos, incendios, rescates", k:"file"},
+    {n:"permissions.lua", d:"Niveles de admin y sus permisos", k:"file"},
+    {n:"ui.lua", d:"Colores, fuentes, temas y diseño", k:"file"},
+  ]},
+  {n:"sql/", d:"BASE DE DATOS", k:"header1", c:[
+    {n:"migrations/", d:"Migraciones — ejecutar en orden", k:"dir", c:[
+      {n:"001_initial.sql", d:"Usuarios, personajes, permisos", k:"file"},
+      {n:"002_characters_economy.sql", d:"Personajes, economía, transacciones", k:"file"},
+      {n:"003_vehicles_garages.sql", d:"Vehículos, garajes, propiedades", k:"file"},
+      {n:"004_police_mdt_cad.sql", d:"Agentes, incidentes, multas, órdenes, CAD", k:"file"},
+      {n:"005_ems_ambulance.sql", d:"Personal, pacientes, hospitales, ambulancias", k:"file"},
+      {n:"006_fire_rescue.sql", d:"Personal, incendios, rescates", k:"file"},
+      {n:"007_phone_bank_radio.sql", d:"Mensajes, contactos, llamadas, banco, radio", k:"file"},
+      {n:"008_properties_businesses.sql", d:"Propiedades y negocios", k:"file"},
+      {n:"009_admin_tickets_logs.sql", d:"Warns, bans, tickets, logs", k:"file"},
+      {n:"010_security_optimization.sql", d:"Logs, índices, optimización", k:"file"},
+    ]},
+    {n:"seeds/", d:"Datos de prueba (opcional)", k:"dir"},
+  ]},
+  {n:"resources/", d:"RECURSOS DE FIVEM", k:"header1", c:[
+    {n:"[standalone]/", d:"DEPENDENCIAS EXTERNAS", k:"header2", c:[
+      {n:"qb-core/", d:"Framework QBCore: núcleo del servidor", k:"dir"},
+      {n:"oxmysql/", d:"Conector SQL: conexión segura a MySQL", k:"dir"},
+      {n:"ox_lib/", d:"Callbacks, menús, inputs, notificaciones", k:"dir"},
+      {n:"pma-voice/", d:"Voz por proximidad y radio en el juego", k:"dir"},
+    ]},
+    {n:"[core]/", d:"NÚCLEO DEL SERVIDOR", k:"header2", c:[
+      {n:"blackout_core/", d:"Gestión de jugadores, sesiones, API", k:"dir"},
+      {n:"blackout_identity/", d:"DNI, teléfono, validación de nombres", k:"dir"},
+      {n:"blackout_utils/", d:"Strings, tablas, logs, matemáticas", k:"dir"},
+      {n:"blackout_ui/", d:"Notificaciones (toasts), variables CSS", k:"dir"},
+      {n:"blackout_security/", d:"Rate limiting, exploits, sanitización", k:"dir"},
+      {n:"blackout_optimization/", d:"Caché SQL, métricas de rendimiento", k:"dir"},
+    ]},
+    {n:"[systems]/", d:"SISTEMAS PRINCIPALES", k:"header2", c:[
+      {n:"characters/", d:"Creación y selección (multicharacter)", k:"dir", c:[
+        {n:"html/", d:"Interfaz de creación/selección", k:"dir"},
+      ]},
+      {n:"inventory/", d:"20 slots, peso, items, armas, drag & drop", k:"dir", c:[
+        {n:"html/", d:"Interfaz de inventario (F2)", k:"dir"},
+      ]},
+      {n:"economy/", d:"Efectivo, banco, transferencias con impuestos", k:"dir"},
+      {n:"vehicles/", d:"Combustible, daños, mods, matrícula única", k:"dir"},
+      {n:"garages/", d:"Almacenar y recuperar vehículos", k:"dir", c:[
+        {n:"html/", d:"Interfaz de garajes", k:"dir"},
+      ]},
+      {n:"dealerships/", d:"Catálogo, compra y financiación", k:"dir", c:[
+        {n:"html/", d:"Interfaz de concesionarios", k:"dir"},
+      ]},
+      {n:"properties/", d:"Compra, alquiler, gestión de llaves", k:"dir"},
+      {n:"businesses/", d:"Empleados, salarios, finanzas, inventario", k:"dir"},
+      {n:"phone/", d:"Llamadas, mensajes, contactos, 10 apps", k:"dir", c:[
+        {n:"html/", d:"Interfaz del teléfono (F1)", k:"dir"},
+      ]},
+      {n:"bank/", d:"Cuentas con IBAN, transferencias, historial", k:"dir"},
+      {n:"radio/", d:"Canales, frecuencias, integración pma-voice", k:"dir"},
+    ]},
+    {n:"[emergency]/", d:"SISTEMAS DE EMERGENCIA", k:"header2", c:[
+      {n:"police/", d:"6 departamentos, rangos, agentes, placas", k:"dir"},
+      {n:"mdt/", d:"Búsquedas, incidentes, multas, órdenes BOLO", k:"dir", c:[
+        {n:"html/", d:"Interfaz del MDT", k:"dir"},
+      ]},
+      {n:"cad/", d:"Llamadas 911, despacho, unidades, mapa", k:"dir", c:[
+        {n:"html/", d:"Interfaz del CAD", k:"dir"},
+      ]},
+      {n:"dispatch/", d:"Coordinación policía-EMS-bomberos", k:"dir"},
+      {n:"ems/", d:"Personal médico, pacientes, hospitales, ambulancias", k:"dir"},
+      {n:"fire/", d:"Personal, incendios dinámicos, rescates", k:"dir"},
+    ]},
+    {n:"[admin]/", d:"ADMINISTRACIÓN", k:"header2", c:[
+      {n:"admin/", d:"Niveles, comandos, warns, bans", k:"dir", c:[
+        {n:"html/", d:"Panel de administración", k:"dir"},
+      ]},
+      {n:"tickets/", d:"Soporte, reportes, bugs, apelaciones", k:"dir", c:[
+        {n:"html/", d:"Sistema de tickets", k:"dir"},
+      ]},
+      {n:"logs/", d:"Logs centralizados (BD + Discord)", k:"dir"},
+    ]},
+    {n:"[assets]/", d:"RECURSOS COMPARTIDOS (NO LÓGICA)", k:"header3", badge:"NUEVO", c:[
+      {n:"blackout_fonts/", d:"Tipografías compartidas por todas las UIs", k:"dir"},
+      {n:"blackout_sounds/", d:"Efectos de sonido (notificaciones, radio, sirenas)", k:"dir"},
+      {n:"blackout_images/", d:"Iconos, logos, imágenes de fondo compartidas", k:"dir"},
+      {n:"blackout_maps/", d:"MLOs e interiores custom (si aplica)", k:"dir"},
+    ]},
+  ]},
+  {n:"docs/", d:"DOCUMENTACIÓN", k:"header1", c:[
+    {n:"installation.md", d:"Instalación paso a paso", k:"file"},
+    {n:"architecture.md", d:"Arquitectura del sistema", k:"file"},
+    {n:"database.md", d:"Esquema de BD y relaciones", k:"file"},
+    {n:"security.md", d:"Buenas prácticas de seguridad", k:"file"},
+    {n:"optimization.md", d:"Estrategias de optimización", k:"file"},
+    {n:"development.md", d:"Guía para desarrolladores", k:"file"},
+    {n:"resources.md", d:"Explicación de cada recurso", k:"file"},
+    {n:"troubleshooting.md", d:"Solución de problemas comunes", k:"file"},
+    {n:"deployment.md", d:"Despliegue a producción", k:"file"},
+    {n:"production.md", d:"Mantenimiento en producción", k:"file"},
+  ]},
+  {n:"scripts/", d:"SCRIPTS DE UTILIDAD", k:"header1", c:[
+    {n:"deploy.sh", d:"Despliegue automatizado", k:"file"},
+    {n:"backup.sh", d:"Backup automático (BD + config)", k:"file"},
+    {n:"restore.sh", d:"Restauración desde backup", k:"file"},
+    {n:"monitor.sh", d:"Monitorización del servidor", k:"file"},
+  ]},
+  {n:"audits/", d:"AUDITORÍAS", k:"header1", c:[
+    {n:"security_audit.md", d:"Auditoría de seguridad (95/100)", k:"file"},
+    {n:"performance_audit.md", d:"Auditoría de rendimiento (92/100)", k:"file"},
+    {n:"code_audit.md", d:"Auditoría de calidad de código", k:"file"},
+  ]},
+  {n:"tests/", d:"PRUEBAS AUTOMATIZADAS", k:"header1", c:[
+    {n:"blackout_tests/", d:"Carpeta raíz de las pruebas", k:"dir", c:[
+      {n:"fxmanifest.lua", d:"Metadatos del recurso de pruebas", k:"file"},
+      {n:"config.lua", d:"Configuración de las pruebas", k:"file"},
+      {n:"server/", d:"Lógica de pruebas del servidor", k:"dir", c:[
+        {n:"server.lua", d:"Orquestador — ejecuta todas las pruebas", k:"file"},
+        {n:"unit/", d:"Pruebas unitarias", k:"dir", c:[
+          {n:"economy.lua", d:"Transferencias, límites", k:"file"},
+          {n:"inventory.lua", d:"Items, peso, slots", k:"file"},
+          {n:"vehicles.lua", d:"Persistencia, daños", k:"file"},
+        ]},
+        {n:"integration/", d:"Pruebas de integración", k:"dir", c:[
+          {n:"police.lua", d:"Sistema policial (MDT, CAD)", k:"file"},
+          {n:"ems.lua", d:"Sistema médico (pacientes, hospitales)", k:"file"},
+        ]},
+        {n:"security/", d:"Pruebas de seguridad", k:"dir", c:[
+          {n:"exploits.lua", d:"Inyección SQL, XSS", k:"file"},
+        ]},
+      ]},
+      {n:"shared/", d:"Código compartido de pruebas", k:"dir", c:[
+        {n:"assertions.lua", d:"Funciones de aserción", k:"file"},
+      ]},
+    ]},
+  ]},
+];
+
+/* ---------------------------------------------------------------
+   Iconos SVG
+--------------------------------------------------------------- */
+const ICON_CARET = `<svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l6 5-6 5"/></svg>`;
+
+function folderIcon(color){
+  return `<svg viewBox="0 0 20 16" width="16" height="14">
+    <path d="M1 2.5C1 1.67 1.67 1 2.5 1H7l1.8 2H17.5c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5h-15C1.67 15 1 14.33 1 13.5v-11Z" fill="${color}"/>
+  </svg>`;
+}
+function fileIcon(bodyColor, lineColor){
+  return `<svg viewBox="0 0 16 18" width="13" height="15">
+    <path d="M2 1h7l5 5v10.2c0 .44-.36.8-.8.8H2.8c-.44 0-.8-.36-.8-.8V1.8C2 1.36 2 1 2 1Z" fill="${bodyColor}" stroke="${lineColor}" stroke-width=".6"/>
+    <path d="M9 1v4.2c0 .44.36.8.8.8H14" fill="none" stroke="${lineColor}" stroke-width=".6"/>
+    <line x1="4.5" y1="10" x2="11.5" y2="10" stroke="${lineColor}" stroke-width=".8" stroke-linecap="round"/>
+    <line x1="4.5" y1="12.3" x2="11.5" y2="12.3" stroke="${lineColor}" stroke-width=".8" stroke-linecap="round"/>
+  </svg>`;
+}
+
+const COLORS = {
+  header1:{icon:"#2dc8a6"}, header2:{icon:"#7a78e8"}, header3:{icon:"#e8853a"},
+  dir:{icon:"#6f97e8"}, file:{icon:"#4c5566"},
+};
+
+/* ---------------------------------------------------------------
+   Construcción del árbol
+--------------------------------------------------------------- */
+let idCounter = 0;
+
+function buildNode(item){
+  const id = "n" + (idCounter++);
+  const isDir = !!item.c || item.k !== "file";
+  const li = document.createElement("li");
+  li.className = "node " + item.k + (item.c ? " open dir" : (isDir ? " dir" : " file"));
+  li.dataset.id = id;
+  li.dataset.searchText = (item.n + " " + item.d).toLowerCase();
+
+  const row = document.createElement("div");
+  row.className = "row";
+
+  const caret = document.createElement("span");
+  caret.className = "caret";
+  caret.innerHTML = ICON_CARET;
+  row.appendChild(caret);
+
+  const icon = document.createElement("span");
+  icon.className = "icon";
+  const c = COLORS[item.k] || COLORS.dir;
+  icon.innerHTML = isDir ? folderIcon(c.icon) : fileIcon("#1c212b", c.icon);
+  row.appendChild(icon);
+
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = item.n;
+  row.appendChild(name);
+
+  if(item.badge){
+    const b = document.createElement("span");
+    b.className = "badge";
+    b.textContent = item.badge;
+    row.appendChild(b);
+  }
+
+  if(item.d){
+    const desc = document.createElement("span");
+    desc.className = "desc";
+    desc.textContent = item.d;
+    row.appendChild(desc);
+  }
+
+  li.appendChild(row);
+
+  if(item.c && item.c.length){
+    const ul = document.createElement("ul");
+    item.c.forEach(child => ul.appendChild(buildNode(child)));
+    li.appendChild(ul);
+  }
+
+  if(isDir){
+    row.addEventListener("click", () => {
+      li.classList.toggle("open");
+    });
+  }
+
+  return li;
+}
+
+const treeRoot = document.getElementById("tree");
+DATA.forEach(item => treeRoot.appendChild(buildNode(item)));
+
+/* contar elementos totales */
+document.getElementById("totalCount").textContent = treeRoot.querySelectorAll("li.node").length;
+
+/* ---------------------------------------------------------------
+   Expandir / colapsar todo
+--------------------------------------------------------------- */
+document.getElementById("expandAll").addEventListener("click", () => {
+  treeRoot.querySelectorAll("li.node.dir, li.node.header1, li.node.header2, li.node.header3")
+    .forEach(li => { if(li.querySelector(":scope > ul")) li.classList.add("open"); });
+});
+document.getElementById("collapseAll").addEventListener("click", () => {
+  treeRoot.querySelectorAll("li.node").forEach(li => {
+    if(li.querySelector(":scope > ul")) li.classList.remove("open");
+  });
+});
+
+/* ---------------------------------------------------------------
+   Búsqueda
+--------------------------------------------------------------- */
+const input = document.getElementById("q");
+const countEl = document.getElementById("count");
+const allNodes = Array.from(treeRoot.querySelectorAll("li.node"));
+
+function clearHighlights(){
+  treeRoot.querySelectorAll("mark").forEach(m => {
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+}
+
+function highlight(el, term){
+  const text = el.textContent;
+  const idx = text.toLowerCase().indexOf(term);
+  if(idx === -1) return;
+  const before = text.slice(0, idx);
+  const match = text.slice(idx, idx + term.length);
+  const after = text.slice(idx + term.length);
+  el.innerHTML = "";
+  el.appendChild(document.createTextNode(before));
+  const mark = document.createElement("mark");
+  mark.textContent = match;
+  el.appendChild(mark);
+  el.appendChild(document.createTextNode(after));
+}
+
+input.addEventListener("input", () => {
+  const term = input.value.trim().toLowerCase();
+  clearHighlights();
+
+  if(!term){
+    allNodes.forEach(li => li.classList.remove("hidden"));
+    countEl.textContent = "";
+    return;
+  }
+
+  let matches = 0;
+  allNodes.forEach(li => li.classList.add("hidden"));
+
+  allNodes.forEach(li => {
+    if(li.dataset.searchText.includes(term)){
+      matches++;
+      li.classList.remove("hidden");
+      // mostrar y expandir todos los ancestros
+      let p = li.parentElement;
+      while(p && p !== treeRoot){
+        if(p.tagName === "UL"){
+          const parentLi = p.parentElement;
+          parentLi.classList.remove("hidden");
+          parentLi.classList.add("open");
+        }
+        p = p.parentElement;
+      }
+      // expandir el propio nodo si tiene hijos
+      if(li.querySelector(":scope > ul")) li.classList.add("open");
+
+      const nameEl = li.querySelector(":scope > .row > .name");
+      const descEl = li.querySelector(":scope > .row > .desc");
+      if(nameEl && nameEl.textContent.toLowerCase().includes(term)) highlight(nameEl, term);
+      else if(descEl && descEl.textContent.toLowerCase().includes(term)) highlight(descEl, term);
+    }
+  });
+
+  countEl.textContent = matches + (matches === 1 ? " resultado" : " resultados");
+});
+</script>
+</body>
+</html>
